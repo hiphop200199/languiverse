@@ -1,0 +1,112 @@
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#page {
+  position: relative;
+  /*animation: show 3s linear forwards;*/
+  height: 100dvh;
+  /* background-image: url("../../image/library-1920.jpg");
+  background-size: 100% 100%;
+  background-position: center; */
+}
+#page #canvas{
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: black;
+}
+#page #orientation-remind{
+  display: none;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+/* #page #title {
+  font-size: 50px;
+  color: #ead680;
+  text-shadow: 3px 3px 2px #887d4c;
+  text-align: center;
+  transform: translateY(20px);
+} */
+#page #link-box{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 5px;
+  place-items: center;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#page #link-box .link {
+  display: grid;
+  place-items: center;
+  width: clamp(120px, 16vw, 220px);
+  height: clamp(120px, 16vw, 220px);
+  text-decoration: none;
+ /*  opacity: 0;
+  transition: 0.5s; */
+}
+#page #link-box .link p {
+  font-size: 30px;
+  color: #ead680;
+  text-shadow: 3px 3px 2px #887d4c;
+  /* writing-mode: vertical-lr;
+  text-orientation: upright; */
+}
+/* #page #link-box .link img {
+  animation: rotate 20s linear infinite;
+  width: 90%;
+  filter: blur(5px);
+  transition: 0.5s;
+}
+#page #link-box .link img:hover {
+ scale: 1.05;
+} */
+
+
+/* @keyframes show {
+  from {
+    -webkit-clip-path: circle(0%);
+            clip-path: circle(0%);
+  }
+  to {
+    -webkit-clip-path: circle(100%);
+            clip-path: circle(100%);
+  }
+} */
+/* @keyframes rotate {
+  to {
+    rotate: 2turn;
+  }
+} */
+@media screen and (max-width: 576px) {
+  #page #link-box .link {
+    height: 200px;
+  }
+  #page #link-box .link p {
+    writing-mode: vertical-lr;
+  text-orientation: upright;
+  }
+  /* #page #link-box .link img {
+    display: none;
+  } */
+}/*# sourceMappingURL=main-menu.css.map */
+@media screen and (orientation: landscape) and (min-width: 400px) and (max-height: 576px) {
+  #page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: none;
+  }
+  #page #orientation-remind {
+    display: block;
+  }
+  #page :not(#orientation-remind) {
+    display: none;
+  }
+}

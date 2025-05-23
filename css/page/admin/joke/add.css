@@ -1,0 +1,140 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#backend {
+  height: 100dvh;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+#backend #orientation-remind{
+  display: none;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+#backend #main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100dvw - 300px);
+}
+#backend #main #form {
+  width: clamp(350px, 80dvw, 450px);
+  height: clamp(500px, 70dvh, 900px);
+  overflow-y: auto;
+}
+#backend #main #form h1 {
+  font-size: 42px;
+  font-weight: 700;
+}
+#backend #main #form #back {
+  text-decoration: none;
+  background-color: #161179;
+  color: #fbe4d6;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 5px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+#backend #main #form form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 18px;
+}
+#backend #main #form form .error {
+  display: none;
+  color: red;
+  margin-left: 10px;
+}
+#backend #main #form form input {
+  font-size: 18px;
+  align-self: flex-start;
+  padding: 3px 5px;
+  outline: none;
+  border: 3px solid #0c0950;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  accent-color: #0c0950;
+}
+#backend #main #form form input:focus {
+  border-color: #261fb3;
+}
+#backend #main #form form select{
+  font-size: 18px;
+  padding: 3px 5px;
+  outline: none;
+  border: 2px solid #0c0950;
+  border-radius: 3px;
+}
+#backend #main #form form #tag-area label{
+  margin-inline-end: 5px;
+}
+#backend #main #form form #tag-area label input{
+  margin-inline-end: 5px;
+}
+#backend #main #form form #upload-image{
+  width: 300px;
+  height: 260px;
+  border: 2px solid #0c0950;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+#backend #main #form form #upload-image img{
+  width: 80%;
+  height: 80%;
+ object-fit: contain;
+}
+#backend #main #form form #image{
+  display: none;
+}
+#backend #main #form form #image-remind{
+  font-size: 14px;
+  color: rgba(0,0,0,0.7);
+}
+#backend #main #form form #status {
+  margin-block: 5px;
+}
+#backend #main #form form #status label :first-child {
+  margin-right: 10px;
+}
+#backend #main #form form #status label :not(:first-child) {
+  margin-inline: 10px;
+}
+#backend #main #form form #button {
+  margin-block: 5px;
+}
+#backend #main #form form #button button{
+  background-color: #161179;
+  color: #fbe4d6;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 3px 5px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+@media screen and (max-width: 768px) {
+  #backend #main {
+    width: 100dvw;
+  }
+}
+/*# sourceMappingURL=add.css.map */
+@media screen and (orientation: landscape) and (min-width: 400px) and (max-height: 576px) {
+  #backend #orientation-remind {
+    display: block;
+  }
+  #backend :not(#orientation-remind) {
+    display: none;
+  }
+}

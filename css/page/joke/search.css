@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Geo:ital@0;1&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  font-family: "Geo", sans-serif;
+  --c1:#DCF2F1;
+--c2:#7FC7D9;
+--c3:#365486;
+--c4:#0F1035;
+}
+h2{
+  font-size: 46px;
+}
+h3{
+font-size: 32px;
+}
+h2,h3{
+  text-align: center;
+  color: var(--c3);
+}
+
+p#copyright{
+  font-size: 14px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+
+
+
+.box{
+   width: 80dvw;
+  max-width: 600px;
+ margin: 60px auto;
+}
+
+.box img{
+  width: 100%;
+}
+
+.box #keyword{
+  display: block;
+   font-size: 20px;
+ margin: 0 auto;
+  padding: 3px;
+  outline: none;
+  border: 3px solid var(--c3);
+  border-radius: 3px;
+  accent-color: var(--c3);
+}
+
+.box #keyword:focus{
+ border-color: var(--c2);
+}
+
+.box .category-label,.box .who-label{
+  display: inline-flex;
+  align-items: center;
+  margin: 3px;
+  padding: 3px 5px;
+  border-radius: 3px;
+  color: #fff;
+  background-color: var(--c3);
+  font-size: 20px;
+}
+
+.box .category-label .category,.box .who-label .who{
+  width: 20px;
+  height: 20px;
+  accent-color: var(--c2);
+  margin-inline-end: 3px;
+}
+
+
+
+#search{
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  background-color: var(--c4);
+  border-radius: 3px;
+  padding: 0 5px;
+  border: none;
+  cursor: pointer;
+  display: block;
+  margin: 30px auto;
+}
+
+.box .content-link{
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--c3);
+}
+
+#top{
+  position: fixed;
+  display: grid;
+  place-items: center;
+  bottom: 3dvh;
+  right: 3dvw;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: var(--c4);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+}
+#page {
+  position: relative;
+  min-height: 100dvh;
+  background-color: var(--c1);
+}
+#page #orientation-remind {
+  display: none;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+#page nav{
+  position: fixed;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 61.56%, 91.21% 40.35%, 90.32% 54.11%, 85.12% 41.34%, 83.52% 50.62%, 77.95% 34.48%, 76.71% 47.13%, 70.97% 40.35%, 69.81% 51.73%, 61.41% 61.56%, 47.63% 62.29%, 27.74% 80.54%, 0% 100%);
+  width: 100dvw;
+  height: 200px;
+  background-color: #fff;
+  filter: drop-shadow(0 2px 3px 2px var(--c1));
+  z-index: 1;
+}
+#page nav a{
+  float: right;
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--c2);
+  font-weight: 700;
+  font-size: 20px;
+  transition: 0.3s;
+  margin-inline-end: 20px;
+  position: relative;
+  right: 5dvw;
+  top: 1.5dvh;
+  text-shadow: 0 0 1px #fff;
+}
+#page nav a:hover{
+  scale: 1.05;
+  text-shadow: 0 0 3px #fff;
+}
+#page #hero-image{
+  width: 100dvw;
+  height: 75dvh;
+  background-image: url('../../../image/ice.jpg');
+  background-size: cover;
+  position: relative;
+  margin-block-end: 60px;
+}
+#page #hero-image::before{
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom,transparent 60%,var(--c1));
+  position: absolute;
+  inset:0;
+}
+
+
+
+@media screen and (orientation: landscape) and (min-width: 400px) and (max-height: 576px) {
+  #page{
+    display: grid;
+    place-items: center;
+    background-color: #fff;
+  }
+  #page #orientation-remind {
+    display: block;
+  }
+  #page :not(#orientation-remind) {
+    display: none;
+  }
+}
+/*# sourceMappingURL=style.css.map */

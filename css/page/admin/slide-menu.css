@@ -1,0 +1,125 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#hamburger-menu {
+  display: none;
+  position: absolute;
+  right: 3dvw;
+  top: 3dvh;
+  font-size: 40px;
+  background: none;
+  border: none;
+  color: #161179;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.5s;
+}
+#hamburger-menu.open {
+  transform: rotateZ(0.25turn);
+}
+
+#side-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100dvh;
+  width: 300px;
+  background-color: #161179;
+  padding-block: 20px;
+}
+#side-menu #img-box {
+  width: 80%;
+  height: 100px;
+}
+#side-menu #img-box #logo {
+  font-size: 36px;
+  font-weight: 700;
+ background-color: #ffffff;
+ color: #161179;
+ padding: 10px;
+ text-align: center;
+}
+#side-menu h4 {
+  font-size: 32px;
+  color: #FBE4D6;
+  font-weight: 700;
+  margin-block-start: 5px;
+  margin-block-end: 10px;
+}
+#side-menu a.block-trigger{
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+#side-menu .link-block{
+  display: none;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 90%;
+  height: 0;
+}
+
+#side-menu .link-block.open{
+  display: flex;
+  height: 150px;
+}
+
+#side-menu a {
+  text-decoration: none;
+  color: #FBE4D6;
+  font-size: 24px;
+  width: 70%;
+  text-align: center;
+  padding: 5px;
+  transition: 0.5s;
+}
+#side-menu a.active{
+  box-shadow: 0 0 2px 5px #FBE4D6;
+  text-shadow: 0 0 5px #FBE4D6;
+  filter: brightness(1.5);
+}
+#side-menu a:hover {
+  color: #ffffff;
+}
+
+#side-menu a.block-trigger .rotate-icon{
+  margin-inline-start: 15px;
+  font-weight: 700;
+}
+
+#side-menu a.block-trigger .rotate-icon.open{
+ rotate: 0.5turn;
+}
+
+#side-menu #logout{
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  #hamburger-menu {
+    display: inline;
+  }
+  #side-menu {
+    position: absolute;
+    right: 0;
+    top: 10dvh;
+    width: 0px;
+    z-index: 1;
+    opacity: 0;
+    height: 90dvh;
+    transition: 0.5s;
+    white-space: nowrap;
+  }
+  
+  #side-menu.open {
+    width: 100dvw;
+    opacity: 1;
+  }
+}/*# sourceMappingURL=slide-menu.css.map */

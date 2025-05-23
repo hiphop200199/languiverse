@@ -1,0 +1,80 @@
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100dvh;
+  background-image: url("../image/castle-1280.jpg");
+  background-size: cover;
+  background-position: center;
+  -webkit-mask-image: url("../image/ink-splash.gif");
+          mask-image: url("../image/ink-splash.gif");
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-size: cover;
+          mask-size: cover;
+}
+#page #orientation-remind{
+  display: none;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+#page #title {
+  position: absolute;
+  right: 18%;
+  top: 5%;
+  font-size: 70px;
+  color: #c4dff6;
+  text-shadow: 3px 3px 2px #9abeee;
+  background-color: aliceblue;
+  -webkit-mask-image: url("../image/cloud.png");
+          mask-image: url("../image/cloud.png");
+  -webkit-mask-size: cover;
+          mask-size: cover;
+  -webkit-mask-position: center;
+          mask-position: center;
+  padding: 30px;
+}
+#page #get-in {
+  display: block;
+  width: clamp(200px, 20vw, 250px);
+  height: clamp(200px, 20vw, 250px);
+  position: relative;
+  bottom: 5%;
+  -webkit-clip-path: polygon(49.69% 23.8%, 63.75% 43.49%, 54.19% 43.49%, 69.9% 81.78%, 28.51% 81.49%, 44.91% 43.49%, 35.62% 43.49%);
+          clip-path: polygon(49.69% 23.8%, 63.75% 43.49%, 54.19% 43.49%, 69.9% 81.78%, 28.51% 81.49%, 44.91% 43.49%, 35.62% 43.49%);
+  background-image: linear-gradient(to top, transparent 20%, aliceblue 50%);
+  animation: updown 3s linear infinite;
+}
+
+@keyframes updown {
+  0%, 25%, 50%, 100% {
+    transform: translateY(0);
+  }
+  12.5%, 37.5% {
+    transform: translateY(-50px);
+  }
+}/*# sourceMappingURL=index.css.map */
+
+@media screen and (orientation: landscape) and (min-width: 400px) and (max-height: 576px) {
+  #page{
+    justify-content: center;
+    background-image: none;
+  }
+  #page #orientation-remind {
+    display: block;
+  }
+  #page :not(#orientation-remind) {
+    display: none;
+  }
+}
