@@ -2,8 +2,8 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/touching.php';
 $db = new Db();
-//$jokeController = new Joke(new Joke_model($db),new Joke_with_tag_model($db),new Account_model($db));
-//$list = $jokeController->index();
+$touchingController = new Touching(new Touching_model($db),new Account_model($db));
+$list = $touchingController->index();
 ?>
     <div id="backend">
     <h1 id="orientation-remind">僅支援直向模式</h1>
@@ -37,10 +37,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
           <?php foreach ($list as $k=>$v):?> 
             <tr>
               <td><?=$v['id']?></td>
-              <td><?=$v['question']?></td>
+              <td><?=$v['content']?></td>
               <td><?= $v['status'] == ACTIVE ? '上架' : '下架'; ?></td>
               <td >
-               <?php if($v['editor']==$jokeController->data['account']['id']):?>
+               <?php if($v['editor']==$touchingController->data['account']['id']):?>
                 <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <a data-id="<?= $v['id']; ?>" class="delete">🗑</a>
                 <?php endif;?>
               </td>
@@ -52,10 +52,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
           <?php foreach($list as $k=>$v):?>
           <div class="item">
             <p>id:<?=$v['id']?></p>
-            <p>內容:<?=$v['question']?></p>
+            <p>內容:<?=$v['content']?></p>
             <p>狀態:<?= $v['status'] == ACTIVE ? '上架' : '下架'; ?></p>
             <section class="button">
-             <?php if($v['editor']==$jokeController->data['account']['id']):?>
+             <?php if($v['editor']==$touchingController->data['account']['id']):?>
                 <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <a data-id="<?= $v['id']; ?>" class="delete">🗑</a>
                 <?php endif;?>
             </section>
@@ -64,5 +64,5 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
         </div>
       </section>
     </div>
-    <script src="<?=ROOT.'/js/page/admin/joke/list.js'?>" type="module"></script>
+    <script src="<?=ROOT.'/js/page/admin/touching/list.js'?>" type="module"></script>
     <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/component/foot.php'); ?>
