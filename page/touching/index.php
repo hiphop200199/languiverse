@@ -6,7 +6,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/component/head.php');
    <h1 id="orientation-remind">僅支援直向模式</h1>
    <h2>還記得感動的時候？</h2>
    <article></article>
-   <video></video>
    <h2>曾聽過這句話</h2>
    <div class="box">
    <p class="content">這是測試的句子</p>

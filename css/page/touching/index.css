@@ -1,13 +1,14 @@
     @font-face {
-    font-family: "kouzan";
-    src: url("../../../font/Kouzan.otf") format("opentype");
+    font-family: "Kouzan";
+    font-display: swap;
+    src: local("Kouzan"),  url("../../../font/Kouzan.woff2") format("woff2");
   }
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: kouzan;
+  font-family: Kouzan;
   scroll-behavior: smooth;
   overflow-x: clip;
  
@@ -82,18 +83,7 @@ article::first-letter{
   font-weight: 700;
   color: var(--c3);
 }
-video{
-  display: block;
-  margin: 60px auto;
-  width: 80%;
-  max-width: 600px;
-  transition: 1s;
-  border-radius: 5px;
-  height: 20dvh;
-}
-video.wait{
-  opacity: 0;
-}
+
 
 
 .box{

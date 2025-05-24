@@ -45,6 +45,7 @@ switch (count($path_array)) {
   <meta name="theme-color" content="#000B58" />
   <link rel="shortcut icon" href="<?php echo ROOT . '/favicon.ico' ;?>" type="image/x-icon" />
   <link rel="stylesheet" href="<?php echo ROOT . '/css' . $css; ?>.css" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="<?php echo ROOT . '/font/Kouzan.woff2';?>">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <title>言宇宙<?php if(in_array('admin',$path_array)){?>後台<?php } ?></title>
 </head>
