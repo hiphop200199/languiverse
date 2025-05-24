@@ -66,8 +66,23 @@ class Touching_model
         }
     }
 
+    public function getMaxId()
+    {
+        $sql = 'SELECT id FROM touching ORDER BY id DESC LIMIT 1 ';
+        $stmt =  $this->db->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (empty($result)) {
+            return 0;
+        } else {
+            return intval($result['id']);
+        }
+    }
+
     public function getExportList(){
-        $sql = "SELECT * FROM touching";
+        $sql = "SELECT t.*,a.name AS editor_name FROM touching AS t
+        JOIN admin_account AS a ON t.editor = a.id
+        ";
         $subSql = "SELECT * FROM touching_thought WHERE touching_id = ?";
         $stmt =  $this->db->conn->prepare($sql);
         $subStmt = $this->db->conn->prepare($subSql);
