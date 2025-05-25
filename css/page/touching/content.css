@@ -66,30 +66,14 @@ p.thought-left{
   writing-mode: vertical-lr;
 }
 
-article{
-  width: 80dvw;
-  max-width: 600px;
- margin: 60px auto;
-  font-size: 28px;
-  line-height: 3;
-  height: 60dvh;
-  writing-mode: vertical-rl;
-  overflow-x: auto;
-  opacity: 0;
-}
 
-article::first-letter{
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--c3);
-}
 
 
 
 .box{
    width: 80dvw;
   max-width: 600px;
- margin: 60px auto;
+ margin: 0 auto;
 }
 
 .box img{
@@ -155,15 +139,80 @@ a.left-link{
   letter-spacing: 2px;
 }
 
+#open-thought-modal{
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  background-color: var(--c4);
+  border-radius: 3px;
+  padding: 0 5px;
+  border: none;
+  cursor: pointer;
+  display: block;
+  margin: 30px auto;
+}
+
+#thought-modal{
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-30%);
+  border-radius: 5px;
+ background-color: var(--c4);
+ transition: 1s;
+}
+
+#thought-modal.open{
+ transform: translate(-50%,-50%);
+}
+
+#thought-modal::backdrop{
+  background-color: rgba(0,0 ,0, 0.7);
+}
+
+#thought-add{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 300px;
+  height: 350px;
+}
+
+#thought-add label{
+  font-size: 24px;
+  color: var(--c2);
+}
+
+#thought-add textarea{
+   font-size: 22px;
+  padding: 3px;
+  outline: none;
+  border: 3px solid var(--c3);
+  border-radius: 5px;
+  accent-color: var(--c3);
+}
+
+#thought-add textarea:focus{
+ border-color: var(--c2);
+}
 
 
-@keyframes show {
-  from{
-    opacity: 0;
-  }
-  to{
-    opacity: 1;
-  }
+#thought-add #button-area{
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+#thought-add #button-area button{
+   font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  background-color: var(--c3);
+  border-radius: 5px;
+  padding: 0 3px;
+  border: none;
+  cursor: pointer;
 }
 
 

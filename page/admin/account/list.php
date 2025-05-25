@@ -40,7 +40,7 @@ $list = $accountController->index();
             <td><?= $v['id']; ?></td>
             <td><?= $v['account']; ?></td>
             <td><?= $v['status'] == ACTIVE ? '啟用' : '停用'; ?></td>
-            <td><a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <?php if($accountController->data['account']['is_admin']==IS_ADMIN){?><a data-id="<?= $v['id']; ?>" class="delete">🗑</a><?php }?></td>
+            <td class="operation"><a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <?php if($accountController->data['account']['is_admin']==IS_ADMIN){?><a data-id="<?= $v['id']; ?>" class="delete">🗑</a><?php }?></td>
           </tr>
         <?php endforeach; ?>
       </tbody>

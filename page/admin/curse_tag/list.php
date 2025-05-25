@@ -39,7 +39,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
               <td><?= $v['id']; ?></td>
               <td><?= $v['name']; ?></td>
               <td><?= $v['status'] == ACTIVE ? '啟用' : '停用'; ?></td>
-              <td >
+              <td class="operation">
                 <?php if($v['editor']==$curseTagController->data['account']['id']):?>
                 <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <a data-id="<?= $v['id']; ?>" class="delete">🗑</a>
                 <?php endif;?>

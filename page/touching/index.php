@@ -1,6 +1,9 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/component/head.php'); 
-
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/touching.php';
+$db = new Db();
+$touchingController = new Touching_frontend(new Touching_model($db));
+$info = $touchingController->randomTouching();
 ?>
 <div id="page">
    <h1 id="orientation-remind">僅支援直向模式</h1>
@@ -8,13 +11,16 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/component/head.php');
    <article></article>
    <h2>曾聽過這句話</h2>
    <div class="box">
-   <p class="content">這是測試的句子</p>
-   <p class="source">這是測試的句子</p>
-      <img src="" alt="">
-      <p class="editor">嗨</p>
+   <p class="content"><?=$info['content']?></p>
+   <p class="source"><?=$info['source']?></p>
+      <img src="<?=empty($info['image'])?'':ROOT.$info['image']?>" alt="">
+      <p class="editor">由 <?=$info['name']?> 建立</p>
+      <?php if(!empty($info['thoughts'])):?>
       <h3>聽聽大家的感想</h3>
-      <p class="thought">這是測試的句子</p>
-      <p class="thought-left">這是測試的句子</p>
+      <?php foreach($info['thoughts'] as $k=>$v):?>
+      <p class="<?= $k%2?'thought':'thought-left'?>"><?=$v['thought']?></p>
+      <?php endforeach;?>
+      <?php endif;?>
    </div>
    <p id="copyright">Copyright => EricWoo 2025</p>
     <a class="right-link" href="../main-menu.php">回到列表</a>

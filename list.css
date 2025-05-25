@@ -92,6 +92,9 @@
   font-size: 18px;
   padding: 2px 5px;
 }
+#backend #list table td.operation {
+  white-space: nowrap;
+}
 #backend #list table td a {
   display: inline-flex;
   justify-content: center;
