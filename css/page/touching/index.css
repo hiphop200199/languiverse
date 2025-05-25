@@ -60,6 +60,7 @@ p.thought,p.thought-left{
   writing-mode: vertical-rl;
   height: 22dvh;
   overflow-x: auto;
+  line-height: 1.5;
 }
 p.thought-left{
   width: 30%;

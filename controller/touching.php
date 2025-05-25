@@ -20,7 +20,7 @@ class Touching_frontend{
         $data = json_decode($request_body, true);
       
         switch ($data['task']) {
-            case 'create-rate':
+            case 'create-thought':
                 $this->createThought($data);
                 break;
         } 

@@ -36,6 +36,7 @@ p.content{
   writing-mode: vertical-rl;
   overflow-x: auto;
   height: 25dvh;
+  line-height: 3;
 }
 p.source{
   font-size: 20px;
@@ -60,6 +61,7 @@ p.thought,p.thought-left{
   writing-mode: vertical-rl;
   height: 22dvh;
   overflow-x: auto;
+  line-height: 1.5;
 }
 p.thought-left{
   width: 30%;
@@ -74,6 +76,7 @@ p.thought-left{
    width: 80dvw;
   max-width: 600px;
  margin: 0 auto;
+ padding-block: 30px;
 }
 
 .box img{
@@ -160,10 +163,13 @@ a.left-link{
   border-radius: 5px;
  background-color: var(--c4);
  transition: 1s;
+ border: none;
+ opacity: 0;
 }
 
 #thought-modal.open{
  transform: translate(-50%,-50%);
+ opacity: 1;
 }
 
 #thought-modal::backdrop{
@@ -180,19 +186,22 @@ a.left-link{
 }
 
 #thought-add label{
-  font-size: 24px;
+  font-size: 32px;
   color: var(--c2);
 }
 
 #thought-add textarea{
-   font-size: 22px;
+   font-size: 24px;
   padding: 3px;
   outline: none;
   border: 3px solid var(--c3);
   border-radius: 5px;
   accent-color: var(--c3);
+  color: var(--c4);
 }
-
+#thought-add textarea::placeholder{
+ color: var(--c4);
+}
 #thought-add textarea:focus{
  border-color: var(--c2);
 }
@@ -205,12 +214,12 @@ a.left-link{
 }
 
 #thought-add #button-area button{
-   font-size: 20px;
+   font-size: 22px;
   font-weight: 700;
   color: #fff;
   background-color: var(--c3);
   border-radius: 5px;
-  padding: 0 3px;
+  padding: 2px 5px;
   border: none;
   cursor: pointer;
 }
