@@ -23,6 +23,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
           </label>
           <input type="file" name="" id="image" accept="image/png,image/jpg,image/jpeg,image/gif">
           <span id="image-remind">圖片格式：JPG,PNG,GIF，限1MB</span>
+            <label for="">連結</label>
+          <div><input type="text" id="link" placeholder="請輸入連結"></div>
           <label for="">狀態</label>
           <section id="status">
             <label for=""><input type="radio" name="status" checked id="" value="2">上架<input type="radio" name="status" id="" value="1">下架</label>

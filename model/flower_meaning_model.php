@@ -81,4 +81,30 @@ class Flower_meaning_model{
         return $result;
     }
 
+    //web
+
+    public function getListFrontend()
+    {
+           $sql = 'SELECT f.*,fc.name FROM flower_meaning AS f
+           JOIN flower_meaning_category AS fc ON f.category = fc.id
+           WHERE f.status = 2
+           ';
+        $stmt =  $this->db->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getFrontend($id)
+    {
+           $sql = 'SELECT f.*,fc.name,a.name AS editor_name FROM flower_meaning AS f
+           JOIN flower_meaning_category AS fc ON f.category = fc.id
+           JOIN admin_account AS a ON f.editor = a.id
+          WHERE f.id = ? ';
+        $stmt =  $this->db->conn->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
 }

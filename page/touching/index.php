@@ -13,7 +13,7 @@ $info = $touchingController->randomTouching();
    <div class="box">
    <p class="content"><?=$info['content']?></p>
    <p class="source"><?=$info['source']?></p>
-      <img src="<?=empty($info['image'])?'':ROOT.$info['image']?>" alt="">
+      <a id="link" <?php if($info['link']){?> target="_blank" href="<?=$info['link']?>"<?php }?>><img src="<?=empty($info['image'])?'':ROOT.$info['image']?>" alt=""></a>
       <p class="editor">由 <?=$info['name']?> 建立</p>
       <?php if(!empty($info['thoughts'])):?>
       <h3>聽聽大家的感想</h3>

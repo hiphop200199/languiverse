@@ -22,12 +22,16 @@ $categoryList = $flowerMeaningCategoryController->index();
 ?>
 <div id="backend">
 <h1 id="orientation-remind">僅支援直向模式</h1>
-<?php require_once $_SERVER['DOCUMENT_ROOT'].'/component/slide-menu.php' ; ?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'].'/component/slide-menu.php' ;
+ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/loading.php';
+ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/confirmLB.php';
+ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
+?>
 <section id="main">
       <section id="form">
         <h1>編輯花語</h1>
         <a href="list.php" id="back">返回</a>
-        <form action="">
+        <form id="flower-meaning-edit">
           <label for="">內容</label>
           <div> <textarea name="" id="content"><?=$info['content']?></textarea><label for="" id="content-error" class="error">必填</label></div>
           <label for="">故事</label>

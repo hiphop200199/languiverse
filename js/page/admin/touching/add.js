@@ -8,6 +8,7 @@ const source = document.getElementById("source");
 const sourceError = document.getElementById("source-error");
 const imageFile = document.getElementById('image');
 const imageSource = document.getElementById('upload-image-source')
+const link = document.getElementById('link')
 const cancel = document.getElementById("cancel");
 const loading = document.getElementById("loading-mask");
 const alertLB = document.getElementById("alert-mask");
@@ -70,6 +71,7 @@ form.addEventListener("submit", async function (e) {
     const param = {
       content: content.value,
       source:source.value,
+      link:link.value,
       status: status,
       image:imageFile.files[0],
       manage: "touching",

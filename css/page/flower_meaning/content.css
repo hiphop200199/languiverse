@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      
+  
 * {
   padding: 0;
   margin: 0;
@@ -99,7 +93,7 @@ a.function-link{
 }
 a.function-link.left{
   left: 2dvw;
-  right:0;
+  right: 0;
 }
 
 #page {
@@ -132,33 +126,10 @@ a.function-link.left{
     padding-block-start: 0;
     display: block;
     font-family: 'Times New Roman', Times, serif;
+    text-shadow: none;
   }
   #page :not(#orientation-remind) {
     display: none;
   }
 }
 /*# sourceMappingURL=style.css.map */
-    </style>
-    <title>Document</title>
-  </head>
-  <body>
-  <div id="page">
-   <h1 id="orientation-remind">僅支援直向模式</h1>
-   <h1>康乃馨</h1>
-   <div class="box">
-    <h2>花語</h2>
-    <p>this is a test</p>
-    <h2>故事</h2>
-    <p>this is a story test</p>
-    <img src="./image/castle-1280.jpg" alt="">
-    <p class="editor">by eric</p>
-   </div>
-    <a class="function-link" href="">=>回到列表</a>
-    <a class="function-link left" href="">=>回到列表</a>
-   <p id="copyright">Copyright => EricWoo 2025</p>
-</div>
-  <script>
-   
-  </script>
-  </body>
-</html>

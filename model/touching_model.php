@@ -28,11 +28,11 @@ class Touching_model
         return $result;
     }
 
-    public function create($content, $source, $image, $status, $editor)
+    public function create($content, $source,$link, $image, $status, $editor)
     {
-        $sql = 'INSERT INTO touching VALUES( ?,?,?,?,?,?,?,? ) ';
+        $sql = 'INSERT INTO touching VALUES( ?,?,?,?,?,?,?,?,? ) ';
         $stmt =  $this->db->conn->prepare($sql);
-        $stmt->execute([null, $content, $source, $image, $status, $editor, time(), time()]);
+        $stmt->execute([null, $content, $source,$link, $image, $status, $editor, time(), time()]);
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
@@ -42,11 +42,11 @@ class Touching_model
         }
     }
 
-    public function edit($id, $content, $source, $image, $status)
+    public function edit($id, $content, $source,$link, $image, $status)
     {
-        $sql = 'UPDATE touching SET content = ?,source = ?,image=?,status = ?,updatetime = ? WHERE id = ?';
+        $sql = 'UPDATE touching SET content = ?,source = ?,link = ?,image=?,status = ?,updatetime = ? WHERE id = ?';
         $stmt =  $this->db->conn->prepare($sql);
-        $stmt->execute([$content, $source, $image, $status, time(), $id]);
+        $stmt->execute([$content, $source,$link, $image, $status, time(), $id]);
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;

@@ -1,0 +1,85 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+ overflow: hidden;
+ 
+  --c1:#BFECFF;
+--c2:#CDC1FF;
+--c3:#FFF6E3;
+--c4:#FFCCEA;
+}
+h1{
+  font-size: 100px;
+  color: #fff;
+  padding-inline-start: 5dvw;
+  padding-block-start: 30dvh;
+  text-shadow: 2px 5px 2px black;
+}
+h2{
+ font-size: 40px;
+  color: #fff;
+  padding-inline-start: 5dvw;
+  text-shadow: 2px 5px 2px black;
+  padding-block-end: 5dvh;
+}
+
+p#copyright{
+  position: absolute;
+  bottom: 1dvh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  white-space: nowrap;
+  text-align: center;
+  color:#fff;
+  font-weight: 700;
+}
+
+a{
+  display: block;
+  font-size: 24px;
+  color: #fff;
+  font-weight: 700;
+  padding-inline-start: 5dvw;
+  cursor: pointer;
+  text-shadow: 1px 1px 2px black;
+}
+
+#page {
+  position: relative;
+  height: 100dvh;
+  background-image: url('../../../image/sunflower-5539198_1920.jpg');
+  background-position: center;
+  background-size: cover;
+}
+#page #orientation-remind {
+  display: none;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+
+
+
+@media screen and (orientation: landscape) and (min-width: 400px) and (max-height: 576px) {
+  #page{
+    display: grid;
+    place-items: center;
+    background-color: #fff;
+    background-image: none;
+  }
+  #page #orientation-remind {
+    color: #000;
+    padding-inline-start: 0;
+    padding-block-start: 0;
+    display: block;
+    font-family: 'Times New Roman', Times, serif;
+    text-shadow: none;
+  }
+  #page :not(#orientation-remind) {
+    display: none;
+  }
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,5 +1,6 @@
 import { SUCCESS } from "../constant.js";
 import { destroy, exportFile } from "../../flower_meaning_category_model.js";
+import { REQUEST_BASE_URL } from "../config.js";
 
 const deleteBtn = document.querySelectorAll(".delete");
 const loading = document.getElementById("loading-mask");
