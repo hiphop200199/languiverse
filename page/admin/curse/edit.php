@@ -63,12 +63,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
               <p data-id="<?=$ks+1?>">編號：<?=$ks+1?></p>
               <label>內容</label>
               <textarea  class="content"><?=$vs['content']?></textarea>
-              <label>圖片</label>
-          <label for="strategy-image-<?=$ks+1?>" class="upload-images">
-            <img src="<?= empty($vs['image'])?ROOT.'/image/upload-image.png':ROOT.$vs['image']?>"  alt="upload-image">
-          </label>
-          <input type="file" id="strategy-image-<?=$ks+1?>" class="strategy-images" accept="image/png,image/jpg,image/jpeg,image/gif">
-          <span class="image-remind">圖片格式：JPG,PNG,GIF，限1MB</span>
             </div>
             <?php endforeach;?>
           </section>

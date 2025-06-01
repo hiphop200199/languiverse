@@ -5,7 +5,7 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/component/head.php'); ?>
        <!-- <h1 id="title">你的方向</h1> -->
        <section id="link-box">
    <a href="./joke/index.php" class="link"><p>難笑笑話</p><!-- <img src="../image/snowflake.png" alt=""> --></a>
-       <a href="" class="link"><p>黑語言防禦術</p><!-- <img src="../image/fire.png" alt=""> --></a>
+       <a href="./curse/index.php" class="link"><p>黑語言防禦術</p><!-- <img src="../image/fire.png" alt=""> --></a>
        <a href="./touching/index.php" class="link"><p>感人話語</p><!-- <img src="../image/fox.png" alt=""> --></a>
        <a href="./flower_meaning/index.php" class="link"><p>花語收藏</p><!-- <img src="../image/flowers.png" alt=""> --></a>
        </section>

@@ -60,11 +60,10 @@ class Joke_category extends Common
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;
             exit;
-        } else {
-            $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
     private function edit($data)
@@ -82,11 +81,10 @@ class Joke_category extends Common
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;
             exit;
-        } else {
-            $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
     private function delete($data)
@@ -97,11 +95,10 @@ class Joke_category extends Common
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;
             exit;
-        } else {
-            $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
     public function export($format)
@@ -109,12 +106,12 @@ class Joke_category extends Common
         $heading = ['id', '名稱', '狀態', '建立者', '建立時間', '更新時間'];
         $list = $this->joke_category_model->getExportList();
         switch ($format) {
-            case 1:
+            case CSV:
                 header('Content-Type: text/csv; charset=utf-8');
                 header('Content-Disposition: attachment; filename=joke_category.csv');
                 $csv = fopen('php://output', 'w+');
                 fputcsv($csv, $heading);
-                foreach ($list as $key => $value) {
+                foreach ($list as  $value) {
                     $status = $value['status'] == ACTIVE ? '啟用' : '停用';
                     $createTime = date('Y-m-d', $value['createtime']);
                     $updateTime = date('Y-m-d', $value['updatetime']);
@@ -124,8 +121,7 @@ class Joke_category extends Common
                 rewind($csv);
                 fclose($csv);
                 break;
-
-            case 2:
+            case EXCEL:
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition:attachment;filename="joke_category.xlsx"');
                 $spreadsheet = new Spreadsheet();

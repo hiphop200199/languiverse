@@ -32,10 +32,9 @@ class Curse_tag_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function edit($id,$name,$status) {
@@ -45,10 +44,9 @@ class Curse_tag_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function delete($id) {
@@ -58,10 +56,9 @@ class Curse_tag_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function getExportList(){

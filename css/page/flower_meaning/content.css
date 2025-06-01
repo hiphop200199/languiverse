@@ -94,6 +94,7 @@ a.function-link{
 a.function-link.left{
   left: 2dvw;
   right: 0;
+  width: fit-content;
 }
 
 #page {

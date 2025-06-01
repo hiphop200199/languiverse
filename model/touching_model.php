@@ -36,10 +36,9 @@ class Touching_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function edit($id, $content, $source,$link, $image, $status)
@@ -50,10 +49,9 @@ class Touching_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function delete($id)
@@ -64,10 +62,9 @@ class Touching_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function getMaxId()
@@ -78,9 +75,8 @@ class Touching_model
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if (empty($result)) {
             return 0;
-        } else {
-            return intval($result['id']);
         }
+        return intval($result['id']);
     }
 
     public function getExportList()
@@ -156,10 +152,9 @@ class Touching_model
             $subResult = $subStmt->fetchAll(PDO::FETCH_ASSOC);
             $result['thoughts'] = empty($subResult) ? '' : $subResult;
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function getRandomTouching()
@@ -180,24 +175,22 @@ class Touching_model
             $subResult = $subStmt->fetchAll(PDO::FETCH_ASSOC);
             $result['thoughts'] = empty($subResult) ? '' : $subResult;
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function getSourceListFrontend()
     {
-          $sql = 'SELECT source FROM touching WHERE status = 2';
+        $sql = 'SELECT source FROM touching WHERE status = 2';
         $stmt =  $this->db->conn->prepare($sql);
         $stmt->execute();
         if ($stmt->rowCount() >= 0) {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
      public function createThought($id, $thought)
@@ -208,10 +201,9 @@ class Touching_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
 }

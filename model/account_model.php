@@ -28,17 +28,15 @@ class Account_model
 
     public function create($account,$password,$nickname,$email,$status,$isAdmin)
     {
-        //$stmt->closeCursor();//消除游標，讓其他敘述可以執行，同時原敘述仍處於可執行的狀態
         $sql = 'INSERT INTO admin_account VALUES( ?,?,?,?,?,?,?,?,?,? ) ';
         $stmt =  $this->db->conn->prepare($sql);
         $stmt->execute([null,$account,$password,$nickname,$email,$status,$isAdmin,1,time(),time()]);
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function edit($id,$account,$nickname,$email,$status) {
@@ -48,10 +46,9 @@ class Account_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function delete($id)
@@ -62,10 +59,9 @@ class Account_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function checkLogin($account,$password){
@@ -108,10 +104,9 @@ class Account_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     //web

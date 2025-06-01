@@ -25,10 +25,9 @@ class Joke_with_tag_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
 
@@ -39,9 +38,8 @@ class Joke_with_tag_model
         if ($stmt->rowCount() >=0) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 }

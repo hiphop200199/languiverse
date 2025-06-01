@@ -32,10 +32,9 @@ class Curse_category_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function edit($id,$name,$status) {
@@ -45,10 +44,9 @@ class Curse_category_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function delete($id) {
@@ -58,14 +56,23 @@ class Curse_category_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function getExportList(){
         $sql = "SELECT c.*,a.name AS editor_name FROM curse_category AS c LEFT JOIN admin_account AS a ON c.editor = a.id";
+        $stmt =  $this->db->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    //web
+
+    public function getListFrontend() {
+        $sql = 'SELECT * FROM curse_category WHERE status = 2';
         $stmt =  $this->db->conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

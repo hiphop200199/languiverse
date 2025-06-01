@@ -29,10 +29,9 @@ class Flower_meaning_model{
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function edit($id,$content,$story,$category,$imageSourceString,$status){
@@ -42,10 +41,9 @@ class Flower_meaning_model{
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function delete($id){
@@ -55,10 +53,9 @@ class Flower_meaning_model{
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        }else{
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function getMaxId(){
@@ -68,9 +65,8 @@ class Flower_meaning_model{
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if(empty($result)){
             return 0;
-        }else{
-            return intval($result['id']);
         }
+        return intval($result['id']);
     }
 
     public function getExportList(){

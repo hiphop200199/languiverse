@@ -1,5 +1,6 @@
 import { SUCCESS } from "../constant.js";
 import { destroy, exportFile } from "../../curse_model.js";
+import { REQUEST_BASE_URL } from "../config.js";
 
 const deleteBtn = document.querySelectorAll(".delete");
 const loading = document.getElementById("loading-mask");
@@ -58,6 +59,6 @@ for (let i = 0; i < deleteBtn.length; i++) {
 
 
 exportBtn.addEventListener('click',async function(){
-  if(!format.value) return;
-  
+ if(!format.value) return;
+    location.href = REQUEST_BASE_URL + '/controller/admin/curse.php?mode=export&format='+format.value
 })

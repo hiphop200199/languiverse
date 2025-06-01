@@ -40,12 +40,16 @@ class Account extends Common
     {
         $id = $this->data['account']['id'];
         $is_admin = $this->data['account']['is_admin'];
-        if($is_admin == IS_ADMIN){
-            $list = $this->account_model->getList();
-        }else{
+        switch($is_admin){
+            case IS_ADMIN : 
+             $list = $this->account_model->getList();
+             break;
+            case IS_NOT_ADMIN:
             $list = [];
             $list[] = $this->account_model->get($id);
+            break;
         }
+      
         return $list;
     }
 
@@ -72,11 +76,10 @@ class Account extends Common
             $response = json_encode(['errCode'=>SUCCESS,'redirect'=>'list.php']);
            echo $response;
            exit;
-        }else{
-            $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
-        } 
+        }
+        $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
     private function edit($data) {
@@ -96,11 +99,10 @@ class Account extends Common
             $response = json_encode(['errCode'=>SUCCESS,'redirect'=>'list.php']);
            echo $response;
            exit;
-        }else{
-            $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;  
     }
 
     private function delete($data) {
@@ -110,11 +112,10 @@ class Account extends Common
             $response = json_encode(['errCode'=>SUCCESS,'redirect'=>'list.php']);
            echo $response;
            exit;
-        }else{
-            $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;      
     }
 
     private function editPassword($data){
@@ -131,11 +132,10 @@ class Account extends Common
             $response = json_encode(['errCode'=>SUCCESS,'redirect'=>'list.php']);
            echo $response;
            exit;
-        }else{
-            $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;  
     }
 }
 

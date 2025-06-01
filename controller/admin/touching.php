@@ -55,7 +55,7 @@ class Touching extends Common{
         $image = $_FILES['image'];
         $allowFileTypes = ['image/png','image/jpg','image/jpeg','image/gif'];
         $imageSourceString = '';
-          if(!empty($image)){
+        if(!empty($image)){
             if($image['size'] > 1 * 1024 * 1024){
                 $response = json_encode(['errCode'=>FILE_OVERSIZE]);
                 echo $response;
@@ -81,11 +81,10 @@ class Touching extends Common{
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;
             exit;
-        } else {
-            $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
     private function edit()
@@ -103,9 +102,8 @@ class Touching extends Common{
         $image = empty($_FILES['image'])?'':$_FILES['image'];
         $allowFileTypes = ['image/png','image/jpg','image/jpeg','image/gif'];
         $oldImage = empty($checkExist['image'])?'':$checkExist['image'];
-        $imageSourceString = empty($image)?$oldImage:'';
-       
-          if(!empty($image)){
+        $imageSourceString = empty($image)?$oldImage:''; 
+        if(!empty($image)){
             if($image['size'] > 1 * 1024 * 1024){
                 $response = json_encode(['errCode'=>FILE_OVERSIZE]);
                 echo $response;
@@ -126,17 +124,15 @@ class Touching extends Common{
             }
         }
 
-
         $result = $this->touching_model->edit($id, $content,$source,$link,$imageSourceString, $status);
         if ($result === SUCCESS) {
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;
             exit;
-        } else {
-            $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
     private function delete()
@@ -147,11 +143,10 @@ class Touching extends Common{
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;
             exit;
-        } else {
-            $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
     public function export($format)
@@ -159,12 +154,12 @@ class Touching extends Common{
         $heading = ['id', '內容','出處','感想', '狀態', '建立者', '建立時間', '更新時間'];
         $list = $this->touching_model->getExportList();
         switch ($format) {
-            case 1:
+            case CSV:
                 header('Content-Type: text/csv; charset=utf-8');
                 header('Content-Disposition: attachment; filename=touching.csv');
                 $csv = fopen('php://output', 'w+');
                 fputcsv($csv, $heading);
-                foreach ($list as $key => $value) {
+                foreach ($list as  $value) {
                     $status = $value['status'] == ACTIVE ? '上架' : '下架';
                     $createTime = date('Y-m-d', $value['createtime']);
                     $updateTime = date('Y-m-d', $value['updatetime']);
@@ -174,8 +169,7 @@ class Touching extends Common{
                 rewind($csv);
                 fclose($csv);
                 break;
-
-            case 2:
+            case EXCEL:
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition:attachment;filename="touching.xlsx"');
                 $spreadsheet = new Spreadsheet();

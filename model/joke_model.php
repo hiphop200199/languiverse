@@ -35,10 +35,9 @@ class Joke_model
             $id = intval($this->db->conn->lastInsertId());
             $result = ['errCode' => SUCCESS, 'id' => $id];
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function edit($id, $question, $answer, $category, $status, $imageSourceString)
@@ -49,10 +48,9 @@ class Joke_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function delete($id)
@@ -63,10 +61,9 @@ class Joke_model
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function getMaxId()
@@ -77,9 +74,8 @@ class Joke_model
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if (empty($result)) {
             return 0;
-        } else {
-            return intval($result['id']);
         }
+        return intval($result['id']);
     }
 
     public function getExportList()
@@ -177,38 +173,37 @@ class Joke_model
         JOIN admin_account AS a ON j.editor = a.id
         WHERE j.id = ? AND j.status = 2
         ';
+        $subSql = 'SELECT jwt.*,jt.name FROM joke_with_tag AS jwt
+        JOIN joke_tag AS jt ON jwt.tag_id = jt.id
+        WHERE jwt.joke_id = ?
+        ';
+        $rateSql = 'SELECT * FROM joke_rate WHERE joke_id = ?';
+
         $mainStmt =  $this->db->conn->prepare($mainSql);
+        $subStmt = $this->db->conn->prepare($subSql);
+        $rateStmt = $this->db->conn->prepare($rateSql);
         $mainStmt->execute([$id]);
+        $mainStmt->closeCursor();
         if ($mainStmt->rowCount() == 1) {
             $mainInfo = $mainStmt->fetch(PDO::FETCH_ASSOC);
-            $mainStmt->closeCursor();
-            $subSql = 'SELECT jwt.*,jt.name FROM joke_with_tag AS jwt
-            JOIN joke_tag AS jt ON jwt.tag_id = jt.id
-            WHERE jwt.joke_id = ?
-            ';
-            $subStmt = $this->db->conn->prepare($subSql);
             $subStmt->execute([$id]);
-            if ($subStmt->rowCount() >= 0) {
-                $mainInfo['subinfo'] = $subStmt->fetchAll(PDO::FETCH_ASSOC);
-                $subStmt->closeCursor();
-                $rateSql = 'SELECT * FROM joke_rate WHERE joke_id = ?';
-                $rateStmt = $this->db->conn->prepare($rateSql);
-                $rateStmt->execute([$id]);
-                if ($rateStmt->rowCount() >= 0) {
-                    $mainInfo['rateinfo'] = $rateStmt->fetchAll(PDO::FETCH_ASSOC);
-                    return $mainInfo;
-                } else {
-                    $result = SERVER_INTERNAL_ERROR;
-                    return $result;
-                }
-            } else {
+            $subStmt->closeCursor();
+            if ($subStmt->rowCount() < 0) {
                 $result = SERVER_INTERNAL_ERROR;
                 return $result;
             }
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
-        }
+            $mainInfo['subinfo'] = $subStmt->fetchAll(PDO::FETCH_ASSOC);
+            $rateStmt->execute([$id]);
+            $rateStmt->closeCursor();
+            if ($rateStmt->rowCount() < 0) {
+                $result = SERVER_INTERNAL_ERROR;
+                return $result;
+            }
+            $mainInfo['rateinfo'] = $rateStmt->fetchAll(PDO::FETCH_ASSOC);
+            return $mainInfo;       
+        } 
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function getRandomJoke()
@@ -223,10 +218,9 @@ class Joke_model
         if ($stmt->rowCount() == 1) {
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function getJokeEvaluation()
@@ -247,23 +241,21 @@ class Joke_model
         if ($stmt->rowCount() == 2) {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function createRate($id, $comment, $score)
     {
-        $sql = 'INSERT INTO joke_rate VALUES(?,?,?,?,?,?)';
+        $sql = 'INSERT INTO joke_rate VALUES(?,?,?,?,?)';
         $stmt =  $this->db->conn->prepare($sql);
-        $stmt->execute([null, $id, $score, $comment, time(), time()]);
+        $stmt->execute([null, $id, $score, $comment, time()]);
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
         }
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 }

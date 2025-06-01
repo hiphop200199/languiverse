@@ -64,7 +64,7 @@ class Joke extends Common
         $image = $_FILES['image'];
         $allowFileTypes = ['image/png','image/jpg','image/jpeg','image/gif'];
         $imageSourceString = '';
-   $editor = intval($this->data['account']['id']);
+        $editor = intval($this->data['account']['id']);
         if(!empty($image)){
             if($image['size'] > 1 * 1024 * 1024){
                 $response = json_encode(['errCode'=>FILE_OVERSIZE]);
@@ -93,12 +93,8 @@ class Joke extends Common
                 foreach($tag as $v){
                     $res = $this->joke_with_tag_model->create($result['id'],$v);
                 }
-                if($res===SUCCESS){
-                    $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
-                    echo $response;
-                    exit;
-                }else{
-                    $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
+                if($res===SERVER_INTERNAL_ERROR){
+                   $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
                     echo $response;
                     exit;
                 }
@@ -106,11 +102,10 @@ class Joke extends Common
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;
             exit;
-        } else {
-            $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
     private function edit()
@@ -153,66 +148,51 @@ class Joke extends Common
             }
         }
         $deleteTagResult = $this->joke_with_tag_model->delete($id);
-        if($deleteTagResult===SUCCESS){
-            if(!empty($tag)){
-                $createTagResult = '';
-                foreach($tag as $v){
-                    $createTagResult = $this->joke_with_tag_model->create($id,$v);
-                }
-                if($createTagResult === SUCCESS){
-                    $result = $this->joke_model->edit($id,$question,$answer,$category,$status,$imageSourceString);
-                    if ($result === SUCCESS) {
-                        $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
-                        echo $response;
-                        exit;
-                    } else {
-                        $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-                        echo $response;
-                        exit;
-                    }
-                }else{
-                    $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-                    echo $response;
-                    exit;
-                }
-            }
-            $result = $this->joke_model->edit($id,$question,$answer,$category,$status,$imageSourceString);
-            if ($result === SUCCESS) {
-                $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
-                echo $response;
-                exit;
-            } else {
-                $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-                echo $response;
-                exit;
-            }
-        }else{
+        if($deleteTagResult===SERVER_INTERNAL_ERROR){
             $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
             echo $response;
             exit;
         }
+        if(!empty($tag)){
+            $createTagResult = '';
+            foreach($tag as $v){
+                $createTagResult = $this->joke_with_tag_model->create($id,$v);
+            }
+            if($createTagResult === SERVER_INTERNAL_ERROR){
+                 $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
+                echo $response;
+                exit;
+            }
+        }
+        $result = $this->joke_model->edit($id,$question,$answer,$category,$status,$imageSourceString);
+        if ($result === SUCCESS) {
+            $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
+            echo $response;
+            exit;
+        } 
+        $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
     private function delete()
     {
         $id = intval($_POST['id']);
         $deleteTagResult = $this->joke_with_tag_model->delete($id);
-        if($deleteTagResult===SUCCESS){
-            $result = $this->joke_model->delete($id);
-            if($result===SUCCESS){
-                $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
-                echo $response;
-                exit;
-            }else{
-                $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-                echo $response;
-                exit;
-            }
-        }else{
+        if($deleteTagResult===SERVER_INTERNAL_ERROR){
             $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
             echo $response;
             exit;
         }
+        $result = $this->joke_model->delete($id);
+        if($result===SUCCESS){
+            $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
+            echo $response;
+            exit;
+        }     
+        $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
     public function export($format)
@@ -220,12 +200,12 @@ class Joke extends Common
         $heading = ['id', '問題','回答','類別','標籤','平均評分', '狀態', '建立者', '建立時間', '更新時間'];
         $list = $this->joke_model->getExportList();
         switch ($format) {
-            case 1:
+            case CSV:
                 header('Content-Type: text/csv; charset=utf-8');
                 header('Content-Disposition: attachment; filename=joke.csv');
                 $csv = fopen('php://output', 'w+');
                 fputcsv($csv, $heading);
-                foreach ($list as $key => $value) {
+                foreach ($list as  $value) {
                     $status = $value['status'] == ACTIVE ? '啟用' : '停用';
                     $createTime = date('Y-m-d', $value['createtime']);
                     $updateTime = date('Y-m-d', $value['updatetime']);
@@ -235,8 +215,7 @@ class Joke extends Common
                 rewind($csv);
                 fclose($csv);
                 break;
-
-            case 2:
+            case EXCEL:
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition:attachment;filename="joke.xlsx"');
                 $spreadsheet = new Spreadsheet();
