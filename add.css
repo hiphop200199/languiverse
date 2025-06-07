@@ -13,7 +13,7 @@
   align-items: center;
 }
 #backend #form {
-  width: clamp(350px, 80dvw, 450px);
+  width: clamp(350px, 80dvw, 600px);
   height: clamp(500px, 70dvh, 900px);
 }
 #backend #form h1 {

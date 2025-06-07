@@ -77,7 +77,6 @@
   border: 1px solid #161179;
   box-shadow: 0 0 3px 1px #161179;
   accent-color: #161179;
-  margin: 0 auto;
 }
 #backend #list table td, #backend #list table th {
   border: 1px solid #161179;
@@ -91,9 +90,6 @@
 #backend #list table td {
   font-size: 18px;
   padding: 2px 5px;
-}
-#backend #list table td.operation {
-  white-space: nowrap;
 }
 #backend #list table td a {
   display: inline-flex;

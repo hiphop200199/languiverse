@@ -92,7 +92,7 @@ class Curse_model
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $stmt->closeCursor();
-        for($i=0;$i<count($result);$i++){
+        for ($i = 0; $i < count($result); $i++) {
             $subStmt->execute([$result[$i]['id']]);
             $subResult = $subStmt->fetchAll(PDO::FETCH_ASSOC);
             $result[$i]['tags'] = '';
@@ -107,7 +107,7 @@ class Curse_model
             $strategyStmt->execute([$result[$i]['id']]);
             $strategyResult = $strategyStmt->fetchAll(PDO::FETCH_ASSOC);
             $result[$i]['strategies'] = '';
-             if (!empty($strategyResult)) {
+            if (!empty($strategyResult)) {
                 $strategies = [];
                 foreach ($strategyResult as $str) {
                     $strategies[] = $str['content'];
@@ -116,7 +116,7 @@ class Curse_model
             }
             $strategyStmt->closeCursor();
         }
-       
+
         return $result;
     }
 
@@ -170,23 +170,23 @@ class Curse_model
         $subStmt = $this->db->conn->prepare($subSql);
         $strategyStmt = $this->db->conn->prepare($strategySql);
         $mainStmt->execute([$id]);
-        $mainStmt->closeCursor();
         if ($mainStmt->rowCount() == 1) {
             $mainInfo = $mainStmt->fetch(PDO::FETCH_ASSOC);
+            $mainStmt->closeCursor();
             $subStmt->execute([$id]);
-            $subStmt->closeCursor();
             if ($subStmt->rowCount() < 0) {
                 $result = SERVER_INTERNAL_ERROR;
                 return $result;
             }
             $mainInfo['subinfo'] = $subStmt->fetchAll(PDO::FETCH_ASSOC);
+            $subStmt->closeCursor();
             $strategyStmt->execute([$id]);
-            $strategyStmt->closeCursor();
             if ($strategyStmt->rowCount() < 0) {
                 $result = SERVER_INTERNAL_ERROR;
                 return $result;
             }
             $mainInfo['strategyInfo'] = $strategyStmt->fetchAll(PDO::FETCH_ASSOC);
+            $strategyStmt->closeCursor();
             return $mainInfo;
         }
         $result = SERVER_INTERNAL_ERROR;

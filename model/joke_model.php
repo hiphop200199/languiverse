@@ -171,7 +171,7 @@ class Joke_model
         $mainSql = 'SELECT j.*,jc.name AS category_name,a.name AS editor_name  FROM joke AS j 
         JOIN joke_category AS jc ON j.category = jc.id
         JOIN admin_account AS a ON j.editor = a.id
-        WHERE j.id = ? AND j.status = 2
+        WHERE j.status = 2 AND j.id = ?
         ';
         $subSql = 'SELECT jwt.*,jt.name FROM joke_with_tag AS jwt
         JOIN joke_tag AS jt ON jwt.tag_id = jt.id
@@ -183,23 +183,23 @@ class Joke_model
         $subStmt = $this->db->conn->prepare($subSql);
         $rateStmt = $this->db->conn->prepare($rateSql);
         $mainStmt->execute([$id]);
-        $mainStmt->closeCursor();
         if ($mainStmt->rowCount() == 1) {
             $mainInfo = $mainStmt->fetch(PDO::FETCH_ASSOC);
-            $subStmt->execute([$id]);
-            $subStmt->closeCursor();
+            $mainStmt->closeCursor();
+            $subStmt->execute([$id]);      
             if ($subStmt->rowCount() < 0) {
                 $result = SERVER_INTERNAL_ERROR;
                 return $result;
             }
             $mainInfo['subinfo'] = $subStmt->fetchAll(PDO::FETCH_ASSOC);
-            $rateStmt->execute([$id]);
-            $rateStmt->closeCursor();
+            $subStmt->closeCursor();
+            $rateStmt->execute([$id]);     
             if ($rateStmt->rowCount() < 0) {
                 $result = SERVER_INTERNAL_ERROR;
                 return $result;
             }
             $mainInfo['rateinfo'] = $rateStmt->fetchAll(PDO::FETCH_ASSOC);
+            $rateStmt->closeCursor();
             return $mainInfo;       
         } 
         $result = SERVER_INTERNAL_ERROR;

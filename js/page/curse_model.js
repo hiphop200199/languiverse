@@ -35,3 +35,10 @@ export const edit = async function (param) {
     });
   return response;
   };
+
+  //web
+ 
+ export const createStrategy = async function(param){
+  const response = await axios.post(REQUEST_BASE_URL + '/controller/curse.php',param);
+  return response;
+ } 

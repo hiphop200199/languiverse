@@ -28,9 +28,9 @@ class CurseFrontend{
 
     public function getList(array $queryArray)
     {
-        $category = intval(substr($queryArray[0], strpos($queryArray[1], '=') + 1));
+        $category = intval(substr($queryArray[0], strpos($queryArray[0], '=') + 1));
     
-
+        
         $list = $this->curse_model->getListFrontend($category);
         return $list;
     }
@@ -44,18 +44,16 @@ class CurseFrontend{
     private function createStrategy($data)
     {
         $id = intval($data['id']);
-        $score = intval($data['score']);
-        $comment = $data['comment'];
-        $result = $this->curse_model->createStrategy($id,$comment,$score);
+        $content = $data['content'];
+        $result = $this->curse_model->createStrategy($id,$content);
         if($result === SUCCESS){
             $response = json_encode(['errCode'=>SUCCESS]);
             echo $response;
             exit;
-        }else{
-             $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
 }

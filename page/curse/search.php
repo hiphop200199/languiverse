@@ -16,7 +16,7 @@ $list = $curseController->getList($queryArray);
    <h1 id="orientation-remind">僅支援直向模式</h1>
    <div class="box">
     <?php foreach($categoryList as $v):?>
-          <p class="category <?php switch(mt_rand(1,3)){ case 1:?><?php break;case 2:?>middle<?php break;case 3:?>right<?php break;}?>"><?=$v['name']?></p>
+          <a href="?category=<?=$v['id']?>" class="category <?php switch(mt_rand(1,3)){ case 1:?><?php break;case 2:?>middle<?php break;case 3:?>right<?php break;}?>"><?=$v['name']?></a>
     <?php endforeach;?>
   </div>
    
