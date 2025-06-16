@@ -38,19 +38,15 @@ class Account extends Common
 
     public function index()
     {
-        $id = $this->data['account']['id'];
-        $is_admin = $this->data['account']['is_admin'];
-        switch($is_admin){
-            case IS_ADMIN : 
-             $list = $this->account_model->getList();
-             break;
-            case IS_NOT_ADMIN:
-            $list = [];
-            $list[] = $this->account_model->get($id);
-            break;
-        }
-      
-        return $list;
+        $id = intval($this->data['account']['id']);
+        $is_admin = intval($this->data['account']['is_admin']);
+       if($is_admin == IS_ADMIN){
+            $list = $this->account_model->getList();
+            return $list;
+       }
+       $list = [];
+       $list[] = $this->account_model->get($id);
+       return $list;
     }
 
     public function get($id){

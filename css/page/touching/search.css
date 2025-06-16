@@ -1,14 +1,9 @@
-    @font-face {
-    font-family: "Kouzan";
-    font-display: swap;
-    src: local("Kouzan"),  url("../../../font/Kouzan.woff2") format("woff2");
-  }
+ 
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: Kouzan;
   scroll-behavior: smooth;
   overflow-x: clip;
  
@@ -25,7 +20,7 @@ font-size: 32px;
 }
 h2,h3{
   text-align: center;
-  color: var(--c3);
+  color: var(--c2);
 }
 p,a.source,a.result{
   color: var(--c4);
