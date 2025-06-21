@@ -50,6 +50,13 @@
   flex-direction: column;
   font-size: 18px;
 }
+#backend #main #form form select{
+  font-size: 18px;
+  padding: 3px 5px;
+  outline: none;
+  border: 2px solid #0c0950;
+  border-radius: 3px;
+}
 #backend #main #form form .error {
   display: none;
   color: red;

@@ -28,8 +28,10 @@ class Touching_frontend{
 
     public function getList(array $queryArray)
     {
-        $sourceId = intval(substr($queryArray[0], strpos($queryArray[0], '=') + 1));
-        
+        $sourceId = 0;
+        if(!empty($queryArray)){
+            $sourceId = intval(substr($queryArray[0], strpos($queryArray[0], '=') + 1));
+        }
         $list = $this->touching_model->getListFrontend($sourceId);
         return $list;
     }

@@ -1,6 +1,7 @@
 <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/component/head.php');
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/touching.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/touching_source.php';
 
 $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $query = parse_url($url, PHP_URL_QUERY);
@@ -16,6 +17,8 @@ if(empty($info)){
   header('Location: ' . ROOT . '/page/admin/touching/list.php');
   exit;
 }
+$touchingSourceController = new Touching_source(new Touching_source_model($db),new Account_model($db));
+$sourceList = $touchingSourceController->index(); 
 ?>
 <div id="backend">
 <h1 id="orientation-remind">僅支援直向模式</h1>
@@ -32,7 +35,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
           <label for="">內容</label>
           <div> <input type="text" id="content" placeholder="請輸入內容" value="<?=$info['content']?>"><label for="" id="content-error" class="error">必填</label></div>
           <label for="">出處</label>
-          <div><input type="text"  id="source" placeholder="請輸入出處" value="<?=$info['source']?>"><label for="" id="source-error" class="error">必填</label></div>
+          <div>  <select name="" id="source">
+            <option value="">請選擇出處</option>
+            <?php foreach($sourceList as $k=>$v):?>
+              <option <?php if($info['source_id']==$v['id']){?>selected<?php }?> value="<?=$v['id']?>"><?=$v['name']?></option>
+              <?php endforeach;?>
+          </select><label for="" id="source-error" class="error">必填</label></div>
           <label for="">圖片</label>
           <label for="image" id="upload-image">
             <img src="<?= empty($info['image'])? ROOT.'/image/upload-image.png':ROOT.$info['image']?>" id="upload-image-source" alt="upload-image">

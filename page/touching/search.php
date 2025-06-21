@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/component/head.php'); 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/touching.php';
-
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/touching_source.php';
 $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $query = parse_url($url, PHP_URL_QUERY);
 $queryArray = explode('&',$query);

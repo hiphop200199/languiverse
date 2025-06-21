@@ -21,7 +21,7 @@ class Touching_model
 
     public function get($id)
     {
-        $sql = 'SELECT t.*,ts.name AS source FROM touching AS t JOIN touching_source AS ts ON t.sourceId = ts.id WHERE t.id = ? ';
+        $sql = 'SELECT t.*,ts.name AS source FROM touching AS t JOIN touching_source AS ts ON t.source_id = ts.id WHERE t.id = ? ';
         $stmt =  $this->db->conn->prepare($sql);
         $stmt->execute([$id]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -82,7 +82,7 @@ class Touching_model
     public function getExportList()
     {
         $sql = "SELECT t.*,ts.name AS source,a.name AS editor_name FROM touching AS t
-        JOIN touching_source AS ts ON t.sourceId = ts.id
+        JOIN touching_source AS ts ON t.source_id = ts.id
         JOIN admin_account AS a ON t.editor = a.id
         ";
         $subSql = "SELECT * FROM touching_thought WHERE touching_id = ?";
@@ -111,35 +111,32 @@ class Touching_model
 
     public function getListFrontend($sourceId)
     {
-        $sql = 'SELECT t.*,ts.name AS source FROM touching AS t JOIN touching_source AS ts ON t.sourceId = ts.id WHERE t.status = 2 ';
-        $params = [];
-
-        if (!empty($sourceId)) {
-            $sql .= " AND ts.id = ? ";
-            $params = [$sourceId];
+         if (empty($sourceId)) {
+            $result = [];
+            return $result;
         }
 
+        $sql = 'SELECT t.*,ts.name AS source FROM touching AS t
+         JOIN touching_source AS ts ON t.source_id = ts.id WHERE t.status = 2
+         AND ts.id = ? ';
+        $params = [$sourceId];
 
         $sql .= " ORDER BY t.createtime DESC ";
         $stmt =  $this->db->conn->prepare($sql);
         $stmt->execute($params);
 
-        if (empty($sourceId)) {
-            $result = [];
-            return $result;
-        } else if ($stmt->rowCount() >= 0) {
+        if ($stmt->rowCount() >= 0) {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
-        } else {
-            $result = SERVER_INTERNAL_ERROR;
-            return $result;
-        }
+        } 
+        $result = SERVER_INTERNAL_ERROR;
+        return $result;
     }
 
     public function getFrontend($id)
     {
         $sql = 'SELECT t.*,ts.name AS source,a.name FROM touching AS t
-            JOIN touching_source AS ts ON t.sourceId = ts.id
+            JOIN touching_source AS ts ON t.source_id = ts.id
            JOIN admin_account AS a ON t.editor = a.id
            WHERE t.status = 2 AND t.id = ?
            ';
@@ -161,8 +158,8 @@ class Touching_model
 
     public function getRandomTouching()
     {
-        $sql = 'SELECT t.*,ts.name AS source,a.name FROM touching AS t
-            JOIN touching_source AS ts ON t.sourceId = ts.id
+        $sql = 'SELECT t.*,ts.name AS source,a.name AS editor_name FROM touching AS t
+            JOIN touching_source AS ts ON t.source_id = ts.id
            JOIN admin_account AS a ON t.editor = a.id
            WHERE t.status = 2
            ORDER BY RAND() LIMIT 1

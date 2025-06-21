@@ -74,7 +74,7 @@ form.addEventListener("submit", async function (e) {
     const param = {
         id:id,
       content: content.value,
-      source:source.value,
+      sourceId:source.value,
       link:link.value,
       status: status,
       image:imageFile.files[0],

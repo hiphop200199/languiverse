@@ -1,5 +1,9 @@
 <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/component/head.php');
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/touching_source.php';
+$db = new Db();
+$touchingSourceController = new Touching_source(new Touching_source_model($db),new Account_model($db));
+$sourceList = $touchingSourceController->index(); 
 ?>
 <div id="backend">
 <h1 id="orientation-remind">僅支援直向模式</h1>
@@ -15,8 +19,13 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
         <form id="touching-add">
           <label for="">內容</label>
           <div> <input type="text" id="content" placeholder="請輸入內容"><label for="" id="content-error" class="error">必填</label></div>
-          <label for="">出處</label>
-          <div><input type="text" id="source" placeholder="請輸入出處"><label for="" id="source-error" class="error">必填</label></div>
+         <label for="">出處</label>
+          <div>  <select name="" id="source">
+            <option value="">請選擇出處</option>
+            <?php foreach($sourceList as $k=>$v):?>
+              <option value="<?=$v['id']?>"><?=$v['name']?></option>
+              <?php endforeach;?>
+          </select><label for="" id="source-error" class="error">必填</label></div>
           <label>圖片</label>
           <label for="image" id="upload-image">
             <img src="<?=ROOT.'/image/upload-image.png'?>" id="upload-image-source" alt="upload-image">
