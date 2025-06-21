@@ -44,30 +44,30 @@ $account = new Account(new Account_model(new Db()));
   const jokeTrigger = document.getElementById('joke-trigger')
   const jokeIcon = document.getElementById('joke-icon')
   const jokeBlock = document.getElementById('joke-block')
-  const curseTrigger = document.getElementById('curse-trigger')
-  const curseIcon = document.getElementById('curse-icon')
-  const curseBlock = document.getElementById('curse-block')
+  //const curseTrigger = document.getElementById('curse-trigger')
+ // const curseIcon = document.getElementById('curse-icon')
+  //const curseBlock = document.getElementById('curse-block')
   const touchingTrigger = document.getElementById('touching-trigger')
   const touchingIcon = document.getElementById('touching-icon')
   const touchingBlock = document.getElementById('touching-block')
-  const flowerTrigger = document.getElementById('flower-trigger')
-  const flowerIcon = document.getElementById('flower-icon')
-  const flowerBlock = document.getElementById('flower-block')
+ // const flowerTrigger = document.getElementById('flower-trigger')
+ // const flowerIcon = document.getElementById('flower-icon')
+ // const flowerBlock = document.getElementById('flower-block')
 
   jokeTrigger.addEventListener('click',function(){
 
-      curseIcon.classList.remove('open')
-    curseBlock.classList.remove('open')
+     // curseIcon.classList.remove('open')
+  //  curseBlock.classList.remove('open')
        touchingIcon.classList.remove('open')
     touchingBlock.classList.remove('open')
-      flowerIcon.classList.remove('open')
-    flowerBlock.classList.remove('open')
+  //    flowerIcon.classList.remove('open')
+  //  flowerBlock.classList.remove('open')
    
     jokeIcon.classList.toggle('open')
     jokeBlock.classList.toggle('open')
   })
 
-curseTrigger.addEventListener('click',function(){
+/* curseTrigger.addEventListener('click',function(){
 
       jokeIcon.classList.remove('open')
     jokeBlock.classList.remove('open')
@@ -78,22 +78,22 @@ curseTrigger.addEventListener('click',function(){
    
     curseIcon.classList.toggle('open')
     curseBlock.classList.toggle('open')
-  })
+  }) */
 
   touchingTrigger.addEventListener('click',function(){
 
-      curseIcon.classList.remove('open')
-    curseBlock.classList.remove('open')
+     // curseIcon.classList.remove('open')
+  //  curseBlock.classList.remove('open')
        jokeIcon.classList.remove('open')
     jokeBlock.classList.remove('open')
-      flowerIcon.classList.remove('open')
-    flowerBlock.classList.remove('open')
+  //    flowerIcon.classList.remove('open')
+ //   flowerBlock.classList.remove('open')
    
     touchingIcon.classList.toggle('open')
     touchingBlock.classList.toggle('open')
   })
 
-  flowerTrigger.addEventListener('click',function(){
+ /*  flowerTrigger.addEventListener('click',function(){
 
       curseIcon.classList.remove('open')
     curseBlock.classList.remove('open')
@@ -104,7 +104,7 @@ curseTrigger.addEventListener('click',function(){
    
     flowerIcon.classList.toggle('open')
     flowerBlock.classList.toggle('open')
-  })
+  }) */
 
   hamburgerMenu.addEventListener('click', function() {
     this.classList.toggle('open')

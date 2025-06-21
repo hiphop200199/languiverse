@@ -7,8 +7,9 @@ $query = parse_url($url, PHP_URL_QUERY);
 $queryArray = explode('&',$query);
 $db = new Db();
 $touchingController = new Touching_frontend(new Touching_model($db));
+$touchingSourceController = new Touching_source_frontend(new Touching_source_model($db));
 $list = $touchingController->getList($queryArray);
-$sourceList = $touchingController->getSourceList();
+$sourceList = $touchingSourceController->index();
 ?>
 <div id="page">
    <h1 id="orientation-remind">僅支援直向模式</h1>
@@ -16,7 +17,7 @@ $sourceList = $touchingController->getSourceList();
    <div class="box">
     <?php if(!empty($sourceList)) :?>
     <?php foreach ($sourceList as $k=>$v):?> 
-   <a href="?source=<?=urlencode($v['source'])?>" class="source"><?=$v['source']?></a>
+   <a href="?sourceId=<?=$v['id']?>" class="source"><?=$v['name']?></a>
     <?php endforeach;?> 
     <?php endif;?>
    </div>

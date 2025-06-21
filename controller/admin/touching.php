@@ -48,7 +48,7 @@ class Touching extends Common{
     private function create()
     {
         $content = $_POST['content'];
-        $source = $_POST['source'];
+        $sourceId = $_POST['sourceId'];
         $link = $_POST['link'];
         $status = intval($_POST['status']);
         $editor = intval($this->data['account']['id']);
@@ -76,7 +76,7 @@ class Touching extends Common{
             }
         }
 
-        $result = $this->touching_model->create($content,$source,$link,$imageSourceString, $status, $editor);
+        $result = $this->touching_model->create($content,$sourceId,$link,$imageSourceString, $status, $editor);
         if ($result === SUCCESS) {
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;
@@ -96,7 +96,7 @@ class Touching extends Common{
             echo $response;
         }
         $content = $_POST['content'];
-        $source = $_POST['source'];
+        $sourceId = $_POST['sourceId'];
         $link = $_POST['link'];
         $status = intval($_POST['status']);
         $image = empty($_FILES['image'])?'':$_FILES['image'];
@@ -124,7 +124,7 @@ class Touching extends Common{
             }
         }
 
-        $result = $this->touching_model->edit($id, $content,$source,$link,$imageSourceString, $status);
+        $result = $this->touching_model->edit($id, $content,$sourceId,$link,$imageSourceString, $status);
         if ($result === SUCCESS) {
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;

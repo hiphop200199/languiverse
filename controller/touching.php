@@ -28,9 +28,9 @@ class Touching_frontend{
 
     public function getList(array $queryArray)
     {
-        $source = urldecode(substr($queryArray[0], strpos($queryArray[0], '=') + 1));
+        $sourceId = intval(substr($queryArray[0], strpos($queryArray[0], '=') + 1));
         
-        $list = $this->touching_model->getListFrontend($source);
+        $list = $this->touching_model->getListFrontend($sourceId);
         return $list;
     }
 
@@ -46,11 +46,6 @@ class Touching_frontend{
         return $info;
     }
 
-   public function getSourceList()
-   {
-    $list = $this->touching_model->getSourceListFrontend();
-    return $list;
-   }
 
    private function createThought($data)
     {
@@ -61,11 +56,10 @@ class Touching_frontend{
             $response = json_encode(['errCode'=>SUCCESS]);
             echo $response;
             exit;
-        }else{
-             $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
     }
 
 }
