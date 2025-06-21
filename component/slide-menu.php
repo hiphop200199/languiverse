@@ -14,9 +14,9 @@ $account = new Account(new Account_model(new Db()));
   <a class="<?= $manage == 'account' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/account/list.php' ?>">帳號管理</a>
   <a id="joke-trigger" class="block-trigger">冷笑話管理<span id="joke-icon" class="rotate-icon <?=$manage == 'joke'||$manage == 'joke_category'||$manage == 'joke_tag'?'open':''?>">▲</span></a>
   <section id="joke-block" class="link-block <?=$manage == 'joke'||$manage == 'joke_category'||$manage == 'joke_tag'?'open':''?>">
- <a class="<?= $manage == 'joke' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke/list.php' ?>">冷笑話管理</a>
-  <a class="<?= $manage == 'joke_category' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke_category/list.php' ?>">冷笑話類別管理</a>
-  <a class="<?= $manage == 'joke_tag' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke_tag/list.php' ?>">冷笑話標籤管理</a>
+ <a class="<?= $manage == 'joke' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke/list.php' ?>">冷笑話</a>
+  <a class="<?= $manage == 'joke_category' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke_category/list.php' ?>">類別</a>
+  <a class="<?= $manage == 'joke_tag' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke_tag/list.php' ?>">標籤</a>
   </section>
  <!--  <a id="curse-trigger" class="block-trigger">黑語言管理<span id="curse-icon" class="rotate-icon <= $manage == 'curse'||$manage == 'curse_category'||$manage == 'curse_tag'?'open':''?>">▲</span></a>
   <section id="curse-block" class="link-block <=$manage == 'curse'||$manage == 'curse_category'||$manage == 'curse_tag'?'open':'' ?>">
@@ -26,7 +26,8 @@ $account = new Account(new Account_model(new Db()));
   </section> -->
   <a id="touching-trigger" class="block-trigger">感人話語管理<span id="touching-icon" class="rotate-icon">▲</span></a>
   <section id="touching-block" class="link-block">
- <a class="<?= $manage == 'touching' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/touching/list.php' ?>">感人話語管理</a>
+ <a class="<?= $manage == 'touching' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/touching/list.php' ?>">感人話語</a>
+  <a class="<?= $manage == 'touching_source' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/touching_source/list.php' ?>">出處</a>
   </section>
   <!-- <a id="flower-trigger" class="block-trigger">花語管理<span id="flower-icon" class="rotate-icon <= $manage == 'flower_meaning'||$manage == 'flower_meaning_category'?'open':''?>">▲</span></a>
   <section id="flower-block"  class="link-block  <=$manage == 'flower_meaning'||$manage == 'flower_meaning_category'?'open':'' ?>">
