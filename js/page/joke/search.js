@@ -1,7 +1,7 @@
 const search = document.getElementById('search')
 
 search.addEventListener('click',function(){
-    let keyword = document.getElementById('keyword').value
+    //let keyword = document.getElementById('keyword').value
     let categories = document.querySelectorAll('.category:checked')
     let cArr = []
     let editors = document.querySelectorAll('.who:checked')
@@ -14,5 +14,5 @@ search.addEventListener('click',function(){
     }
     cArr.sort((a,b)=> a - b);
     eArr.sort((a,b)=> a - b);
-    location.search = `?keyword=${keyword}&category=${cArr.join()}&editor=${eArr.join()}`;
+    location.search = `?category=${cArr.join()}&editor=${eArr.join()}`;
 })

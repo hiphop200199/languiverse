@@ -37,11 +37,11 @@ class JokeFrontend{
 
     public function getList(array $queryArray)
     {
-        $keyword = substr($queryArray[0], strpos($queryArray[0], '=') + 1);
-        $category = substr($queryArray[1], strpos($queryArray[1], '=') + 1);
-        $editor = substr($queryArray[2], strpos($queryArray[2], '=') + 1);
+        //$keyword = substr($queryArray[0], strpos($queryArray[0], '=') + 1);
+        $category = substr($queryArray[0], strpos($queryArray[0], '=') + 1);
+        $editor = substr($queryArray[1], strpos($queryArray[1], '=') + 1);
 
-        $list = $this->joke_model->getListFrontend($keyword,$category,$editor);
+        $list = $this->joke_model->getListFrontend(null,$category,$editor);
         return $list;
     }
 

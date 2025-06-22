@@ -117,15 +117,15 @@ class Joke_model
     //web
 
 
-    public function getListFrontend($keyword, $category, $editor)
+    public function getListFrontend($keyword = null, $category, $editor)
     {
         $sql = 'SELECT * FROM joke WHERE status = 2 ';
         $params = [];
 
-        if (!empty($keyword)) {
+      /*   if (!empty($keyword)) {
             $sql .= " AND question LIKE ? OR answer LIKE ? ";
             $params = ["'%$keyword%'", "'%$keyword%'"];
-        }
+        } */
 
         if (!empty($category)) {
             $arr = array_map('intval', explode(',', $category));
@@ -153,7 +153,7 @@ class Joke_model
         $stmt =  $this->db->conn->prepare($sql);
         $stmt->execute($params);
 
-        if (empty($keyword) && empty($category) && empty($editor)) {
+        if (/* empty($keyword) && */ empty($category) && empty($editor)) {
             $result = [];
             return $result;
         } else if ($stmt->rowCount() >= 0) {

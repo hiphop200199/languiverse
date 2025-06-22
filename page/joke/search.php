@@ -26,10 +26,10 @@ $list = $jokeController->getList($queryArray);
    <div class="box">
         <img src="<?=ROOT.'/image/question-mark.png'?>" alt="">
    </div>
-   <h3>給我關鍵字</h3>
+   <!-- <h3>給我關鍵字</h3>
    <div class="box">
       <input type="text" id="keyword" placeholder="我愛關鍵字...">
-   </div>
+   </div> -->
    <h3>哪些分類呢</h3>
    <div class="box">
       <?php foreach ($categoryList as $vc):?>
