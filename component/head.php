@@ -45,6 +45,7 @@ switch (count($path_array)) {
   <meta name="theme-color" content="#000B58" />
   <link rel="shortcut icon" href="<?php echo ROOT . '/favicon.ico' ;?>" type="image/x-icon" />
   <link rel="stylesheet" href="<?php echo ROOT . '/css' . $css; ?>.css" />
+  <link rel="prefetch" as="image" crossorigin="anonymous" href="<?php echo ROOT . '/image/cloud.png';?>">
   <link rel="prefetch" as="image" crossorigin="anonymous" href="<?php echo ROOT . '/image/castle-1280.jpg';?>">
   <!-- <link rel="prefetch" as="font" type="font/woff2" crossorigin="anonymous" href="<php echo ROOT . '/font/Kouzan.woff2';?>"> -->
   <!-- <link rel="prefetch" as="image" type="image/jpeg" crossorigin="anonymous" href="<php echo ROOT . '/image/sunflower-5539198_1920.jpg';?>"> -->
