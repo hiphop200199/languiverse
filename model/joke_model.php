@@ -26,11 +26,11 @@ class Joke_model
         return $result;
     }
 
-    public function create($question, $answer, $category, $status, $imageSourceString, $editor)
+    public function create($question, $answer, $inspiration,$category, $status, $imageSourceString, $editor)
     {
-        $sql = 'INSERT INTO joke VALUES( ?,?,?,?,?,?,?,?,? ) ';
+        $sql = 'INSERT INTO joke VALUES( ?,?,?,?,?,?,?,?,?,? ) ';
         $stmt =  $this->db->conn->prepare($sql);
-        $stmt->execute([null, $question, $answer, $category, $imageSourceString, $status, $editor, time(), time()]);
+        $stmt->execute([null, $question, $answer,$inspiration, $category, $imageSourceString, $status, $editor, time(), time()]);
         if ($stmt->rowCount() == 1) {
             $id = intval($this->db->conn->lastInsertId());
             $result = ['errCode' => SUCCESS, 'id' => $id];
@@ -40,11 +40,11 @@ class Joke_model
         return $result;
     }
 
-    public function edit($id, $question, $answer, $category, $status, $imageSourceString)
+    public function edit($id, $question, $answer,$inspiration, $category, $status, $imageSourceString)
     {
-        $sql = 'UPDATE joke SET question = ?,answer = ?,category = ?,status = ?,image = ?,updatetime = ? WHERE id = ?';
+        $sql = 'UPDATE joke SET question = ?,answer = ?,inspiration = ?,category = ?,status = ?,image = ?,updatetime = ? WHERE id = ?';
         $stmt =  $this->db->conn->prepare($sql);
-        $stmt->execute([$question, $answer, $category, $status, $imageSourceString, time(), $id]);
+        $stmt->execute([$question, $answer,$inspiration, $category, $status, $imageSourceString, time(), $id]);
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;

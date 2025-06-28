@@ -30,6 +30,7 @@ $info = $jokeController->get($id);
    <div class="box">
     <p class="ask">問題：<?=$info['question']?></p>
     <p class="reply">回答：<?=$info['answer']?></p>
+    <p>靈感： <?=$info['inspiration']?></p>
     <img src="<?=empty($info['image'])?'':ROOT.$info['image']?>" alt="">
     <p>類別：<?=$info['category_name']?></p>
     <p>標籤：<?php foreach($info['subinfo'] as $vs):?><button class="tag" data-id="<?=$vs['tag_id']?>"><?=$vs['name']?></button><?php endforeach;?></p>

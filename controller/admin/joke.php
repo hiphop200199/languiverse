@@ -58,6 +58,7 @@ class Joke extends Common
     {
         $question = $_POST['question'];
         $answer = $_POST['answer'];
+        $inspiration = $_POST['inspiration'];
         $category = intval($_POST['category']);
         $tag = empty($_POST['tag'])?'':array_map('intval',explode(',',$_POST['tag']));
         $status = intval($_POST['status']);
@@ -86,7 +87,7 @@ class Joke extends Common
             }
         }
 
-        $result = $this->joke_model->create($question,$answer,$category,$status,$imageSourceString,$editor);
+        $result = $this->joke_model->create($question,$answer,$inspiration,$category,$status,$imageSourceString,$editor);
         if ($result['errCode'] === SUCCESS) {
             if(!empty($tag)){
                 $res = '';
@@ -119,6 +120,7 @@ class Joke extends Common
         }
         $question = $_POST['question'];
         $answer = $_POST['answer'];
+        $inspiration = $_POST['inspiration'];
         $category = intval($_POST['category']);
         $tag = empty($_POST['tag'])?'':array_map('intval',explode(',',$_POST['tag']));
         $status = intval($_POST['status']);
@@ -164,7 +166,7 @@ class Joke extends Common
                 exit;
             }
         }
-        $result = $this->joke_model->edit($id,$question,$answer,$category,$status,$imageSourceString);
+        $result = $this->joke_model->edit($id,$question,$answer,$inspiration,$category,$status,$imageSourceString);
         if ($result === SUCCESS) {
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;
@@ -197,7 +199,7 @@ class Joke extends Common
 
     public function export($format)
     {
-        $heading = ['id', '問題','回答','類別','標籤','平均評分', '狀態', '建立者', '建立時間', '更新時間'];
+        $heading = ['id', '問題','回答','靈感','類別','標籤','平均評分', '狀態', '建立者', '建立時間', '更新時間'];
         $list = $this->joke_model->getExportList();
         switch ($format) {
             case CSV:
@@ -209,7 +211,7 @@ class Joke extends Common
                     $status = $value['status'] == ACTIVE ? '啟用' : '停用';
                     $createTime = date('Y-m-d', $value['createtime']);
                     $updateTime = date('Y-m-d', $value['updatetime']);
-                    $tmp = [$value['id'],$value['question'],$value['answer'],$value['category_name'],$value['tags'],$value['avg_score'], $status, $value['editor_name'], $createTime, $updateTime];
+                    $tmp = [$value['id'],$value['question'],$value['answer'],$value['inspiration'],$value['category_name'],$value['tags'],$value['avg_score'], $status, $value['editor_name'], $createTime, $updateTime];
                     fputcsv($csv, $tmp);
                 }
                 rewind($csv);
@@ -231,18 +233,20 @@ class Joke extends Common
                 $activeWorksheet->setCellValue('H' . $cellNumber, $heading[7]);
                 $activeWorksheet->setCellValue('I' . $cellNumber, $heading[8]);
                 $activeWorksheet->setCellValue('J' . $cellNumber, $heading[9]);
+                $activeWorksheet->setCellValue('K' . $cellNumber, $heading[10]);
                 $cellNumber += 1;
                 foreach ($list as $d) {
                     $activeWorksheet->setCellValue('A' . $cellNumber, $d['id']);
                     $activeWorksheet->setCellValue('B' . $cellNumber, $d['question']);
                     $activeWorksheet->setCellValue('C' . $cellNumber, $d['answer']);
-                    $activeWorksheet->setCellValue('D' . $cellNumber, $d['category_name']);
-                    $activeWorksheet->setCellValue('E' . $cellNumber, $d['tags']);
-                    $activeWorksheet->setCellValue('F' . $cellNumber, $d['avg_score']);
-                    $activeWorksheet->setCellValue('G' . $cellNumber,  $d['status'] == ACTIVE ? '啟用' : '停用');
-                    $activeWorksheet->setCellValue('H' . $cellNumber, $d['editor_name']);
-                    $activeWorksheet->setCellValue('I' . $cellNumber, date('Y-m-d', $d['createtime']));
-                    $activeWorksheet->setCellValue('J' . $cellNumber, date('Y-m-d', $d['updatetime']));
+                    $activeWorksheet->setCellValue('D' . $cellNumber, $d['inspiration'] );
+                    $activeWorksheet->setCellValue('E' . $cellNumber, $d['category_name'] );
+                    $activeWorksheet->setCellValue('F' . $cellNumber,  $d['tags'] );
+                    $activeWorksheet->setCellValue('G' . $cellNumber,  $d['avg_score']);
+                    $activeWorksheet->setCellValue('H' . $cellNumber, $d['status'] == ACTIVE ? '啟用' : '停用');
+                    $activeWorksheet->setCellValue('I' . $cellNumber, $d['editor_name']);
+                    $activeWorksheet->setCellValue('J' . $cellNumber, date('Y-m-d', $d['createtime']));
+                    $activeWorksheet->setCellValue('K' . $cellNumber, date('Y-m-d', $d['updatetime']));
                     $cellNumber += 1;
                 }
                 $writer = new Xlsx($spreadsheet);

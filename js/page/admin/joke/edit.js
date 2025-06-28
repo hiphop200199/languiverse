@@ -1,70 +1,67 @@
 import { SUCCESS } from "../constant.js";
 import { edit } from "../../joke_model.js";
 
-
 const form = document.getElementById("joke-edit");
 const question = document.getElementById("question");
 const questionError = document.getElementById("question-error");
 const answer = document.getElementById("answer");
 const answerError = document.getElementById("answer-error");
+const inspiration = document.getElementById("inspiration");
 const category = document.getElementById("category");
 const categoryError = document.getElementById("category-error");
-const imageFile = document.getElementById('image');
-const imageSource = document.getElementById('upload-image-source')
-const cancel = document.getElementById('cancel');
+const imageFile = document.getElementById("image");
+const imageSource = document.getElementById("upload-image-source");
+const cancel = document.getElementById("cancel");
 const loading = document.getElementById("loading-mask");
 const alertLB = document.getElementById("alert-mask");
-const alertMessage = document.getElementById('alert-message')
-const alertBtn = document.getElementById('submit-alert')
+const alertMessage = document.getElementById("alert-message");
+const alertBtn = document.getElementById("submit-alert");
 const confirmLB = document.getElementById("confirm-mask");
-const query = new URLSearchParams(location.search)
-const id = query.get('id')
+const query = new URLSearchParams(location.search);
+const id = query.get("id");
 let status;
-let tag = []; 
+let tag = [];
 
 question.addEventListener("change", checkQuestion);
-answer.addEventListener("change",checkAnswer);
+answer.addEventListener("change", checkAnswer);
 category.addEventListener("change", checkCategory);
 
-imageFile.addEventListener('change',function(e){
-    const file = imageFile.files[0]
-    const allowFileTypes = ['image/png','image/jpg','image/jpeg','image/gif']
-    if(file.size > 1 * 1024 * 1024){
-      imageFile.value = ''
-      alertMessage.innerText = '檔案太大囉！'
-      alertBtn.onclick = function(){
-        alertLB.style.display = 'none'
-      }
-      alertLB.style.display = 'block'
-      return;
-    }
-  
-    if(!allowFileTypes.includes(file.type)){
-        imageFile.value = ''
-      alertMessage.innerText = '檔案格式不符'
-      alertBtn.onclick = function(){
-        alertLB.style.display = 'none'
-      }
-      alertLB.style.display = 'block'
-      return;
-    }
-  
-    const reader = new FileReader()
-    reader.onload = function(e){
-      imageSource.src = e.target.result;
-    }
-    reader.readAsDataURL(file);
-  
-  })
+imageFile.addEventListener("change", function (e) {
+  const file = imageFile.files[0];
+  const allowFileTypes = ["image/png", "image/jpg", "image/jpeg", "image/gif"];
+  if (file.size > 1 * 1024 * 1024) {
+    imageFile.value = "";
+    alertMessage.innerText = "檔案太大囉！";
+    alertBtn.onclick = function () {
+      alertLB.style.display = "none";
+    };
+    alertLB.style.display = "block";
+    return;
+  }
 
+  if (!allowFileTypes.includes(file.type)) {
+    imageFile.value = "";
+    alertMessage.innerText = "檔案格式不符";
+    alertBtn.onclick = function () {
+      alertLB.style.display = "none";
+    };
+    alertLB.style.display = "block";
+    return;
+  }
 
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    imageSource.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+});
 
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
   checkQuestion();
   checkAnswer();
   checkCategory();
-  if(!question.value||!answer.value||!category.value)return;
+  if (!question.value || !answer.value || !category.value) return;
   let radios = document.querySelectorAll('input[name="status"]');
   for (let i = 0; i < radios.length; i++) {
     if (radios[i].checked) {
@@ -74,21 +71,22 @@ form.addEventListener("submit", async function (e) {
   }
   let tags = document.querySelectorAll('input[name="tag"]');
   tag = [];
-  for(let i=0;i<tags.length;i++){
-    if(tags[i].checked){
+  for (let i = 0; i < tags.length; i++) {
+    if (tags[i].checked) {
       tag.push(tags[i].value);
     }
   }
-  tag.sort((a,b)=> a - b);
+  tag.sort((a, b) => a - b);
   try {
     const param = {
-        id:id,
+      id: id,
       question: question.value,
-      answer:answer.value,
-      category:category.value,
-      tag:tag.join(),
+      answer: answer.value,
+      inspiration: inspiration.value,
+      category: category.value,
+      tag: tag.join(),
       status: status,
-      image:imageFile.files[0],
+      image: imageFile.files[0],
       manage: "joke",
       task: "edit",
     };
@@ -122,25 +120,25 @@ cancel.addEventListener("click", function (e) {
 });
 
 function checkQuestion() {
-    if (!question.value) {
-      questionError.style.display = "inline";
-      return;
-    }
-    questionError.style.display = "none";
+  if (!question.value) {
+    questionError.style.display = "inline";
+    return;
   }
-  
-  function checkAnswer(){
-    if (!answer.value) {
-      answerError.style.display = "inline";
-      return;
-    }
-    answerError.style.display = "none";
+  questionError.style.display = "none";
+}
+
+function checkAnswer() {
+  if (!answer.value) {
+    answerError.style.display = "inline";
+    return;
   }
-  
-  function checkCategory(){
-    if (!category.value) {
-      categoryError.style.display = "inline";
-      return;
-    }
-    categoryError.style.display = "none";
+  answerError.style.display = "none";
+}
+
+function checkCategory() {
+  if (!category.value) {
+    categoryError.style.display = "inline";
+    return;
   }
+  categoryError.style.display = "none";
+}

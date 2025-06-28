@@ -55,7 +55,7 @@
   color: red;
   margin-left: 10px;
 }
-#backend #main #form form input {
+#backend #main #form form input ,#backend #main #form form textarea{
   font-size: 18px;
   align-self: flex-start;
   padding: 3px 5px;
@@ -65,8 +65,8 @@
   margin-bottom: 5px;
   accent-color: #0c0950;
 }
-#backend #main #form form input:focus {
-  border-color: #261fb3;
+#backend #main #form form input:focus ,#backend #main #form form textarea:focus{
+  border-color: #261FB3;
 }
 #backend #main #form form select{
   font-size: 18px;

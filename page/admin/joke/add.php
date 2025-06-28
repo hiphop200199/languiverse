@@ -24,6 +24,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
           <div> <input type="text" id="question" placeholder="請輸入問題"><label for="" id="question-error" class="error">必填</label></div>
           <label for="">回答</label>
           <div><input type="text" id="answer" placeholder="請輸入回答"><label for="" id="answer-error" class="error">必填</label></div>
+          <label for="">靈感</label>
+          <textarea name="" id="inspiration"></textarea>
           <label for="">類別</label>
           <div>  <select name="" id="category">
             <option value="">請選擇類別</option>

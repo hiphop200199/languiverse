@@ -6,6 +6,7 @@ const question = document.getElementById("question");
 const questionError = document.getElementById("question-error");
 const answer = document.getElementById("answer");
 const answerError = document.getElementById("answer-error");
+const inspiration = document.getElementById('inspiration');
 const category = document.getElementById("category");
 const categoryError = document.getElementById("category-error");
 const imageFile = document.getElementById('image');
@@ -80,6 +81,7 @@ form.addEventListener("submit", async function (e) {
     const param = {
       question: question.value,
       answer:answer.value,
+      inspiration:inspiration.value,
       category:category.value,
       tag:tag.join(),
       status: status,
