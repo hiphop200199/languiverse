@@ -43,7 +43,7 @@ class Touching_model
 
     public function edit($id, $content, $sourceId,$link, $image, $status)
     {
-        $sql = 'UPDATE touching SET content = ?,source = ?,link = ?,image=?,status = ?,updatetime = ? WHERE id = ?';
+        $sql = 'UPDATE touching SET content = ?,source_id = ?,link = ?,image=?,status = ?,updatetime = ? WHERE id = ?';
         $stmt =  $this->db->conn->prepare($sql);
         $stmt->execute([$content, $sourceId,$link, $image, $status, time(), $id]);
         if ($stmt->rowCount() == 1) {

@@ -46,15 +46,20 @@
   align-items: center;
   margin-block: 10px;
 }
-#backend #list #function #export-area select,#backend #list #function #export-area option{
+#backend #list #function #export-area select,#backend #list #function #export-area option,#backend #list #function #search-area select,#backend #list #function #search-area option{
   font-size: 18px;
   padding: 3px 5px;
   outline: none;
   border: 2px solid #0c0950;
   border-radius: 3px;
 }
-#backend #list #function #export-area #export{
+#backend #list #function #export-area #export,#backend #list #function #search-area #search{
   margin-left: 5px;
+}
+#backend #list #function #search-area{
+  display: flex;
+  align-items: center;
+  margin-block-end: 10px;
 }
 #backend #list table {
   border-collapse: collapse;
@@ -64,6 +69,7 @@
   accent-color: #161179;
   margin: 0 auto;
 }
+
 #backend #list table td, #backend #list table th {
   border: 1px solid #161179;
   text-align: center;

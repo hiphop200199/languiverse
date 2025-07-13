@@ -8,11 +8,16 @@ class Joke_model
     {
         $this->db = $db;
     }
-    public function getList()
+    public function getList($category)
     {
         $sql = 'SELECT * FROM  joke';
+        $params = [];
+        if(!empty($category)){
+            $sql .= ' WHERE category = ?';
+            $params[] = $category;
+        }
         $stmt =  $this->db->conn->prepare($sql);
-        $stmt->execute();
+        $stmt->execute($params);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }

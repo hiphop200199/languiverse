@@ -14,6 +14,8 @@ const confirmLBBtn = document.getElementById("submit-confirm");
 const confirmLBCancel = document.getElementById("close-confirm");
 const exportBtn = document.getElementById('export')
 const format = document.getElementById('format')
+const searchBtn = document.getElementById('search')
+const category = document.getElementById('category')
 let id;
 
 confirmLBMessage.innerText = "確認刪除？";
@@ -62,4 +64,9 @@ for (let i = 0; i < deleteBtn.length; i++) {
 exportBtn.addEventListener('click',async function(){
   if(!format.value) return;
     location.href = REQUEST_BASE_URL + '/controller/admin/joke.php?mode=export&format='+format.value
+})
+
+searchBtn.addEventListener('click',function(){
+  if(!category.value) return;
+  location.href = REQUEST_BASE_URL + '/page/admin/joke/list.php?category='+category.value
 })

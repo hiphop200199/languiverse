@@ -4,205 +4,175 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-      
-* {
+  * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
- overflow-x: clip;
- 
-  --c1:#181C14;
---c2:#3C3D37;
---c3:#697565;
---c4:#ECDFCC;
+  overflow: hidden;
 }
 
-
-
-h2,h3{
-  text-align: center;
-  color: var(--c4);
-  font-size: 46px;
-}
-h3{
-  font-size: 32px;
-}
-
-.box{
-  padding: 20px;
-   width: 80dvw;
-   margin: 0 auto;
-
-  max-width: 600px;
-}
-.box img{
-  width: 100%;
-}
-.box *{
-  margin-block: 30px;
-}
-
-
-
-.box a{
-  display: block;
-    font-weight: 700;
-  cursor: pointer;
-  color: var(--c4);
-  font-size: 28px;
-  padding: 3px 8px;
-  text-decoration: none;
-  text-align: center;
-}
-
-p{
-  font-size: 20px;
-  color: var(--c4);
-}
-p.editor{
-  font-size: 16px;
-  text-align: end;
-}
-
-p#copyright{
-  font-size: 14px;
-  white-space: nowrap;
-  text-align: center;
-  color:var(--c4);
-  font-weight: 700;
-}
-
-.tag{
-     font-size: 20px;
-  color: var(--c1);
-  background-color: var(--c4);
-  border-radius: 3px;
-  padding: 0 3px;
-  border: none;
-  cursor: pointer;
-  margin-inline-end: 3px;
-}
-
-#open-strategy-modal{
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--c4);
-  padding: 0 5px;
-  border: 3px solid var(--c4);
-  background: none;
-  cursor: pointer;
-  display: block;
-  margin: 30px auto;
-}
-
-#strategy-modal{
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  background-color: var(--c3);
-  border: 6px solid var(--c4);
-}
-
-#strategy-modal::backdrop{
-  background-color: rgba(0,0 ,0, 0.7);
-}
-
-#strategy-add{
+#backend {
+  height: 100dvh;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 320px;
-  height: 400px;
-}
-
-#strategy-add label{
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--c4);
-}
-
-#strategy-add textarea{
-   font-size: 24px;
-  padding: 3px;
-  outline: none;
-  border: 6px solid var(--c4);
-  accent-color: var(--c4);
-  color: var(--c4);
-  background: none;
-}
-
-
-
-#strategy-add #button-area{
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-}
-
-#strategy-add #button-area button{
-   font-size: 20px;
-  font-weight: 700;
-  border: 3px solid var(--c4);
-  background: none;
-  color: var(--c4);
-  padding: 0 3px;
-  cursor: pointer;
-}
-
-section.buttons{
-  margin:  60px auto ;
-   padding: 20px;
-   width: 80dvw;
-   max-width: 600px;
-   display: flex;
-   justify-content: space-evenly;
-}
-
-section.buttons a{
-    font-weight: 700;
-  cursor: pointer;
-  color: var(--c4);
-  border: 6px solid var(--c4);
-  font-size: 28px;
-  padding: 3px 8px;
-  text-decoration: none;
-}
-
-
-
-
-#page {
   position: relative;
-  min-height: 100dvh;
- background-color: var(--c1);
+  justify-content: center;
+  align-items: center;
 }
-#page #orientation-remind {
+#backend #orientation-remind{
   display: none;
   font-size: 4rem;
   font-weight: 700;
   letter-spacing: 2px;
 }
 
+#backend #list {
+ overflow-y: auto;
+ height: 80%;
+  width: calc(100dvw - 300px);
+}
+#backend #list #function{
+  width: clamp(400px, 80%, 1000px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin:  0 auto;
+}
+#backend #list #function a{
+  background-color: #161179;
+  color: #fbe4d6;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 3px 5px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+}
+#backend #list #function #export-area{
+  display: flex;
+  align-items: center;
+  margin-block: 10px;
+}
+#backend #list #function #export-area select,#backend #list #function #search-area select,#backend #list #function #export-area option,#backend #list #function #search-area option{
+  font-size: 18px;
+  padding: 3px 5px;
+  outline: none;
+  border: 2px solid #0c0950;
+  border-radius: 3px;
+}
+#backend #list #function #export-area #export,#search{
+  margin-left: 5px;
+}
+#backend #list #function #search-area{
+  display: flex;
+  align-items: center;
+  margin-block-end: 10px;
+}
+#backend #list table {
+  border-collapse: collapse;
+  width: clamp(400px, 80%, 1000px);
+  border: 1px solid #161179;
+  box-shadow: 0 0 3px 1px #161179;
+  accent-color: #161179;
+  margin: 0 auto;
+}
+#backend #list table td, #backend #list table th {
+  border: 1px solid #161179;
+  text-align: center;
+}
+#backend #list table th {
+  font-weight: 700;
+  font-size: 20px;
+  padding: 3px 5px;
+}
+#backend #list table td {
+  font-size: 18px;
+  padding: 2px 5px;
+}
+#backend #list table td.operation {
+  white-space: nowrap;
+}
+#backend #list table td a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  margin-inline: 2px;
+  border-radius: 2px;
+  background-color: #161179;
+  color: #FBE4D6;
+  cursor: pointer;
+  font-weight: 700;
+}
+#backend #list #grid {
+  display: none;
+}
 
-
+@media screen and (max-width: 768px) {
+  
+  #backend #list {
+    width: 100%;
+    position: relative;
+    top: 30px;
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  }
+  #backend #list #function{
+    width: clamp(305px,60dvw,420px);
+  }
+  #backend #list table {
+    display: none;
+  }
+  #backend #list #grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    overflow-y: auto;
+    height: calc(75dvh + 10px);
+  }
+  #backend #list #grid .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: 2px solid #161179;
+    border-radius: 2px;
+    padding: 5px 10px;
+    font-size: 18px;
+    width: clamp(150px, 30dvw, 200px);
+    height: clamp(180px, 25dvh, 230px);
+    accent-color: #161179;
+  }
+  #backend #list #grid .item input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+    align-self: flex-end;
+  }
+  #backend #list #grid .item p{
+    height: 52px;
+  }
+  #backend #list #grid .item .button a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    margin-inline: 2px;
+    border-radius: 2px;
+    background-color: #161179;
+    color: #FBE4D6;
+    cursor: pointer;
+    font-weight: 700;
+  }
+}/*# sourceMappingURL=list.css.map */
 
 @media screen and (orientation: landscape) and (min-width: 400px) and (max-height: 576px) {
-  #page{
-    display: grid;
-    place-items: center;
-    background-color: #fff;
-    background-image: none;
-  }
-  #page #orientation-remind {
-    color: #000;
-    padding-inline-start: 0;
-    padding-block-start: 0;
+  #backend #orientation-remind {
     display: block;
-    font-family: 'Times New Roman', Times, serif;
   }
-  #page :not(#orientation-remind) {
+  #backend :not(#orientation-remind) {
     display: none;
   }
 }
@@ -211,35 +181,73 @@ section.buttons a{
     <title>Document</title>
   </head>
   <body>
-  <div id="page">
-   <h1 id="orientation-remind">僅支援直向模式</h1>
-  
-   <h2>內容↓</h2>
-   <div class="box">
-    <p class="content">語句：
-    </p>
-    <p class="category">類別：</p>
-    <p>標籤：</p>
-    <p class="editor">作者：</p>
-    <h3>策略↓</h3>
-    <section id="strategy-area"></section>
-    <button id="open-strategy-modal">新增策略</button>
-   </div>
-   <section class="buttons">
-    <a href="">進入探索</a>
-   </section>
-   <p id="copyright">Copyright => EricWoo 2025</p>
-   <dialog id="strategy-modal">
-  <form id="strategy-add">
-    <label >策略</label>
-    <textarea name="strategy" placeholder="想寫什麼..."></textarea>
-   
-    <div id="button-area">
-      <button type="submit">送出</button><button id="cancel">取消</button>
+   <div id="backend">
+    <h1 id="orientation-remind">僅支援直向模式</h1>
+<?php require_once $_SERVER['DOCUMENT_ROOT'].'/component/slide-menu.php' ;
+require_once $_SERVER['DOCUMENT_ROOT'] . '/component/loading.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/component/confirmLB.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
+?>
+      <section id="list">
+      <div id="function">
+        <a href="add.php">新增冷笑話</a>
+        <div id="export-area">
+          <select name="" id="format">
+            <option value="">請選擇匯出格式</option>
+            <option value="1">csv</option>
+            <option value="2">excel</option>
+          </select>
+          <a id="export">匯出</a>
+        </div>
+        <div id="search-area">
+           <select name="" id="category">
+            <option value="">請選擇類別</option>
+            <option value="1">csv</option>
+            <option value="2">excel</option>
+          </select>
+          <a  id="search">搜尋</a>
+        </div>
+       </div>
+        <table>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>問題</th>
+              <th>狀態</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="operation">
+             
+                <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <a data-id="<?= $v['id']; ?>" class="delete">🗑</a>
+            
+              </td>
+            </tr>
+          
+          </tbody>
+        </table>
+        <div id="grid">
+     
+          <div class="item">
+            <p>id:</p>
+            <p>問題:</p>
+            <p>狀態:</p>
+            <section class="button">
+          
+                <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <a data-id="<?= $v['id']; ?>" class="delete">🗑</a>
+              
+            </section>
+          </div>
+      
+        </div>
+      </section>
     </div>
-  </form>
-   </dialog>
-</div>
   <script>
    
   </script>

@@ -90,19 +90,24 @@ class Touching extends Common{
     private function edit()
     {
         $id = intval($_POST['id']);
-         $checkExist = $this->touching_model->get($id);
+        $checkExist = $this->touching_model->get($id);
         if (empty($checkExist)) {
             $response = json_encode(['errCode' => CURSE_CATEGORY_NOT_EXIST]);
             echo $response;
         }
         $content = $_POST['content'];
-        $sourceId = $_POST['sourceId'];
+        $sourceId = intval($_POST['sourceId']);
         $link = $_POST['link'];
         $status = intval($_POST['status']);
         $image = empty($_FILES['image'])?'':$_FILES['image'];
         $allowFileTypes = ['image/png','image/jpg','image/jpeg','image/gif'];
         $oldImage = empty($checkExist['image'])?'':$checkExist['image'];
-        $imageSourceString = empty($image)?$oldImage:''; 
+        $imageSourceString = empty($image)?$oldImage:'';
+
+        if(!empty($image)&&!empty($oldImage)&&file_exists($_SERVER['DOCUMENT_ROOT'].$oldImage)){
+            unlink($_SERVER['DOCUMENT_ROOT'].$oldImage);
+        }
+
         if(!empty($image)){
             if($image['size'] > 1 * 1024 * 1024){
                 $response = json_encode(['errCode'=>FILE_OVERSIZE]);
@@ -138,6 +143,15 @@ class Touching extends Common{
     private function delete()
     {
         $id = intval($_POST['id']);
+        $checkExist = $this->touching_model->get($id);
+        if (empty($checkExist)) {
+            $response = json_encode(['errCode' => CURSE_CATEGORY_NOT_EXIST]);
+            echo $response;
+            exit;
+        }
+        if(!empty($checkExist['image'])&&file_exists($_SERVER['DOCUMENT_ROOT'].$checkExist['image'])){
+            unlink($_SERVER['DOCUMENT_ROOT'].$checkExist['image']);
+        }
         $result = $this->touching_model->delete($id);
         if ($result === SUCCESS) {
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);

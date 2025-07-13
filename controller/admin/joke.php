@@ -36,9 +36,10 @@ class Joke extends Common
         }
     }
 
-    public function index()
+    public function index(array $queryArray)
     {
-        $list = $this->joke_model->getList();
+        $category = intval(substr($queryArray[0], strpos($queryArray[0], '=') + 1));
+        $list = $this->joke_model->getList($category);
         return $list;
     }
 
@@ -129,6 +130,10 @@ class Joke extends Common
         $oldImage = empty($checkExist['image'])?'':$checkExist['image'];
         $imageSourceString = empty($image)?$oldImage:'';
         
+        if(!empty($image)&&!empty($oldImage)&&file_exists($_SERVER['DOCUMENT_ROOT'].$oldImage)){
+            unlink($_SERVER['DOCUMENT_ROOT'].$oldImage);
+        }
+
         if(!empty($image)){
             if($image['size'] > 1 * 1024 * 1024){
                 $response = json_encode(['errCode'=>FILE_OVERSIZE]);
@@ -180,6 +185,15 @@ class Joke extends Common
     private function delete()
     {
         $id = intval($_POST['id']);
+        $checkExist = $this->joke_model->get($id);
+        if (empty($checkExist)) {
+            $response = json_encode(['errCode' => CURSE_CATEGORY_NOT_EXIST]);
+            echo $response;
+            exit;
+        }
+        if(!empty($checkExist['image'])&&file_exists($_SERVER['DOCUMENT_ROOT'].$checkExist['image'])){
+            unlink($_SERVER['DOCUMENT_ROOT'].$checkExist['image']);
+        }
         $deleteTagResult = $this->joke_with_tag_model->delete($id);
         if($deleteTagResult===SERVER_INTERNAL_ERROR){
             $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);

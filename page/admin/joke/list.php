@@ -1,9 +1,15 @@
 <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/component/head.php');
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/joke.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/joke_category.php';
+$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$query = parse_url($url, PHP_URL_QUERY);
+$queryArray = explode('&',$query);
 $db = new Db();
 $jokeController = new Joke(new Joke_model($db),new Joke_with_tag_model($db),new Account_model($db));
-$list = $jokeController->index();
+$list = $jokeController->index($queryArray);
+$jokeCategoryController = new Joke_category(new Joke_category_model($db),new Account_model($db));
+$categoryList = $jokeCategoryController->index();
 ?>
     <div id="backend">
     <h1 id="orientation-remind">僅支援直向模式</h1>
@@ -22,6 +28,15 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
             <option value="2">excel</option>
           </select>
           <a id="export">匯出</a>
+        </div>
+         <div id="search-area">
+           <select name="" id="category">
+            <option value="">請選擇類別</option>
+            <?php foreach ($categoryList as $k=>$v):?> 
+            <option value="<?=$v['id']?>"><?=$v['name']?></option>
+            <?php endforeach;?>
+          </select>
+          <a  id="search">搜尋</a>
         </div>
        </div>
         <table>

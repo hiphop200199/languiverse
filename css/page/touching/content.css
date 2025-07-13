@@ -193,6 +193,7 @@ a.left-link{
   border-radius: 5px;
   accent-color: var(--c3);
   color: var(--c4);
+  width: 80%;
 }
 #thought-add textarea::placeholder{
  color: var(--c4);
