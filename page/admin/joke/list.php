@@ -5,6 +5,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/joke_category.php';
 $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $query = parse_url($url, PHP_URL_QUERY);
 $queryArray = explode('&',$query);
+$categoryNumber = 0;
+if(!empty($queryArray)){
+  $categoryNumber =  intval(substr($queryArray[0], strpos($queryArray[0], '=') + 1));
+}
 $db = new Db();
 $jokeController = new Joke(new Joke_model($db),new Joke_with_tag_model($db),new Account_model($db));
 $list = $jokeController->index($queryArray);
@@ -33,7 +37,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
            <select name="" id="category">
             <option value="">請選擇類別</option>
             <?php foreach ($categoryList as $k=>$v):?> 
-            <option value="<?=$v['id']?>"><?=$v['name']?></option>
+            <option <?php if($categoryNumber!=0 && $categoryNumber == $v['id']):?>selected<?php endif;?> value="<?=$v['id']?>"><?=$v['name']?></option>
             <?php endforeach;?>
           </select>
           <a  id="search">搜尋</a>

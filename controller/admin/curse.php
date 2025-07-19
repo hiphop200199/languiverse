@@ -238,7 +238,7 @@ class Curse extends Common
         $heading = ['id', '內容', '策略', '類別', '標籤', '狀態', '建立者', '建立時間', '更新時間'];
         $list = $this->curse_model->getExportList();
         switch ($format) {
-            case CSV:
+            case 1:
                 header('Content-Type: text/csv; charset=utf-8');
                 header('Content-Disposition: attachment; filename=curse.csv');
                 $csv = fopen('php://output', 'w+');
@@ -253,7 +253,7 @@ class Curse extends Common
                 rewind($csv);
                 fclose($csv);
                 break;
-            case EXCEL:
+            case 2:
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition:attachment;filename="curse.xlsx"');
                 $spreadsheet = new Spreadsheet();

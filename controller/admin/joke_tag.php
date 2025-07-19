@@ -102,7 +102,7 @@ class Joke_tag extends Common
         $heading = ['id', '名稱', '狀態', '建立者', '建立時間', '更新時間'];
         $list = $this->joke_tag_model->getExportList();
         switch ($format) {
-            case CSV:
+            case 1:
                 header('Content-Type: text/csv; charset=utf-8');
                 header('Content-Disposition: attachment; filename=joke_tag.csv');
                 $csv = fopen('php://output', 'w+');
@@ -117,7 +117,7 @@ class Joke_tag extends Common
                 rewind($csv);
                 fclose($csv);
                 break;
-            case EXCEL:
+            case 2:
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition:attachment;filename="joke_tag.xlsx"');
                 $spreadsheet = new Spreadsheet();

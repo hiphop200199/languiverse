@@ -106,7 +106,7 @@ class Touching_source extends Common
         $heading = ['id', '名稱', '狀態', '建立者', '建立時間', '更新時間'];
         $list = $this->touching_source_model->getExportList();
         switch ($format) {
-            case CSV:
+            case 1:
                 header('Content-Type: text/csv; charset=utf-8');
                 header('Content-Disposition: attachment; filename=touching_source.csv');
                 $csv = fopen('php://output', 'w+');
@@ -121,7 +121,7 @@ class Touching_source extends Common
                 rewind($csv);
                 fclose($csv);
                 break;
-            case EXCEL:
+            case 2:
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition:attachment;filename="touching_source.xlsx"');
                 $spreadsheet = new Spreadsheet();
