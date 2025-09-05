@@ -28,9 +28,9 @@ class Trends_model
 
     public function create($content,$age,$explanation,  $status,  $editor)
     {
-        $sql = 'INSERT INTO trends VALUES( ?,?,?,?,?,? ) ';
+        $sql = 'INSERT INTO trends VALUES( ?,?,?,?,?,?,?,? ) ';
         $stmt =  $this->db->conn->prepare($sql);
-        $stmt->execute([null, $content,,$age,$explanation, $status, $editor, time(), time()]);
+        $stmt->execute([null, $content,$age,$explanation, $status, $editor, time(), time()]);
         if ($stmt->rowCount() == 1) {
             $result = SUCCESS;
             return $result;
