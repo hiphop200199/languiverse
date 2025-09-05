@@ -174,7 +174,7 @@ class Touching extends Common{
                 $csv = fopen('php://output', 'w+');
                 fputcsv($csv, $heading);
                 foreach ($list as  $value) {
-                    $status = $value['status'] == ACTIVE ? '上架' : '下架';
+                    $status = $value['status'] == ACTIVE ? '啟用' : '停用';
                     $createTime = date('Y-m-d', $value['createtime']);
                     $updateTime = date('Y-m-d', $value['updatetime']);
                     $tmp = [$value['id'],$value['content'],$value['source'],$value['thoughts'], $status, $value['editor_name'], $createTime, $updateTime];
@@ -199,7 +199,7 @@ class Touching extends Common{
                 $activeWorksheet->setCellValue('H' . $cellNumber, $heading[7]);
                 $cellNumber += 1;
                 foreach ($list as $d) {
-                    $status = $d['status'] == ACTIVE ? '上架' : '下架';
+                    $status = $d['status'] == ACTIVE ? '啟用' : '停用';
                     $createTime = date('Y-m-d', $d['createtime']);
                     $updateTime = date('Y-m-d', $d['updatetime']);
                     $activeWorksheet->setCellValue('A' . $cellNumber, $d['id']);

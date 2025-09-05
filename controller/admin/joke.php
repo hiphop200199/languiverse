@@ -63,10 +63,22 @@ class Joke extends Common
         $category = intval($_POST['category']);
         $tag = empty($_POST['tag'])?'':array_map('intval',explode(',',$_POST['tag']));
         $status = intval($_POST['status']);
+        $mp3 = $_FILES['mp3'];
+        $mp3String = '';
         $image = $_FILES['image'];
         $allowFileTypes = ['image/png','image/jpg','image/jpeg','image/gif'];
         $imageSourceString = '';
         $editor = intval($this->data['account']['id']);
+
+        $maxId = $this->checkMaxId();
+        $targetDirectory = $_SERVER['DOCUMENT_ROOT'].'/uploadAudio/joke/';
+        $targetFileName = ($maxId+1).'-'. basename($mp3['name']);
+        $targetFile = $targetDirectory .$targetFileName;
+        if(move_uploaded_file($mp3['tmp_name'],$targetFile)){
+            $mp3String = '/uploadAudio/joke/'.$targetFileName;
+        }
+
+
         if(!empty($image)){
             if($image['size'] > 1 * 1024 * 1024){
                 $response = json_encode(['errCode'=>FILE_OVERSIZE]);
@@ -88,7 +100,7 @@ class Joke extends Common
             }
         }
 
-        $result = $this->joke_model->create($question,$answer,$inspiration,$category,$status,$imageSourceString,$editor);
+        $result = $this->joke_model->create($question,$answer,$inspiration,$category,$status,$imageSourceString,$mp3String,$editor);
         if ($result['errCode'] === SUCCESS) {
             if(!empty($tag)){
                 $res = '';
@@ -125,6 +137,9 @@ class Joke extends Common
         $category = intval($_POST['category']);
         $tag = empty($_POST['tag'])?'':array_map('intval',explode(',',$_POST['tag']));
         $status = intval($_POST['status']);
+        $mp3 = empty($_FILES['mp3'])?'':$_FILES['mp3'];
+        $oldMp3 = empty($checkExist['mp3'])?'':$checkExist['mp3'];
+        $mp3String = empty($mp3)?$oldMp3:'';
         $image = empty($_FILES['image'])?'':$_FILES['image'];
         $allowFileTypes = ['image/png','image/jpg','image/jpeg','image/gif'];
         $oldImage = empty($checkExist['image'])?'':$checkExist['image'];
@@ -132,6 +147,13 @@ class Joke extends Common
         
         if(!empty($image)&&!empty($oldImage)&&file_exists($_SERVER['DOCUMENT_ROOT'].$oldImage)){
             unlink($_SERVER['DOCUMENT_ROOT'].$oldImage);
+        }
+
+        $targetDirectory = $_SERVER['DOCUMENT_ROOT'].'/uploadAudio/joke/';
+        $targetFileName = $id.'-'. basename($mp3['name']);
+        $targetFile = $targetDirectory .$targetFileName;
+        if(move_uploaded_file($mp3['tmp_name'],$targetFile)){
+          $mp3String = '/uploadAudio/joke/'.$targetFileName;
         }
 
         if(!empty($image)){
@@ -171,7 +193,7 @@ class Joke extends Common
                 exit;
             }
         }
-        $result = $this->joke_model->edit($id,$question,$answer,$inspiration,$category,$status,$imageSourceString);
+        $result = $this->joke_model->edit($id,$question,$answer,$inspiration,$category,$status,$imageSourceString,$mp3String);
         if ($result === SUCCESS) {
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;

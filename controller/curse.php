@@ -26,12 +26,9 @@ class CurseFrontend{
     
 
 
-    public function getList(array $queryArray)
+    public function getList()
     {
-        $category = intval(substr($queryArray[0], strpos($queryArray[0], '=') + 1));
-    
-        
-        $list = $this->curse_model->getListFrontend($category);
+        $list = $this->curse_model->getListFrontend();
         return $list;
     }
 

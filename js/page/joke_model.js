@@ -42,3 +42,13 @@ export const edit = async function (param) {
   const response = await axios.post(REQUEST_BASE_URL + '/controller/joke.php',param);
   return response;
  } 
+
+ export const getRandomQuestion = async function (param) {
+  const response = await axios.post(REQUEST_BASE_URL + '/controller/joke.php',param)
+  return response
+ }
+
+ export const exportPdf = async function (param){
+  const response = await axios.post(REQUEST_BASE_URL+'/controller/joke.php',param)
+  return response
+ }

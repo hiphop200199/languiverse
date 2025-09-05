@@ -60,9 +60,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
           </label>
           <input type="file" name="" id="image" accept="image/png,image/jpg,image/jpeg,image/gif">
           <span id="image-remind">圖片格式：JPG,PNG,GIF，限1MB</span>
+          <label>mp3</label>
+          <?php if(!empty($info['mp3'])){?><p><?php echo ROOT.$info['mp3'];?></p><?php } ?>
+          <input type="file"  id="mp3" accept="audio/mpeg">
           <label for="">狀態</label>
           <section id="status">
-            <label for=""><input type="radio" name="status" id="" <?php if ($info['status'] == ACTIVE) { ?>checked <?php } ?> value="2">上架<input type="radio" name="status" id="" <?php if ($info['status'] != ACTIVE) { ?>checked <?php } ?> value="1">下架</label>
+            <label for=""><input type="radio" name="status" id="" <?php if ($info['status'] == ACTIVE) { ?>checked <?php } ?> value="2">啟用<input type="radio" name="status" id="" <?php if ($info['status'] != ACTIVE) { ?>checked <?php } ?> value="1">停用</label>
           </section>
           <section id="button">
             <button type="submit">提交</button>

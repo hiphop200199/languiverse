@@ -2,6 +2,9 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/model/joke_model.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+
+use Mpdf\Mpdf;
 
 class JokeFrontend{
     private $joke_model;
@@ -20,6 +23,9 @@ class JokeFrontend{
         switch ($data['task']) {
             case 'create-rate':
                 $this->createRate($data);
+                break;
+            case 'get-random-question':
+                $this->getRandomQuestion($data);
                 break;
         } 
     }
@@ -61,16 +67,125 @@ class JokeFrontend{
             $response = json_encode(['errCode'=>SUCCESS]);
             echo $response;
             exit;
-        }else{
-             $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
         }
+        $response = json_encode(['errCode'=>SERVER_INTERNAL_ERROR]);
+        echo $response;
+        exit;
+    }
+
+    private function getRandomQuestion($data)
+    {
+        $list = $this->joke_model->getRandomQuestion();
+        echo json_encode(['errCode'=>SUCCESS,'list'=>$list]);
+        exit;
+    }
+
+    public function exportPdf($score)
+    {
+        
+        $date = date('d-M-Y');
+        $html = '<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <style>
+    *{
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    #pdf{
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      border: 50px solid #365486;
+    }
+    #title{
+      font-size: 50px;
+      font-style: italic;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #second-title{
+      font-size: 32px;
+      text-align: center;
+      margin-top: 50px;
+    }
+    h3{
+      font-size: 28px;
+      text-align: center;
+    }
+    h4{
+      font-size: 24px;
+      font-style: italic;
+      text-align: center;
+    }
+    h5{
+      font-size: 20px;
+      text-align: center;
+      margin-block: 10px;
+    }
+    p{
+      font-size: 14px;
+      font-style: italic;
+      text-align: center;
+      margin-block: 10px;
+    }
+    p.date{
+      font-style: normal;
+      margin-bottom:30px;
+    }
+    span{
+      text-align: center;
+    }
+   
+   </style>
+    <title>Document</title>
+  </head>
+  <body>
+  <div id="pdf">
+    <h1 id="title">TOBJE</h1>
+    <h2 id="second-title">CERTIFICATE OF ACHIEVEMENT</h2>
+    <p>This is to certify that</p>
+    <h3>YOU</h3>
+    <p>achieved the following score on the</p>
+    <h4>TOBJE Listening & Reading Test</h4>
+    <h5>'.$score.'</h5>
+    <p class="date">date : '.$date.'</p>
+    <p class="date">Eric Tsai</p>
+    <p class="date">Executive Director</p>
+    <p class="date">Global TOBJE Management</p>
+</div>
+  </body>
+</html>
+';
+
+        $mpdf = new Mpdf(['orientation' => 'L','margin_left'=>0,'margin_right'=>0,'margin_top'=>0,'margin_bottom'=>0]);
+        $mpdf->WriteHTML($html);
+
+        $mpdf->Output('certificate.pdf',\Mpdf\Output\Destination::DOWNLOAD);
     }
 
 }
 
+$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$query = parse_url($url, PHP_URL_QUERY);
+$query_array = explode('&', $query);
+
+$query_array = array_map(function ($item) {
+    $item = substr($item, strpos($item, '=') + 1);
+    return $item;
+}, $query_array);
+
+
 $joke  = new JokeFrontend(new Joke_model(new Db()));
+
+if (in_array('export', $query_array)) {
+    $joke->exportPdf($query_array[1]);
+    exit;
+}
 
 $joke->requestEntry();
 

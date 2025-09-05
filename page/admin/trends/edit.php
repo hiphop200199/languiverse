@@ -1,0 +1,59 @@
+<?php require_once ($_SERVER['DOCUMENT_ROOT'].'/component/head.php');
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/trends.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/trends_age.php';
+
+$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$query = parse_url($url, PHP_URL_QUERY);
+if (!preg_match('/^id=\d+$/', $query)) {
+  header('Location: ' . ROOT . '/page/admin/trends/list.php');
+  exit;
+}
+$id =  intval(substr($query, strpos($query, '=') + 1));
+$db = new Db();
+$trendsController = new Trends(new Trends_model($db),new Account_model($db));
+$info = $trendsController->get($id);
+if(empty($info)){
+  header('Location: ' . ROOT . '/page/admin/trends/list.php');
+  exit;
+}
+$trendsAgeController = new Trends_age(new Trends_age_model($db),new Account_model($db));
+$ageList = $trendsAgeController->index(); 
+?>
+<div id="backend">
+<h1 id="orientation-remind">僅支援直向模式</h1>
+<?php require_once $_SERVER['DOCUMENT_ROOT'].'/component/slide-menu.php' ; 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/component/loading.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/component/confirmLB.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
+?>
+<section id="main">
+      <section id="form">
+        <h1>編輯流行語</h1>
+        <a href="list.php" id="back">返回</a>
+        <form id="trends-edit">
+          <label for="">內容</label>
+          <div> <input type="text" id="content" placeholder="請輸入內容" value="<?=$info['content']?>"><label for="" id="content-error" class="error">必填</label></div>
+           <label for="">解釋</label>
+          <textarea name="" id="explanation"><?=$info['explanation']?></textarea>
+          <label for="">時代</label>
+          <div>  <select name="" id="age">
+            <option value="">請選擇時代</option>
+            <?php foreach($ageList as $k=>$v):?>
+              <option <?php if($info['age']==$v['id']){?>selected<?php }?> value="<?=$v['id']?>"><?=$v['name']?></option>
+              <?php endforeach;?>
+          </select><label for="" id="age-error" class="error">必填</label></div>
+          <label for="">狀態</label>
+          <section id="status">
+            <label for=""><input type="radio" name="status" id="" <?php if ($info['status'] == ACTIVE) { ?>checked <?php } ?> value="2">啟用<input type="radio" name="status" id="" <?php if ($info['status'] != ACTIVE) { ?>checked <?php } ?> value="1">停用</label>
+          </section>
+          <section id="button">
+            <button type="submit">提交</button>
+           <button id="cancel">取消</button>
+          </section>
+        </form>
+      </section>
+      </section>
+    </div>
+    <script src="<?=ROOT.'/js/page/admin/trends/edit.js'?>" type="module"></script>
+    <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/component/foot.php'); ?>

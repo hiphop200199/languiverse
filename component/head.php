@@ -47,13 +47,11 @@ switch (count($path_array)) {
   <link rel="stylesheet" href="<?php echo ROOT . '/css' . $css; ?>.css" />
   <link rel="prefetch" as="image" crossorigin="anonymous" href="<?php echo ROOT . '/image/cloud.png';?>">
   <link rel="prefetch" as="image" crossorigin="anonymous" href="<?php echo ROOT . '/image/castle-1280.jpg';?>">
-  <!-- <link rel="prefetch" as="font" type="font/woff2" crossorigin="anonymous" href="<php echo ROOT . '/font/Kouzan.woff2';?>"> -->
-  <!-- <link rel="prefetch" as="image" type="image/jpeg" crossorigin="anonymous" href="<php echo ROOT . '/image/sunflower-5539198_1920.jpg';?>"> -->
   <link rel="prefetch" as="image" type="image/jpeg" crossorigin="anonymous" href="<?php echo ROOT . '/image/ice.jpg';?>">
   <link rel="prefetch" as="image" type="image/jpeg" crossorigin="anonymous" href="<?php echo ROOT . '/image/scroll-1920.jpg';?>">
- <!--  <link rel="prefetch" as="image" type="image/png" crossorigin="anonymous" href="<php echo ROOT . '/image/blue-4299231_640-removebg-preview.png';?>">
+  <link rel="prefetch" as="image" type="image/png" crossorigin="anonymous" href="<php echo ROOT . '/image/blue-4299231_640-removebg-preview.png';?>">
   <link rel="prefetch" as="image" type="image/png" crossorigin="anonymous" href="<php echo ROOT . '/image/fire-1680614_640-removebg-preview.png';?>">
-  <link rel="prefetch" as="video" type="video/mp4" crossorigin="anonymous" href="<php echo ROOT . '/video/15287-262921829_tiny.mp4';?>"> -->
+  <link rel="prefetch" as="video" type="video/mp4" crossorigin="anonymous" href="<php echo ROOT . '/video/15287-262921829_tiny.mp4';?>">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <title>言宇宙<?php if(in_array('admin',$path_array)){?>後台<?php } ?></title>
 </head>

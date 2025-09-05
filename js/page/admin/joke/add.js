@@ -11,6 +11,7 @@ const category = document.getElementById("category");
 const categoryError = document.getElementById("category-error");
 const imageFile = document.getElementById('image');
 const imageSource = document.getElementById('upload-image-source')
+const mp3 = document.getElementById('mp3')
 const cancel = document.getElementById("cancel");
 const loading = document.getElementById("loading-mask");
 const alertLB = document.getElementById("alert-mask");
@@ -85,6 +86,7 @@ form.addEventListener("submit", async function (e) {
       category:category.value,
       tag:tag.join(),
       status: status,
+      mp3:mp3.files[0],
       image:imageFile.files[0],
       manage: "joke",
       task: "create",

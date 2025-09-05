@@ -18,22 +18,20 @@ $account = new Account(new Account_model(new Db()));
   <a class="<?= $manage == 'joke_category' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke_category/list.php' ?>">類別</a>
   <a class="<?= $manage == 'joke_tag' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke_tag/list.php' ?>">標籤</a>
   </section>
- <!--  <a id="curse-trigger" class="block-trigger">黑語言管理<span id="curse-icon" class="rotate-icon <= $manage == 'curse'||$manage == 'curse_category'||$manage == 'curse_tag'?'open':''?>">▲</span></a>
-  <section id="curse-block" class="link-block <=$manage == 'curse'||$manage == 'curse_category'||$manage == 'curse_tag'?'open':'' ?>">
- <a class="<= $manage == 'curse' ? 'active' : ''; ?> " href="<= ROOT . '/page/admin/curse/list.php' ?>">黑語言管理</a>
-  <a class="<= $manage == 'curse_category' ? 'active' : ''; ?> " href="<= ROOT . '/page/admin/curse_category/list.php' ?>">黑語言類別管理</a>
-  <a class="<= $manage == 'curse_tag' ? 'active' : ''; ?> " href="<= ROOT . '/page/admin/curse_tag/list.php' ?>">黑語言標籤管理</a>
-  </section> -->
+ <a id="curse-trigger" class="block-trigger">負面語言管理<span id="curse-icon" class="rotate-icon <= $manage == 'curse'||$manage == 'curse_category'||$manage == 'curse_tag'?'open':''?>">▲</span></a>
+  <section id="curse-block" class="link-block <=$manage == 'curse'?'open':'' ?>">
+ <a class="<= $manage == 'curse' ? 'active' : ''; ?> " href="<= ROOT . '/page/admin/curse/list.php' ?>">負面語言管理</a>
+  </section>
   <a id="touching-trigger" class="block-trigger">感人話語管理<span id="touching-icon" class="rotate-icon">▲</span></a>
   <section id="touching-block" class="link-block">
  <a class="<?= $manage == 'touching' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/touching/list.php' ?>">感人話語</a>
   <a class="<?= $manage == 'touching_source' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/touching_source/list.php' ?>">出處</a>
   </section>
-  <!-- <a id="flower-trigger" class="block-trigger">花語管理<span id="flower-icon" class="rotate-icon <= $manage == 'flower_meaning'||$manage == 'flower_meaning_category'?'open':''?>">▲</span></a>
-  <section id="flower-block"  class="link-block  <=$manage == 'flower_meaning'||$manage == 'flower_meaning_category'?'open':'' ?>">
-  <a class="<= $manage == 'flower_meaning' ? 'active' : ''; ?> " href="<= ROOT . '/page/admin/flower_meaning/list.php' ?>">花語管理</a>
-  <a class="<= $manage == 'flower_meaning_category' ? 'active' : ''; ?> " href="<= ROOT . '/page/admin/flower_meaning_category/list.php' ?>">花語類別管理</a>
-  </section> -->
+  <a id="trends-trigger" class="block-trigger">流行語管理<span id="trends-icon" class="rotate-icon <= $manage == 'trends'||$manage == 'trends_age'?'open':''?>">▲</span></a>
+  <section id="trends-block"  class="link-block  <=$manage == 'trends'||$manage == 'trends_age'?'open':'' ?>">
+  <a class="<= $manage == 'trends' ? 'active' : ''; ?> " href="<= ROOT . '/page/admin/trends/list.php' ?>">流行語管理</a>
+  <a class="<= $manage == 'trends_age' ? 'active' : ''; ?> " href="<= ROOT . '/page/admin/trends_age/list.php' ?>">流行語時代管理</a>
+  </section>
   <a id="logout">登出</a>
 </section>
 <script>
@@ -45,56 +43,54 @@ $account = new Account(new Account_model(new Db()));
   const jokeTrigger = document.getElementById('joke-trigger')
   const jokeIcon = document.getElementById('joke-icon')
   const jokeBlock = document.getElementById('joke-block')
-  //const curseTrigger = document.getElementById('curse-trigger')
- // const curseIcon = document.getElementById('curse-icon')
-  //const curseBlock = document.getElementById('curse-block')
+  const curseTrigger = document.getElementById('curse-trigger')
+  const curseIcon = document.getElementById('curse-icon')
+  const curseBlock = document.getElementById('curse-block')
   const touchingTrigger = document.getElementById('touching-trigger')
   const touchingIcon = document.getElementById('touching-icon')
   const touchingBlock = document.getElementById('touching-block')
- // const flowerTrigger = document.getElementById('flower-trigger')
- // const flowerIcon = document.getElementById('flower-icon')
- // const flowerBlock = document.getElementById('flower-block')
+  const trendsTrigger = document.getElementById('trends-trigger')
+  const trendsIcon = document.getElementById('trends-icon')
+  const trendsBlock = document.getElementById('trends-block')
 
   jokeTrigger.addEventListener('click',function(){
 
-     // curseIcon.classList.remove('open')
-  //  curseBlock.classList.remove('open')
+      curseIcon.classList.remove('open')
+    curseBlock.classList.remove('open')
        touchingIcon.classList.remove('open')
     touchingBlock.classList.remove('open')
-  //    flowerIcon.classList.remove('open')
-  //  flowerBlock.classList.remove('open')
-   
+      trendsIcon.classList.remove('open')
+    trendsBlock.classList.remove('open')
     jokeIcon.classList.toggle('open')
     jokeBlock.classList.toggle('open')
   })
 
-/* curseTrigger.addEventListener('click',function(){
+ curseTrigger.addEventListener('click',function(){
 
       jokeIcon.classList.remove('open')
     jokeBlock.classList.remove('open')
        touchingIcon.classList.remove('open')
     touchingBlock.classList.remove('open')
-      flowerIcon.classList.remove('open')
-    flowerBlock.classList.remove('open')
+      trendsIcon.classList.remove('open')
+    trendsBlock.classList.remove('open')
    
     curseIcon.classList.toggle('open')
     curseBlock.classList.toggle('open')
-  }) */
+  })
 
   touchingTrigger.addEventListener('click',function(){
 
-     // curseIcon.classList.remove('open')
-  //  curseBlock.classList.remove('open')
+      curseIcon.classList.remove('open')
+    curseBlock.classList.remove('open')
        jokeIcon.classList.remove('open')
     jokeBlock.classList.remove('open')
-  //    flowerIcon.classList.remove('open')
- //   flowerBlock.classList.remove('open')
-   
+      trendsIcon.classList.remove('open')
+   trendsBlock.classList.remove('open')
     touchingIcon.classList.toggle('open')
     touchingBlock.classList.toggle('open')
   })
 
- /*  flowerTrigger.addEventListener('click',function(){
+   trendsTrigger.addEventListener('click',function(){
 
       curseIcon.classList.remove('open')
     curseBlock.classList.remove('open')
@@ -103,9 +99,9 @@ $account = new Account(new Account_model(new Db()));
       jokeIcon.classList.remove('open')
     jokeBlock.classList.remove('open')
    
-    flowerIcon.classList.toggle('open')
-    flowerBlock.classList.toggle('open')
-  }) */
+    trendsIcon.classList.toggle('open')
+    trendsBlock.classList.toggle('open')
+  })
 
   hamburgerMenu.addEventListener('click', function() {
     this.classList.toggle('open')

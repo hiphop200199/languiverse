@@ -38,7 +38,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
             <tr>
               <td><?=$v['id']?></td>
               <td><?=$v['content']?></td>
-              <td><?= $v['status'] == ACTIVE ? '上架' : '下架'; ?></td>
+              <td><?= $v['status'] == ACTIVE ? '啟用' : '停用'; ?></td>
               <td class="operation">
                <?php if($v['editor']==$touchingController->data['account']['id']):?>
                 <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <a data-id="<?= $v['id']; ?>" class="delete">🗑</a>
@@ -53,7 +53,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
           <div class="item">
             <p>id:<?=$v['id']?></p>
             <p>內容:<?=$v['content']?></p>
-            <p>狀態:<?= $v['status'] == ACTIVE ? '上架' : '下架'; ?></p>
+            <p>狀態:<?= $v['status'] == ACTIVE ? '啟用' : '停用'; ?></p>
             <section class="button">
              <?php if($v['editor']==$touchingController->data['account']['id']):?>
                 <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <a data-id="<?= $v['id']; ?>" class="delete">🗑</a>

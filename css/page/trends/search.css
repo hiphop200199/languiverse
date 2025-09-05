@@ -1,0 +1,134 @@
+ 
+
+  * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+        overflow-x: clip;
+        --c1: #e9e3df;
+        --c2: #ff7a30;
+        --c3: #465c88;
+        --c4: #000000;
+      }
+      h2 {
+        font-size: 46px;
+      }
+      h3 {
+        font-size: 32px;
+      }
+      h2,
+      h3 {
+        text-align: center;
+        color: var(--c2);
+      }
+      p,
+      span,
+      article {
+        color: var(--c1);
+      }
+      p.content {
+        font-size: 28px;
+        width: 100%;
+        overflow-x: auto;
+        height: 25dvh;
+      }
+      p.age {
+        font-size: 20px;
+        overflow-x: auto;
+        width: 30%;
+        height: 20dvh;
+        word-wrap: break-word;
+      }
+      p.editor {
+        font-size: 16px;
+        text-align: end;
+      }
+      p#copyright {
+        font-size: 14px;
+        white-space: nowrap;
+        text-align: center;
+      }
+
+      article {
+        width: 80dvw;
+        max-width: 600px;
+        margin: 60px auto;
+        font-size: 28px;
+        line-height: 3;
+        height: 60dvh;
+        overflow-x: auto;
+      }
+
+      article::first-letter {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--c2);
+      }
+
+      .box {
+        width: 80dvw;
+        max-width: 600px;
+        margin: 60px auto;
+      }
+
+      section.buttons{
+  margin:  60px auto ;
+   padding: 20px;
+   width: 80dvw;
+   max-width: 600px;
+   display: flex;
+   justify-content: space-evenly;
+  }
+
+    section.buttons  a.link {
+   
+        text-decoration:none;
+        cursor: pointer;
+        color: var(--c1);
+
+        font-size: 18px;
+        font-weight: 700;
+        padding: 5px 2px;
+      }
+
+      #top {
+        position: fixed;
+        display: grid;
+        place-items: center;
+        bottom: 3dvh;
+        right: 3dvw;
+        text-decoration: none;
+        cursor: pointer;
+        color: var(--c1);
+        font-size: 18px;
+        font-weight: 700;
+        padding: 5px 2px;
+      }
+      #page {
+        position: relative;
+        min-height: 100dvh;
+        background-image: linear-gradient(37deg, var(--c3), var(--c4));
+      }
+      #page #orientation-remind {
+        display: none;
+        font-size: 4rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+      }
+
+      @media screen and (orientation: landscape) and (min-width: 400px) and (max-height: 576px) {
+        #page {
+          display: grid;
+          place-items: center;
+          background-color: #fff;
+          background-image: none;
+        }
+        #page #orientation-remind {
+          display: block;
+          font-family: "Times New Roman", Times, serif;
+        }
+        #page :not(#orientation-remind) {
+          display: none;
+        }
+      }
