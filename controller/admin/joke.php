@@ -3,7 +3,6 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/common.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/model/joke_model.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/model/joke_with_tag_model.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -12,12 +11,11 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Joke extends Common
 {
     private $joke_model,$joke_with_tag_model;
-    public function __construct(Joke_model $joke_model,Joke_with_tag_model $joke_with_tag_model,Account_model $account_model)
+    public function __construct(Joke_model $joke_model,Account_model $account_model)
     {
         parent::__construct($account_model);
         parent::init();
         $this->joke_model = $joke_model;
-        $this->joke_with_tag_model = $joke_with_tag_model;
     }
 
     public function requestEntry()
@@ -46,12 +44,6 @@ class Joke extends Common
     public function get($id)
     {
         $info = $this->joke_model->get($id);
-        $tagData = $this->joke_with_tag_model->getList($id);
-        $tags = [];
-        foreach($tagData as $v){
-            $tags[] = $v['tag_id'];
-        }
-        $info['tags'] = $tags;
         return $info;
     }
 
@@ -61,7 +53,6 @@ class Joke extends Common
         $answer = $_POST['answer'];
         $inspiration = $_POST['inspiration'];
         $category = intval($_POST['category']);
-        $tag = empty($_POST['tag'])?'':array_map('intval',explode(',',$_POST['tag']));
         $status = intval($_POST['status']);
         $mp3 = $_FILES['mp3'];
         $mp3String = '';
@@ -102,17 +93,6 @@ class Joke extends Common
 
         $result = $this->joke_model->create($question,$answer,$inspiration,$category,$status,$imageSourceString,$mp3String,$editor);
         if ($result['errCode'] === SUCCESS) {
-            if(!empty($tag)){
-                $res = '';
-                foreach($tag as $v){
-                    $res = $this->joke_with_tag_model->create($result['id'],$v);
-                }
-                if($res===SERVER_INTERNAL_ERROR){
-                   $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-                    echo $response;
-                    exit;
-                }
-            }
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
             echo $response;
             exit;
@@ -135,7 +115,6 @@ class Joke extends Common
         $answer = $_POST['answer'];
         $inspiration = $_POST['inspiration'];
         $category = intval($_POST['category']);
-        $tag = empty($_POST['tag'])?'':array_map('intval',explode(',',$_POST['tag']));
         $status = intval($_POST['status']);
         $mp3 = empty($_FILES['mp3'])?'':$_FILES['mp3'];
         $oldMp3 = empty($checkExist['mp3'])?'':$checkExist['mp3'];
@@ -176,23 +155,7 @@ class Joke extends Common
               $imageSourceString = '/upload/joke/'.$targetFileName;
             }
         }
-        $deleteTagResult = $this->joke_with_tag_model->delete($id);
-        if($deleteTagResult===SERVER_INTERNAL_ERROR){
-            $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
-        }
-        if(!empty($tag)){
-            $createTagResult = '';
-            foreach($tag as $v){
-                $createTagResult = $this->joke_with_tag_model->create($id,$v);
-            }
-            if($createTagResult === SERVER_INTERNAL_ERROR){
-                 $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-                echo $response;
-                exit;
-            }
-        }
+       
         $result = $this->joke_model->edit($id,$question,$answer,$inspiration,$category,$status,$imageSourceString,$mp3String);
         if ($result === SUCCESS) {
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
@@ -216,12 +179,7 @@ class Joke extends Common
         if(!empty($checkExist['image'])&&file_exists($_SERVER['DOCUMENT_ROOT'].$checkExist['image'])){
             unlink($_SERVER['DOCUMENT_ROOT'].$checkExist['image']);
         }
-        $deleteTagResult = $this->joke_with_tag_model->delete($id);
-        if($deleteTagResult===SERVER_INTERNAL_ERROR){
-            $response = json_encode(['errCode' => SERVER_INTERNAL_ERROR]);
-            echo $response;
-            exit;
-        }
+    
         $result = $this->joke_model->delete($id);
         if($result===SUCCESS){
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
@@ -235,7 +193,7 @@ class Joke extends Common
 
     public function export($format)
     {
-        $heading = ['id', '問題','回答','靈感','類別','標籤','平均評分', '狀態', '建立者', '建立時間', '更新時間'];
+        $heading = ['id', '問題','回答','靈感','類別','平均評分', '狀態', '建立者', '建立時間', '更新時間'];
         $list = $this->joke_model->getExportList();
         switch ($format) {
             case 1:
@@ -247,7 +205,7 @@ class Joke extends Common
                     $status = $value['status'] == ACTIVE ? '啟用' : '停用';
                     $createTime = date('Y-m-d', $value['createtime']);
                     $updateTime = date('Y-m-d', $value['updatetime']);
-                    $tmp = [$value['id'],$value['question'],$value['answer'],$value['inspiration'],$value['category_name'],$value['tags'],$value['avg_score'], $status, $value['editor_name'], $createTime, $updateTime];
+                    $tmp = [$value['id'],$value['question'],$value['answer'],$value['inspiration'],$value['category_name'],$value['avg_score'], $status, $value['editor_name'], $createTime, $updateTime];
                     fputcsv($csv, $tmp);
                 }
                 rewind($csv);
@@ -269,7 +227,6 @@ class Joke extends Common
                 $activeWorksheet->setCellValue('H' . $cellNumber, $heading[7]);
                 $activeWorksheet->setCellValue('I' . $cellNumber, $heading[8]);
                 $activeWorksheet->setCellValue('J' . $cellNumber, $heading[9]);
-                $activeWorksheet->setCellValue('K' . $cellNumber, $heading[10]);
                 $cellNumber += 1;
                 foreach ($list as $d) {
                     $activeWorksheet->setCellValue('A' . $cellNumber, $d['id']);
@@ -277,12 +234,11 @@ class Joke extends Common
                     $activeWorksheet->setCellValue('C' . $cellNumber, $d['answer']);
                     $activeWorksheet->setCellValue('D' . $cellNumber, $d['inspiration'] );
                     $activeWorksheet->setCellValue('E' . $cellNumber, $d['category_name'] );
-                    $activeWorksheet->setCellValue('F' . $cellNumber,  $d['tags'] );
-                    $activeWorksheet->setCellValue('G' . $cellNumber,  $d['avg_score']);
-                    $activeWorksheet->setCellValue('H' . $cellNumber, $d['status'] == ACTIVE ? '啟用' : '停用');
-                    $activeWorksheet->setCellValue('I' . $cellNumber, $d['editor_name']);
-                    $activeWorksheet->setCellValue('J' . $cellNumber, date('Y-m-d', $d['createtime']));
-                    $activeWorksheet->setCellValue('K' . $cellNumber, date('Y-m-d', $d['updatetime']));
+                    $activeWorksheet->setCellValue('F' . $cellNumber,  $d['avg_score'] );
+                    $activeWorksheet->setCellValue('G' . $cellNumber,  $d['status'] == ACTIVE ? '啟用' : '停用');
+                    $activeWorksheet->setCellValue('H' . $cellNumber, $d['editor_name']);
+                    $activeWorksheet->setCellValue('I' . $cellNumber, date('Y-m-d', $d['createtime']));
+                    $activeWorksheet->setCellValue('J' . $cellNumber, date('Y-m-d', $d['updatetime']));
                     $cellNumber += 1;
                 }
                 $writer = new Xlsx($spreadsheet);
@@ -308,7 +264,7 @@ $query_array = array_map(function ($item) {
 
 $db = new Db();
 
-$joke = new Joke(new Joke_model($db),new Joke_with_tag_model($db),new Account_model($db));
+$joke = new Joke(new Joke_model($db),new Account_model($db));
 
 if (in_array('export', $query_array)) {
     $joke->export($query_array[1]);

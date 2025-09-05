@@ -10,7 +10,7 @@ if(!empty($queryArray)){
   $categoryNumber =  intval(substr($queryArray[0], strpos($queryArray[0], '=') + 1));
 }
 $db = new Db();
-$jokeController = new Joke(new Joke_model($db),new Joke_with_tag_model($db),new Account_model($db));
+$jokeController = new Joke(new Joke_model($db),new Account_model($db));
 $list = $jokeController->index($queryArray);
 $jokeCategoryController = new Joke_category(new Joke_category_model($db),new Account_model($db));
 $categoryList = $jokeCategoryController->index();

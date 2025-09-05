@@ -1,12 +1,11 @@
 <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/component/head.php');
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/joke_category.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/joke_tag.php';
+
 $db = new Db();
 $jokeCategoryController = new Joke_category(new Joke_category_model($db),new Account_model($db));
 $categoryList = $jokeCategoryController->index(); 
-$jokeTagController = new Joke_tag(new Joke_tag_model($db),new Account_model($db));
-$tagList = $jokeTagController->index(); 
+
 ?>
 <div id="backend">
 <h1 id="orientation-remind">僅支援直向模式</h1>
@@ -33,12 +32,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
               <option value="<?=$v['id']?>"><?=$v['name']?></option>
               <?php endforeach;?>
           </select><label for="" id="category-error" class="error">必填</label></div>
-          <label for="">標籤</label>
-          <section id="tag-area">
-            <?php foreach ($tagList as $k=>$v):?>
-          <label for=""><input type="checkbox" name="tag" value="<?=$v['id']?>"><?=$v['name']?></label>
-          <?php endforeach;?>
-          </section>
+         
           <label>圖片</label>
           <label for="image" id="upload-image">
             <img src="<?=ROOT.'/image/upload-image.png'?>" id="upload-image-source" alt="upload-image">

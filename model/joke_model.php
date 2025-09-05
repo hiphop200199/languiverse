@@ -88,29 +88,14 @@ class Joke_model
         $mainSql = "SELECT j.*,jc.name AS category_name,a.name AS editor_name FROM joke AS j
          LEFT JOIN joke_category AS jc ON j.category = jc.id
         LEFT JOIN admin_account AS a ON j.editor = a.id";
-        $tagSql = "SELECT jt.name AS tag_name FROM joke_with_tag AS jwt
-        JOIN joke_tag AS jt ON jwt.tag_id = jt.id
-        WHERE jwt.joke_id = ?
-        ";
+       
         $rateSql = "SELECT AVG(score) AS avg_score FROM joke_rate WHERE joke_id = ?";
         $stmt =  $this->db->conn->prepare($mainSql);
-        $tagStmt = $this->db->conn->prepare($tagSql);
         $rateStmt = $this->db->conn->prepare($rateSql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $stmt->closeCursor();
         for ($i=0;$i<count($result);$i++) {
-            $tagStmt->execute([$result[$i]['id']]);
-            $tagResult = $tagStmt->fetchAll(PDO::FETCH_ASSOC);
-            $result[$i]['tags'] = '';
-            if (!empty($tagResult)) {
-                $tags = [];
-                foreach ($tagResult as $tag) {
-                    $tags[] = $tag['tag_name'];
-                }
-                $result[$i]['tags'] = implode(',', $tags);
-            }
-            $tagStmt->closeCursor();
             $rateStmt->execute([$result[$i]['id']]);
             $rateResult = $rateStmt->fetch(PDO::FETCH_ASSOC);
             $result[$i]['avg_score'] = empty($rateResult['avg_score'])?'':number_format($rateResult['avg_score'],1);
@@ -178,26 +163,15 @@ class Joke_model
         JOIN admin_account AS a ON j.editor = a.id
         WHERE j.status = 2 AND j.id = ?
         ';
-        $subSql = 'SELECT jwt.*,jt.name FROM joke_with_tag AS jwt
-        JOIN joke_tag AS jt ON jwt.tag_id = jt.id
-        WHERE jwt.joke_id = ?
-        ';
+       
         $rateSql = 'SELECT * FROM joke_rate WHERE joke_id = ?';
 
         $mainStmt =  $this->db->conn->prepare($mainSql);
-        $subStmt = $this->db->conn->prepare($subSql);
         $rateStmt = $this->db->conn->prepare($rateSql);
         $mainStmt->execute([$id]);
         if ($mainStmt->rowCount() == 1) {
             $mainInfo = $mainStmt->fetch(PDO::FETCH_ASSOC);
             $mainStmt->closeCursor();
-            $subStmt->execute([$id]);      
-            if ($subStmt->rowCount() < 0) {
-                $result = SERVER_INTERNAL_ERROR;
-                return $result;
-            }
-            $mainInfo['subinfo'] = $subStmt->fetchAll(PDO::FETCH_ASSOC);
-            $subStmt->closeCursor();
             $rateStmt->execute([$id]);     
             if ($rateStmt->rowCount() < 0) {
                 $result = SERVER_INTERNAL_ERROR;
