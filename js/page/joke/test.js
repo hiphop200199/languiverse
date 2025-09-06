@@ -1,6 +1,6 @@
 import { REQUEST_BASE_URL } from "../admin/config.js";
 import { SUCCESS } from "../admin/constant.js";
-import { getRandomQuestion,exportPdf } from "../joke_model.js";
+import { frontend } from "../../request_model.js";
 
 const loadingIcon = document.getElementById("loading-mask");
 const alertLB = document.getElementById("alert-mask");
@@ -40,7 +40,7 @@ startTestBtn.addEventListener("click", async function () {
       task: "get-random-question",
     };
     loadingIcon.style.display = "block";
-    const response = await getRandomQuestion(param);
+    const response = await frontend('joke',param);
     loadingIcon.style.display = "none";
     console.log(response);
     if (response.data.errCode === SUCCESS) {
@@ -108,7 +108,7 @@ nextQuestionBtn.addEventListener("click", async function () {
         task: "get-random-question",
       };
       loadingIcon.style.display = "block";
-      const response = await getRandomQuestion(param);
+      const response = await jokeRequest(param);
       loadingIcon.style.display = "none";
       console.log(response);
       if (response.data.errCode === SUCCESS) {

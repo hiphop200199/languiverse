@@ -2,14 +2,9 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/joke.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/joke_category.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-if (!preg_match('/^id=\d+$/', $query)) {
-  header('Location: ' . ROOT . '/page/admin/joke/list.php');
-  exit;
-}
-$id =  intval(substr($query, strpos($query, '=') + 1));
+$id =  Util::getIdOfModel();
 $db = new Db();
 $jokeController = new Joke(new Joke_model($db),new Account_model($db));
 $info = $jokeController->get($id);
@@ -35,16 +30,16 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
         <a href="list.php" id="back">返回</a>
         <form id="joke-edit">
           <label for="">問題</label>
-          <div> <input type="text" id="question" placeholder="請輸入問題" value="<?=$info['question']?>"><label for="" id="question-error" class="error">必填</label></div>
+          <div> <input type="text" id="question" placeholder="請輸入問題" value="<?=htmlspecialchars($info['question'])?>"><label for="" id="question-error" class="error">必填</label></div>
           <label for="">回答</label>
-          <div><input type="text"  id="answer" placeholder="請輸入回答" value="<?=$info['answer']?>"><label for="" id="answer-error" class="error">必填</label></div>
+          <div><input type="text"  id="answer" placeholder="請輸入回答" value="<?=htmlspecialchars($info['answer'])?>"><label for="" id="answer-error" class="error">必填</label></div>
           <label for="">靈感</label>
-          <textarea name="" id="inspiration"><?=$info['inspiration']?></textarea>
+          <textarea name="" id="inspiration"><?=htmlspecialchars($info['inspiration'])?></textarea>
           <label for="">類別</label>
           <div>  <select name="" id="category">
             <option value="">請選擇類別</option>
             <?php foreach($categoryList as $k=>$v):?>
-              <option <?php if($info['category']==$v['id']){?>selected<?php }?> value="<?=$v['id']?>"><?=$v['name']?></option>
+              <option <?php if(htmlspecialchars($info['category'])==htmlspecialchars($v['id'])){?>selected<?php }?> value="<?=htmlspecialchars($v['id'])?>"><?=htmlspecialchars($v['name'])?></option>
               <?php endforeach;?>
           </select><label for="" id="category-error" class="error">必填</label></div>
          

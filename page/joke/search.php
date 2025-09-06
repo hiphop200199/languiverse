@@ -3,10 +3,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/component/head.php');
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/joke.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/joke_category.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/account.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-$queryArray = explode('&',$query);
+$queryArray = Util::getSearchQuery();
 $db = new Db();
 $jokeCategoryController = new Joke_category_frontend(new Joke_category_model($db));
 $categoryList = $jokeCategoryController->index();
@@ -33,20 +32,20 @@ $list = $jokeController->getList($queryArray);
    <h3>哪些分類呢</h3>
    <div class="box">
       <?php foreach ($categoryList as $vc):?>
-      <label class="category-label" for="c-<?=$vc['id']?>"><input type="checkbox" class="category"  value="<?=$vc['id']?>" id="c-<?=$vc['id']?>"><?=$vc['name']?></label>
+      <label class="category-label" for="c-<?=$vc['id']?>"><input type="checkbox" class="category"  value="<?=htmlspecialchars($vc['id'])?>" id="c-<?=$vc['id']?>"><?=htmlspecialchars($vc['name'])?></label>
       <?php endforeach;?>
    </div>
    <h3>還是想看誰寫的</h3>
    <div class="box">
       <?php foreach ($editorList as $ve):?>
-      <label class="who-label" for="w-<?=$ve['id']?>"><input type="checkbox" class="who" value="<?=$ve['id']?>" id="w-<?=$ve['id']?>"><?=$ve['name']?></label>
+      <label class="who-label" for="w-<?=$ve['id']?>"><input type="checkbox" class="who" value="<?=htmlspecialchars($ve['id'])?>" id="w-<?=$ve['id']?>"><?=htmlspecialchars($ve['name'])?></label>
          <?php endforeach;?>
    </div>
    <button id="search">查詢</button>
    <h3>結果...↓</h3>
    <div class="box">
        <?php foreach ($list as $k=>$v):?>
-      <a class="content-link" href="content.php?id=<?=$v['id']?>"><?=$k+1?>.<?=$v['question']?></a>
+      <a class="content-link" href="content.php?id=<?=$v['id']?>"><?=$k+1?>.<?=htmlspecialchars($v['question'])?></a>
         <?php endforeach;?>
    </div>
    <p id="copyright">Copyright © EricWoo 2024 | All Rights Reserved.</p>

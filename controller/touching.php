@@ -2,7 +2,7 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/model/touching_model.php';
-
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
 
 
@@ -13,18 +13,7 @@ class Touching_frontend{
         $this->touching_model = $touching_model;
     }
 
-    public function requestEntry()
-    {
-        $request_body = file_get_contents('php://input');
-    
-        $data = json_decode($request_body, true);
-      
-        switch ($data['task']) {
-            case 'create-thought':
-                $this->createThought($data);
-                break;
-        } 
-    }
+   
 
     public function getList(array $queryArray)
     {
@@ -49,10 +38,10 @@ class Touching_frontend{
     }
 
 
-   private function createThought($data)
+   private function createThought()
     {
-        $id = intval($data['id']);
-        $thought = $data['thought'];
+        $id = intval($_POST['id']);
+        $thought = $_POST['thought'];
         $result = $this->touching_model->createThought($id,$thought);
         if($result === SUCCESS){
             $response = json_encode(['errCode'=>SUCCESS]);
@@ -66,19 +55,15 @@ class Touching_frontend{
 
 }
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-$query_array = explode('&', $query);
 
-$query_array = array_map(function ($item) {
-    $item = substr($item, strpos($item, '=') + 1);
-    return $item;
-}, $query_array);
+$query_array = Util::getSearchQuery();
+
+$query_array = Util::getSearchQueryValue($query_array);
 
 $db = new Db();
 
 $touching = new Touching_frontend(new Touching_model($db));
 
-$touching->requestEntry();
+Util::requestEntry($touching);
 
 unset($touching);

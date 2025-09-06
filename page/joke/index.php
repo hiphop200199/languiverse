@@ -22,29 +22,29 @@ $list = $joke->jokeEvaluation();
 </article>
    <h2>隨機一則冷笑話</h2>
    <div class="box">
-      <p class="ask"><?=$random['question']?></p>
-      <p class="reply"><?=$random['answer']?></p>
+      <p class="ask"><?=htmlspecialchars($random['question'])?></p>
+      <p class="reply"><?=htmlspecialchars($random['answer'])?></p>
       <img src="<?=empty($random['image'])?'':ROOT . $random['image']?>" alt="">
-      <p class="editor">by <?=$random['name']?></p>
+      <p class="editor">by <?=htmlspecialchars($random['name'])?></p>
    </div>
    <?php if(!empty($list)):?>
    <h2>票選冷笑話</h2>
    <h3>最好笑冷笑話</h3>
    <div class="box">
-      <p class="ask"><?=$list[0]['question']?></p>
-      <p class="reply"><?=$list[0]['answer']?></p>
+      <p class="ask"><?=htmlspecialchars($list[0]['question'])?></p>
+      <p class="reply"><?=htmlspecialchars($list[0]['answer'])?></p>
       <img src="<?=empty($list[0]['image'])?'':ROOT.$list[0]['image']?>" alt="">
       <p>平均評分：<?=number_format($list[0]['avg_score'],1)?></p>
-      <p class="editor">by <?=$list[0]['name']?></p>
+      <p class="editor">by <?=htmlspecialchars($list[0]['name'])?></p>
    </div>
 
    <h3>最難笑冷笑話</h3>
    <div class="box">
-      <p class="ask"><?=$list[1]['question']?></p>
-      <p class="reply"><?=$list[1]['answer']?></p>
+      <p class="ask"><?=htmlspecialchars($list[1]['question'])?></p>
+      <p class="reply"><?=htmlspecialchars($list[1]['answer'])?></p>
      <img src="<?=empty($list[1]['image'])?'':ROOT.$list[1]['image']?>" alt="">
       <p>平均評分：<?=number_format($list[1]['avg_score'],1)?></p>
-      <p class="editor">by <?=$list[1]['name']?></p>
+      <p class="editor">by <?=htmlspecialchars($list[1]['name'])?></p>
    </div>
    <?php endif;?>
    <p id="copyright">Copyright © EricWoo 2024 | All Rights Reserved.</p>

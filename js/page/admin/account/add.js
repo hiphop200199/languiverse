@@ -1,5 +1,5 @@
 import { IS_ACTIVE, IS_ADMIN, IS_NOT_ADMIN, SUCCESS } from "../constant.js";
-import { create } from "../../account_model.js";
+import { backend } from "../../request_model.js";
 
 const form = document.getElementById("account-add");
 const account = document.getElementById("account");
@@ -50,7 +50,7 @@ form.addEventListener("submit", async function (e) {
       task: "create",
     };
     loading.style.display = 'block';
-    const response = await create(param);
+    const response = await backend(param);
     loading.style.display = 'none';
     console.log(response);
      if (response.data.errCode === SUCCESS) {

@@ -1,5 +1,5 @@
 import { SUCCESS } from "../constant.js";
-import { destroy, exportFile } from "../../touching_model.js";
+import { backend } from "../../request_model.js";
 import { REQUEST_BASE_URL } from "../config.js";
 
 
@@ -29,7 +29,7 @@ confirmLBBtn.addEventListener("click", async function () {
     };
     confirmLB.style.display = "none";
     loading.style.display = "block";
-    const response = await destroy(param);
+    const response = await backend(param);
     loading.style.display = "none";
     console.log(response);
    

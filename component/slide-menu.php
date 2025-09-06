@@ -1,5 +1,5 @@
 <?php
-$manage = $path_array[3];
+$manage = $path_array[3];//從head.php取得path_array變數
 require_once $_SERVER['DOCUMENT_ROOT'] . '/component/loading.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/account.php';
 $account = new Account(new Account_model(new Db()));
@@ -10,27 +10,27 @@ $account = new Account(new Account_model(new Db()));
   <div id="img-box">
     <h1 id="logo">言宇宙學院</h1>
   </div>
-  <h4>Hi!<?=$account->data['account']['name']?></h4>
-  <a class="<?= $manage == 'account' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/account/list.php' ?>">帳號管理</a>
-  <a id="joke-trigger" class="block-trigger">冷笑話管理<span id="joke-icon" class="rotate-icon <?=$manage == 'joke'||$manage == 'joke_category'||$manage == 'joke_tag'?'open':''?>">▲</span></a>
-  <section id="joke-block" class="link-block <?=$manage == 'joke'||$manage == 'joke_category'||$manage == 'joke_tag'?'open':''?>">
- <a class="<?= $manage == 'joke' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke/list.php' ?>">冷笑話</a>
-  <a class="<?= $manage == 'joke_category' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke_category/list.php' ?>">類別</a>
-  <a class="<?= $manage == 'joke_tag' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke_tag/list.php' ?>">標籤</a>
+  <h4>Hi!<?= htmlspecialchars($account->data['account']['name'])?></h4>
+  <a class="<?= htmlspecialchars($manage) == 'account' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/account/list.php' ?>">帳號管理</a>
+  <a id="joke-trigger" class="block-trigger">冷笑話管理<span id="joke-icon" class="rotate-icon <?=htmlspecialchars($manage) == 'joke'||htmlspecialchars($manage) == 'joke_category'||htmlspecialchars($manage) == 'joke_tag'?'open':''?>">▲</span></a>
+  <section id="joke-block" class="link-block <?=htmlspecialchars($manage) == 'joke'||htmlspecialchars($manage) == 'joke_category'||htmlspecialchars($manage) == 'joke_tag'?'open':''?>">
+ <a class="<?= htmlspecialchars($manage) == 'joke' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke/list.php' ?>">冷笑話</a>
+  <a class="<?= htmlspecialchars($manage) == 'joke_category' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke_category/list.php' ?>">類別</a>
+  <a class="<?= htmlspecialchars($manage) == 'joke_tag' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/joke_tag/list.php' ?>">標籤</a>
   </section>
- <a id="curse-trigger" class="block-trigger">負面語言管理<span id="curse-icon" class="rotate-icon <= $manage == 'curse'||$manage == 'curse_category'||$manage == 'curse_tag'?'open':''?>">▲</span></a>
-  <section id="curse-block" class="link-block <=$manage == 'curse'?'open':'' ?>">
- <a class="<= $manage == 'curse' ? 'active' : ''; ?> " href="<= ROOT . '/page/admin/curse/list.php' ?>">負面語言管理</a>
+ <a id="curse-trigger" class="block-trigger">負面語言管理<span id="curse-icon" class="rotate-icon <?= htmlspecialchars($manage) == 'curse'||htmlspecialchars($manage) == 'curse_category'||htmlspecialchars($manage) == 'curse_tag'?'open':''?>">▲</span></a>
+  <section id="curse-block" class="link-block <?=htmlspecialchars($manage) == 'curse'?'open':'' ?>">
+ <a class="<?= htmlspecialchars($manage) == 'curse' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/curse/list.php' ?>">負面語言管理</a>
   </section>
   <a id="touching-trigger" class="block-trigger">感人話語管理<span id="touching-icon" class="rotate-icon">▲</span></a>
   <section id="touching-block" class="link-block">
- <a class="<?= $manage == 'touching' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/touching/list.php' ?>">感人話語</a>
-  <a class="<?= $manage == 'touching_source' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/touching_source/list.php' ?>">出處</a>
+ <a class="<?= htmlspecialchars($manage) == 'touching' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/touching/list.php' ?>">感人話語</a>
+  <a class="<?= htmlspecialchars($manage) == 'touching_source' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/touching_source/list.php' ?>">出處</a>
   </section>
-  <a id="trends-trigger" class="block-trigger">流行語管理<span id="trends-icon" class="rotate-icon <= $manage == 'trends'||$manage == 'trends_age'?'open':''?>">▲</span></a>
-  <section id="trends-block"  class="link-block  <=$manage == 'trends'||$manage == 'trends_age'?'open':'' ?>">
-  <a class="<= $manage == 'trends' ? 'active' : ''; ?> " href="<= ROOT . '/page/admin/trends/list.php' ?>">流行語管理</a>
-  <a class="<= $manage == 'trends_age' ? 'active' : ''; ?> " href="<= ROOT . '/page/admin/trends_age/list.php' ?>">流行語時代管理</a>
+  <a id="trends-trigger" class="block-trigger">流行語管理<span id="trends-icon" class="rotate-icon <?= htmlspecialchars($manage) == 'trends'||htmlspecialchars($manage) == 'trends_age'?'open':''?>">▲</span></a>
+  <section id="trends-block"  class="link-block  <?=htmlspecialchars($manage) == 'trends'||htmlspecialchars($manage) == 'trends_age'?'open':'' ?>">
+  <a class="<?= htmlspecialchars($manage) == 'trends' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/trends/list.php' ?>">流行語管理</a>
+  <a class="<?= htmlspecialchars($manage) == 'trends_age' ? 'active' : ''; ?> " href="<?= ROOT . '/page/admin/trends_age/list.php' ?>">流行語時代管理</a>
   </section>
   <a id="logout">登出</a>
 </section>

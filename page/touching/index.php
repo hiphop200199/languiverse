@@ -11,14 +11,14 @@ $info = $touchingController->randomTouching();
    <article></article>
    <h2>曾聽過這句話</h2>
    <div class="box">
-   <p class="content"><?=$info['content']?></p>
-   <p class="source"><?=$info['source']?></p>
+   <p class="content"><?=htmlspecialchars($info['content'])?></p>
+   <p class="source"><?=htmlspecialchars($info['source'])?></p>
       <a id="link" <?php if($info['link']){?> target="_blank" href="<?=$info['link']?>"<?php }?>><img src="<?=empty($info['image'])?'':ROOT.$info['image']?>" alt=""></a>
-      <p class="editor">由 <?=$info['editor_name']?> 建立</p>
+      <p class="editor">由 <?=htmlspecialchars($info['editor_name'])?> 建立</p>
       <?php if(!empty($info['thoughts'])):?>
       <h3>聽聽大家的感想</h3>
       <?php foreach($info['thoughts'] as $k=>$v):?>
-      <p class="<?= $k%2?'thought':'thought-left'?>"><?=$v['thought']?></p>
+      <p class="<?= $k%2?'thought':'thought-left'?>"><?=htmlspecialchars($v['thought'])?></p>
       <?php endforeach;?>
       <?php endif;?>
    </div>

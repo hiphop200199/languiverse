@@ -1,5 +1,5 @@
 import { SUCCESS } from "../constant.js";
-import { create } from "../../curse_model.js";
+import { backend } from "../../request_model.js";
 import { REQUEST_BASE_URL } from "../config.js";
 
 const form = document.getElementById("curse-add");
@@ -39,7 +39,7 @@ form.addEventListener("submit", async function (e) {
       task: "create",
     };
     loading.style.display = "block";
-    const response = await create(param);
+    const response = await backend(param);
     loading.style.display = "none";
     console.log(response);
 

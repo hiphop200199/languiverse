@@ -4,13 +4,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/common.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/model/joke_model.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Joke extends Common
 {
-    private $joke_model,$joke_with_tag_model;
+    private $joke_model;
     public function __construct(Joke_model $joke_model,Account_model $account_model)
     {
         parent::__construct($account_model);
@@ -18,21 +19,7 @@ class Joke extends Common
         $this->joke_model = $joke_model;
     }
 
-    public function requestEntry()
-    {
-        switch ($_POST['task']) {
-            case 'create':
-                $this->create();
-                break;
-            case 'edit':
-                $this->edit();
-                break;
-            case 'delete':
-                $this->delete();
-                break;
-         
-        }
-    }
+   
 
     public function index(array $queryArray)
     {
@@ -49,9 +36,9 @@ class Joke extends Common
 
     private function create()
     {
-        $question = $_POST['question'];
-        $answer = $_POST['answer'];
-        $inspiration = $_POST['inspiration'];
+        $question = htmlspecialchars(strip_tags($_POST['question']));
+        $answer = htmlspecialchars(strip_tags($_POST['answer']));
+        $inspiration = htmlspecialchars(strip_tags($_POST['inspiration']));
         $category = intval($_POST['category']);
         $status = intval($_POST['status']);
         $mp3 = $_FILES['mp3'];
@@ -111,9 +98,9 @@ class Joke extends Common
             echo $response;
             exit;
         }
-        $question = $_POST['question'];
-        $answer = $_POST['answer'];
-        $inspiration = $_POST['inspiration'];
+        $question = htmlspecialchars(strip_tags($_POST['question']));
+        $answer = htmlspecialchars(strip_tags($_POST['answer']));
+        $inspiration = htmlspecialchars(strip_tags($_POST['inspiration']));
         $category = intval($_POST['category']);
         $status = intval($_POST['status']);
         $mp3 = empty($_FILES['mp3'])?'':$_FILES['mp3'];
@@ -253,14 +240,10 @@ class Joke extends Common
     }
 }
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-$query_array = explode('&', $query);
 
-$query_array = array_map(function ($item) {
-    $item = substr($item, strpos($item, '=') + 1);
-    return $item;
-}, $query_array);
+$query_array = Util::getSearchQuery();
+
+$query_array = Util::getSearchQueryValue($query_array);
 
 $db = new Db();
 
@@ -271,6 +254,6 @@ if (in_array('export', $query_array)) {
     exit;
 }
 
-$joke->requestEntry();
+Util::requestEntry(object: $joke);
 
 unset($joke);

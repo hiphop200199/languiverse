@@ -1,6 +1,6 @@
 import { REQUEST_BASE_URL } from "../admin/config.js"
 import { SUCCESS } from "../admin/constant.js"
-import { createRate } from "../joke_model.js"
+import { frontend } from "../../request_model.js";
 
 const openCommentModal = document.getElementById('open-comment-modal')
 const commentModal = document.getElementById('comment-modal')
@@ -34,7 +34,7 @@ form.addEventListener('submit',async function(e){
         };
          commentModal.close()
         loadingIcon.style.display = 'block';
-        const response = await createRate(param);
+        const response = await frontend('joke',param);
         loadingIcon.style.display = 'none';
         console.log(response);
          if (response.data.errCode === SUCCESS) {

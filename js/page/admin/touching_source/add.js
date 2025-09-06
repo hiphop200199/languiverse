@@ -1,5 +1,5 @@
 import { SUCCESS } from "../constant.js";
-import { create } from "../../touching_source_model.js";
+import { backend } from "../../request_model.js";
 
 const form = document.getElementById("touching-source-add");
 const name = document.getElementById("name");
@@ -34,7 +34,7 @@ form.addEventListener("submit", async function (e) {
       task: "create",
     };
     loading.style.display = "block";
-    const response = await create(param);
+    const response = await backend(param);
     loading.style.display = "none";
     console.log(response);
 

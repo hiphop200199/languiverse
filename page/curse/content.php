@@ -1,14 +1,9 @@
  <?php
   require_once($_SERVER['DOCUMENT_ROOT'] . '/component/head.php');
   require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/curse.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
-  $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-  $query = parse_url($url, PHP_URL_QUERY);
-  if (!preg_match('/^id=\d+$/', $query)) {
-    header('Location: ' . ROOT . '/page/curse/search.php');
-    exit;
-  }
-  $id =  intval(substr($query, strpos($query, '=') + 1));
+  $id =  Util::getIdOfModel();
   $db = new Db();
   $curseController = new CurseFrontend(new Curse_model($db));
   $info = $curseController->get($id);
@@ -21,12 +16,12 @@
     ?>
    <h2>內容↓</h2>
    <div class="box">
-     <p class="content">語句：<?= $info['content'] ?></p>
-     <p class="editor">作者：<?= $info['editor_name'] ?></p>
+     <p class="content">語句：<?= htmlspecialchars($info['content']) ?></p>
+     <p class="editor">作者：<?= htmlspecialchars($info['editor_name']) ?></p>
      <h3>策略↓</h3>
      <section id="strategy-area">
        <?php foreach ($info['strategyInfo'] as $vs): ?>
-         <p><?= $vs['content'] ?></p>
+         <p><?= htmlspecialchars($vs['content']) ?></p>
        <?php endforeach; ?>
      </section>
      <button id="open-strategy-modal">新增策略</button>

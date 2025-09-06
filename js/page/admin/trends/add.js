@@ -1,5 +1,4 @@
-import { SUCCESS } from "../constant.js";
-import { create } from "../../trends_model.js";
+import { backend } from "../../request_model.js";
 
 const form = document.getElementById("trends-add");
 const content = document.getElementById("content");
@@ -46,7 +45,7 @@ form.addEventListener("submit", async function (e) {
       task: "create",
     };
     loading.style.display = "block";
-    const response = await create(param);
+    const response = await backend(param);
     loading.style.display = "none";
     console.log(response);
 

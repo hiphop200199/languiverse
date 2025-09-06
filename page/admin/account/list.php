@@ -37,10 +37,10 @@ $list = $accountController->index();
       <tbody>
         <?php foreach ($list as $k => $v): ?>
           <tr>
-            <td><?= $v['id']; ?></td>
-            <td><?= $v['account']; ?></td>
+            <td><?= htmlspecialchars($v['id']); ?></td>
+            <td><?= htmlspecialchars($v['account']); ?></td>
             <td><?= $v['status'] == ACTIVE ? '啟用' : '停用'; ?></td>
-            <td class="operation"><a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <?php if($accountController->data['account']['is_admin']==IS_ADMIN){?><a data-id="<?= $v['id']; ?>" class="delete">🗑</a><?php }?></td>
+            <td class="operation"><a href="edit.php?id=<?= htmlspecialchars($v['id']); ?>" class="edit">🖊</a> <?php if($accountController->data['account']['is_admin']==IS_ADMIN){?><a data-id="<?= htmlspecialchars($v['id']); ?>" class="delete">🗑</a><?php }?></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
@@ -48,11 +48,11 @@ $list = $accountController->index();
     <div id="grid">
         <?php foreach ($list as $k => $v): ?>
       <div class="item">
-          <p>id:<?= $v['id']; ?></p>
-          <p>帳號:<?= $v['account']; ?></p>
+          <p>id:<?= htmlspecialchars($v['id']); ?></p>
+          <p>帳號:<?= htmlspecialchars($v['account']); ?></p>
           <p>狀態:<?= $v['status'] == ACTIVE ? '啟用' : '停用'; ?></p>
           <section class="button">
-            <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <?php if($accountController->data['account']['is_admin']==IS_ADMIN){?><a data-id="<?= $v['id']; ?>" class="delete">🗑</a><?php }?>
+            <a href="edit.php?id=<?= htmlspecialchars($v['id']); ?>" class="edit">🖊</a> <?php if($accountController->data['account']['is_admin']==IS_ADMIN){?><a data-id="<?= htmlspecialchars($v['id']); ?>" class="delete">🗑</a><?php }?>
           </section>
       </div>
     <?php endforeach; ?>

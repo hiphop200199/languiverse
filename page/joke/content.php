@@ -1,14 +1,9 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/component/head.php'); 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/joke.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-if (!preg_match('/^id=\d+$/', $query)) {
-  header('Location: ' . ROOT . '/page/joke/search.php');
-  exit;
-}
-$id =  intval(substr($query, strpos($query, '=') + 1));
+$id =  Util::getIdOfModel();
 $db = new Db();
 $jokeController = new JokeFrontend(new Joke_model($db));
 $info = $jokeController->get($id);
@@ -28,18 +23,18 @@ $info = $jokeController->get($id);
    <div id="hero-image"></div>
    <h2>內容↓</h2>
    <div class="box">
-    <p class="ask">問題：<?=$info['question']?></p>
-    <p class="reply">回答：<?=$info['answer']?></p>
-    <p>靈感： <?=$info['inspiration']?></p>
+    <p class="ask">問題：<?=htmlspecialchars($info['question'])?></p>
+    <p class="reply">回答：<?=htmlspecialchars($info['answer'])?></p>
+    <p>靈感： <?=htmlspecialchars($info['inspiration'])?></p>
     <img src="<?=empty($info['image'])?'':ROOT.$info['image']?>" alt="">
-    <p>類別：<?=$info['category_name']?></p>
-    <p>標籤：<?php foreach($info['subinfo'] as $vs):?><button class="tag" data-id="<?=$vs['tag_id']?>"><?=$vs['name']?></button><?php endforeach;?></p>
-  <p class="editor">作者：<?=$info['editor_name']?></p>
+    <p>類別：<?=htmlspecialchars($info['category_name'])?></p>
+    <p>標籤：<?php foreach($info['subinfo'] as $vs):?><button class="tag" data-id="<?=htmlspecialchars($vs['tag_id'])?>"><?=htmlspecialchars($vs['name'])?></button><?php endforeach;?></p>
+  <p class="editor">作者：<?=htmlspecialchars($info['editor_name'])?></p>
   <h3>評價↓</h3>
   <section id="comment-area">
     <?php foreach ($info['rateinfo'] as $vr):?>
 <div class="comment">
-    <p><?=$vr['comment']?>.</p><p><?= str_repeat('★',$vr['score']).str_repeat('☆',5 - $vr['score']) ?></p>
+    <p><?=htmlspecialchars($vr['comment'])?>.</p><p><?= str_repeat('★',$vr['score']).str_repeat('☆',5 - $vr['score']) ?></p>
 </div>
 <?php endforeach;?>
   </section>

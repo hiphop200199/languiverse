@@ -1,5 +1,5 @@
 import { SUCCESS } from "../constant.js";
-import { destroy, exportFile } from "../../curse_model.js";
+import { backend } from "../../request_model.js";
 import { REQUEST_BASE_URL } from "../config.js";
 
 const deleteBtn = document.querySelectorAll(".delete");
@@ -28,7 +28,7 @@ confirmLBBtn.addEventListener("click", async function () {
     };
     confirmLB.style.display = "none";
     loading.style.display = "block";
-    const response = await destroy(param);
+    const response = await backend(param);
     loading.style.display = "none";
     console.log(response);
    

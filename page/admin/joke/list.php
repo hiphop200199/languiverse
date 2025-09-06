@@ -2,9 +2,9 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/joke.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/joke_category.php';
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-$queryArray = explode('&',$query);
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
+
+$queryArray = Util::getSearchQuery();
 $categoryNumber = 0;
 if(!empty($queryArray)){
   $categoryNumber =  intval(substr($queryArray[0], strpos($queryArray[0], '=') + 1));
@@ -37,7 +37,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
            <select name="" id="category">
             <option value="">請選擇類別</option>
             <?php foreach ($categoryList as $k=>$v):?> 
-            <option <?php if($categoryNumber!=0 && $categoryNumber == $v['id']):?>selected<?php endif;?> value="<?=$v['id']?>"><?=$v['name']?></option>
+            <option <?php if($categoryNumber!=0 && $categoryNumber == $v['id']):?>selected<?php endif;?> value="<?=htmlspecialchars($v['id'])?>"><?=htmlspecialchars($v['name'])?></option>
             <?php endforeach;?>
           </select>
           <a  id="search">搜尋</a>
@@ -55,12 +55,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
           <tbody>
           <?php foreach ($list as $k=>$v):?> 
             <tr>
-              <td><?=$v['id']?></td>
-              <td><?=$v['question']?></td>
+              <td><?=htmlspecialchars($v['id'])?></td>
+              <td><?=htmlspecialchars($v['question'])?></td>
               <td><?= $v['status'] == ACTIVE ? '啟用' : '停用'; ?></td>
               <td class="operation">
                <?php if($v['editor']==$jokeController->data['account']['id']):?>
-                <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <a data-id="<?= $v['id']; ?>" class="delete">🗑</a>
+                <a href="edit.php?id=<?= htmlspecialchars($v['id']); ?>" class="edit">🖊</a> <a data-id="<?= htmlspecialchars($v['id']); ?>" class="delete">🗑</a>
                 <?php endif;?>
               </td>
             </tr>
@@ -70,12 +70,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
         <div id="grid">
           <?php foreach($list as $k=>$v):?>
           <div class="item">
-            <p>id:<?=$v['id']?></p>
-            <p>問題:<?=$v['question']?></p>
+            <p>id:<?=htmlspecialchars($v['id'])?></p>
+            <p>問題:<?=htmlspecialchars($v['question'])?></p>
             <p>狀態:<?= $v['status'] == ACTIVE ? '啟用' : '停用'; ?></p>
             <section class="button">
              <?php if($v['editor']==$jokeController->data['account']['id']):?>
-                <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <a data-id="<?= $v['id']; ?>" class="delete">🗑</a>
+                <a href="edit.php?id=<?= htmlspecialchars($v['id']); ?>" class="edit">🖊</a> <a data-id="<?= htmlspecialchars($v['id']); ?>" class="delete">🗑</a>
                 <?php endif;?>
             </section>
           </div>

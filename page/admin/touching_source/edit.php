@@ -1,13 +1,8 @@
 <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/component/head.php');
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/touching_source.php';
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-if (!preg_match('/^id=\d+$/', $query)) {
-  header('Location: ' . ROOT . '/page/admin/touching_source/list.php');
-  exit;
-}
-$id =  intval(substr($query, strpos($query, '=') + 1));
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
+$id =  Util::getIdOfModel();
 $db = new Db();
 $touchingSourceController = new Touching_source(new Touching_source_model($db),new Account_model($db));
 $info = $touchingSourceController->get($id);
@@ -29,7 +24,7 @@ if(empty($info)){
         <a href="list.php" id="back">返回</a>
         <form id="touching-source-edit">
         <label for="">名稱</label>
-          <div> <input type="text" id="name" value="<?=$info['name']?>" placeholder="請輸入名稱"><label for="" id="name-error" class="error">必填</label></div>
+          <div> <input type="text" id="name" value="<?=htmlspecialchars($info['name'])?>" placeholder="請輸入名稱"><label for="" id="name-error" class="error">必填</label></div>
           <label for="">狀態</label>
           <section id="status">
             <label for=""><input type="radio" name="status"<?php if ($info['status'] == ACTIVE) { ?>checked <?php } ?> id="" value="2">啟用<input type="radio" name="status" <?php if ($info['status'] != ACTIVE) { ?>checked <?php } ?> id="" value="1">停用</label>

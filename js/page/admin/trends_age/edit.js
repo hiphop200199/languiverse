@@ -1,5 +1,5 @@
 import { SUCCESS } from "../constant.js";
-import { edit } from "../../trends_age_model.js";
+import { backend } from "../../request_model.js";
 
 const form = document.getElementById("trends-age-edit");
 const name = document.getElementById("name");
@@ -38,7 +38,7 @@ form.addEventListener("submit", async function (e) {
       task: "edit",
     };
     loading.style.display = "block";
-    const response = await edit(param);
+    const response = await backend(param);
     loading.style.display = "none";
     console.log(response);
 

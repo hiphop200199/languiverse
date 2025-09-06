@@ -1,5 +1,5 @@
 import { SUCCESS } from "../constant.js";
-import { edit } from "../../touching_model.js";
+import { backend } from "../../request_model.js";
 
 
 const form = document.getElementById("touching-edit");
@@ -82,7 +82,7 @@ form.addEventListener("submit", async function (e) {
       task: "edit",
     };
     loading.style.display = "block";
-    const response = await edit(param);
+    const response = await backend(param);
     loading.style.display = "none";
     console.log(response);
 

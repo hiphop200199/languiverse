@@ -2,14 +2,9 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/trends.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/trends_age.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-if (!preg_match('/^id=\d+$/', $query)) {
-  header('Location: ' . ROOT . '/page/admin/trends/list.php');
-  exit;
-}
-$id =  intval(substr($query, strpos($query, '=') + 1));
+$id =  Util::getIdOfModel();
 $db = new Db();
 $trendsController = new Trends(new Trends_model($db),new Account_model($db));
 $info = $trendsController->get($id);
@@ -33,14 +28,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
         <a href="list.php" id="back">返回</a>
         <form id="trends-edit">
           <label for="">內容</label>
-          <div> <input type="text" id="content" placeholder="請輸入內容" value="<?=$info['content']?>"><label for="" id="content-error" class="error">必填</label></div>
+          <div> <input type="text" id="content" placeholder="請輸入內容" value="<?=htmlspecialchars($info['content'])?>"><label for="" id="content-error" class="error">必填</label></div>
            <label for="">解釋</label>
-          <textarea name="" id="explanation"><?=$info['explanation']?></textarea>
+          <textarea name="" id="explanation"><?=htmlspecialchars($info['explanation'])?></textarea>
           <label for="">時代</label>
           <div>  <select name="" id="age">
             <option value="">請選擇時代</option>
             <?php foreach($ageList as $k=>$v):?>
-              <option <?php if($info['age']==$v['id']){?>selected<?php }?> value="<?=$v['id']?>"><?=$v['name']?></option>
+              <option <?php if($info['age']==$v['id']){?>selected<?php }?> value="<?=htmlspecialchars($v['id'])?>"><?=htmlspecialchars($v['name'])?></option>
               <?php endforeach;?>
           </select><label for="" id="age-error" class="error">必填</label></div>
           <label for="">狀態</label>

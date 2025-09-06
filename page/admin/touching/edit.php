@@ -2,14 +2,9 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/touching.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/touching_source.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-if (!preg_match('/^id=\d+$/', $query)) {
-  header('Location: ' . ROOT . '/page/admin/touching/list.php');
-  exit;
-}
-$id =  intval(substr($query, strpos($query, '=') + 1));
+$id =  Util::getIdOfModel();
 $db = new Db();
 $touchingController = new Touching(new Touching_model($db),new Account_model($db));
 $info = $touchingController->get($id);
@@ -33,12 +28,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
         <a href="list.php" id="back">返回</a>
         <form id="touching-edit">
           <label for="">內容</label>
-          <div> <input type="text" id="content" placeholder="請輸入內容" value="<?=$info['content']?>"><label for="" id="content-error" class="error">必填</label></div>
+          <div> <input type="text" id="content" placeholder="請輸入內容" value="<?=htmlspecialchars($info['content'])?>"><label for="" id="content-error" class="error">必填</label></div>
           <label for="">出處</label>
           <div>  <select name="" id="source">
             <option value="">請選擇出處</option>
             <?php foreach($sourceList as $k=>$v):?>
-              <option <?php if($info['source_id']==$v['id']){?>selected<?php }?> value="<?=$v['id']?>"><?=$v['name']?></option>
+              <option <?php if($info['source_id']==$v['id']){?>selected<?php }?> value="<?=htmlspecialchars($v['id'])?>"><?=htmlspecialchars($v['name'])?></option>
               <?php endforeach;?>
           </select><label for="" id="source-error" class="error">必填</label></div>
           <label for="">圖片</label>
@@ -48,7 +43,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
           <input type="file" name="" id="image" accept="image/png,image/jpg,image/jpeg,image/gif">
           <span id="image-remind">圖片格式：JPG,PNG,GIF，限1MB</span>
             <label for="">連結</label>
-          <div><input type="text" id="link" value="<?=$info['link']?>" placeholder="請輸入連結"></div>
+          <div><input type="text" id="link" value="<?= filter_var($info['link'],FILTER_VALIDATE_URL)?$info['link']:''?>" placeholder="請輸入連結"></div>
           <label for="">狀態</label>
           <section id="status">
             <label for=""><input type="radio" name="status" id="" <?php if ($info['status'] == ACTIVE) { ?>checked <?php } ?> value="2">啟用<input type="radio" name="status" id="" <?php if ($info['status'] != ACTIVE) { ?>checked <?php } ?> value="1">停用</label>

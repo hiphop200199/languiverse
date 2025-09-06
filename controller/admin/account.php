@@ -4,6 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/common.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/model/account_model.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/app.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
 class Account extends Common
 {
@@ -13,29 +14,9 @@ class Account extends Common
         parent::init();
     }
 
-    public function requestEntry()
-    {
-        $request_body = file_get_contents('php://input');
     
-        $data = json_decode($request_body, true);
-        
-        switch ($data['task']) {
-          
-            case 'create':
-                $this->create($data);
-                break;
-            case 'edit':
-                $this->edit($data);
-                break;
-            case 'delete':
-                $this->delete($data);
-                break;
-            case 'edit-password':
-                $this->editPassword($data);
-                break;    
-        }
-    }
 
+    //如果是管理員，回傳所有帳號資料，否則只回傳該使用者的資料
     public function index()
     {
         $id = intval($this->data['account']['id']);
@@ -54,19 +35,24 @@ class Account extends Common
         return $info;
     }
 
-    private function create($data) {
-        $account = $data['account'];
-        $email = $data['email'];
+    private function create() {
+        $account = htmlspecialchars(strip_tags($_POST['account']));
+        $email = filter_var($_POST['email'],FILTER_VALIDATE_EMAIL);
+        if(!$email){
+            $response = json_encode(['errCode'=>EMAIL_FORMAT_ERROR]);
+            echo $response;
+            exit;
+        }
         $checkResult = $this->account_model->checkByAccountAndEmail($account,$email);
         if(!empty($checkResult)){
             $response = json_encode(['errCode'=>ACCOUNT_DUPLICATED]);
             echo $response;
             exit;
         }
-        $nickname = $data['name'];
-        $password = hash('sha256', $data['password']);
-        $status = intval($data['status']);
-        $isAdmin = intval($data['is_admin']);
+        $nickname = htmlspecialchars(strip_tags($_POST['name']));
+        $password = hash('sha256', $_POST['password']);
+        $status = intval($_POST['status']);
+        $isAdmin = intval($_POST['is_admin']);
         $result = $this->account_model->create($account,$password,$nickname,$email,$status,$isAdmin);
         if($result===SUCCESS){
             $response = json_encode(['errCode'=>SUCCESS,'redirect'=>'list.php']);
@@ -78,12 +64,17 @@ class Account extends Common
         exit;
     }
 
-    private function edit($data) {
-        $id = intval($data['id']);
-        $account = $data['account'];
-        $email = $data['email'];
-        $nickname = $data['name'];
-        $status = intval($data['status']);
+    private function edit() {
+        $id = intval($_POST['id']);
+        $account = htmlspecialchars(strip_tags($_POST['account']));
+        $email = filter_var($_POST['email'],FILTER_VALIDATE_EMAIL);
+        if(!$email){
+            $response = json_encode(['errCode'=>EMAIL_FORMAT_ERROR]);
+            echo $response;
+            exit;
+        }
+        $nickname = htmlspecialchars(strip_tags($_POST['name']));
+        $status = intval($_POST['status']);
         $checkExist = $this->account_model->get($id);
         if(empty($checkExist)){
             $response = json_encode(['errCode'=>CURSE_CATEGORY_NOT_EXIST]);
@@ -101,8 +92,8 @@ class Account extends Common
         exit;  
     }
 
-    private function delete($data) {
-        $id = intval($data['id']);
+    private function delete() {
+        $id = intval($_POST['id']);
         $result = $this->account_model->delete($id);
         if($result===SUCCESS){
             $response = json_encode(['errCode'=>SUCCESS,'redirect'=>'list.php']);
@@ -114,9 +105,9 @@ class Account extends Common
         exit;      
     }
 
-    private function editPassword($data){
-        $id = intval($data['id']);
-        $newPassword = hash('sha256', $data['newPassword']);
+    private function editPassword(){
+        $id = intval($_POST['id']);
+        $newPassword = hash('sha256', $_POST['newPassword']);
         $checkExist = $this->account_model->get($id);
         if(empty($checkExist)){
             $response = json_encode(['errCode'=>CURSE_CATEGORY_NOT_EXIST]);
@@ -138,6 +129,6 @@ class Account extends Common
 
 $account = new Account(new Account_model(new Db()));
 
-$account->requestEntry();
+Util::requestEntry(object: $account);
 
 unset($account);

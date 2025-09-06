@@ -1,14 +1,9 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/component/head.php'); 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/touching.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-if (!preg_match('/^id=\d+$/', $query)) {
-  header('Location: ' . ROOT . '/page/touching/search.php');
-  exit;
-}
-$id =  intval(substr($query, strpos($query, '=') + 1));
+$id =  Util::getIdOfModel();
 $db = new Db();
 $touchingController = new Touching_frontend(new Touching_model($db));
 $info = $touchingController->get($id);
@@ -20,14 +15,14 @@ $info = $touchingController->get($id);
   require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLBFrontend.php';
   ?>
    <div class="box">
-   <p class="content"><?=$info['content']?></p>
-   <p class="source"><?=$info['source']?></p>
+   <p class="content"><?=htmlspecialchars($info['content'])?></p>
+   <p class="source"><?=htmlspecialchars($info['source'])?></p>
       <img src="<?=empty($info['image'])?'':ROOT.$info['image']?>" alt="">
-      <p class="editor">由 <?=$info['name']?> 建立</p>
+      <p class="editor">由 <?=htmlspecialchars($info['name'])?> 建立</p>
       <?php if(!empty($info['thoughts'])):?>
       <h3>感想</h3>
       <?php foreach($info['thoughts'] as $k=>$v):?>
-      <p class="<?= $k%2?'thought':'thought-left'?>"><?=$v['thought']?></p>
+      <p class="<?= $k%2?'thought':'thought-left'?>"><?=htmlspecialchars($v['thought'])?></p>
       <?php endforeach;?>
       <?php endif;?>
       <button id="open-thought-modal">寫下感想</button>

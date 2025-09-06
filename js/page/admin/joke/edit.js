@@ -1,5 +1,5 @@
 import { SUCCESS } from "../constant.js";
-import { edit } from "../../joke_model.js";
+import { backend } from "../../request_model.js";
 
 const form = document.getElementById("joke-edit");
 const question = document.getElementById("question");
@@ -93,7 +93,7 @@ form.addEventListener("submit", async function (e) {
       task: "edit",
     };
     loading.style.display = "block";
-    const response = await edit(param);
+    const response = await backend(param);
     loading.style.display = "none";
     console.log(response);
 

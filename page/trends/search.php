@@ -2,9 +2,9 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/component/head.php'); 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/trends.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/trends_age.php';
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-$queryArray = explode('&',$query);
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
+
+$queryArray = Util::getSearchQuery();
 $db = new Db();
 $trendsController = new TrendsFrontend(new Trends_model($db));
 $trendsAgeController = new Trends_age_frontend(new Trends_age_model($db));
@@ -17,7 +17,7 @@ $ageList = $trendsAgeController->index();
    <div class="box">
     <?php if(!empty($ageList)) :?>
     <?php foreach ($ageList as $k=>$v):?> 
-   <a href="?age=<?=$v['id']?>" class="age"><?=$v['name']?></a>
+   <a href="?age=<?=$v['id']?>" class="age"><?=htmlspecialchars($v['name'])?></a>
     <?php endforeach;?> 
     <?php endif;?>
    </div>
@@ -25,7 +25,7 @@ $ageList = $trendsAgeController->index();
    <h2>結果</h2>
    <div class="box">
     <?php foreach ($list as $k=>$v):?>
-        <a class="result" href="content.php?id=<?=$v['id']?>"><?=($k+1).' '.$v['content']?></a>
+        <a class="result" href="content.php?id=<?=$v['id']?>"><?=($k+1).' '.htmlspecialchars($v['content'])?></a>
     <?php endforeach;?>
    </div>
    <?php endif;?>

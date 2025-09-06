@@ -4,6 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/common.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/model/touching_model.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -17,21 +18,7 @@ class Touching extends Common{
         $this->touching_model = $touching_model;
     }
 
-    public function requestEntry()
-    {
-        switch ($_POST['task']) {
-            case 'create':
-                $this->create();
-                break;
-            case 'edit':
-                $this->edit();
-                break;
-            case 'delete':
-                $this->delete();
-                break;
-         
-        }
-    }
+    
 
     public function index()
     {
@@ -47,9 +34,14 @@ class Touching extends Common{
 
     private function create()
     {
-        $content = $_POST['content'];
+        $content = htmlspecialchars(strip_tags($_POST['content']));
         $sourceId = $_POST['sourceId'];
-        $link = $_POST['link'];
+        $link = filter_var($_POST['link'],FILTER_VALIDATE_URL);
+        if(!$link){
+            $response = json_encode(['errCode'=>URL_FORMAT_ERROR]);
+            echo $response;
+            exit;
+        }
         $status = intval($_POST['status']);
         $editor = intval($this->data['account']['id']);
         $image = $_FILES['image'];
@@ -95,9 +87,14 @@ class Touching extends Common{
             $response = json_encode(['errCode' => CURSE_CATEGORY_NOT_EXIST]);
             echo $response;
         }
-        $content = $_POST['content'];
+        $content = htmlspecialchars(strip_tags($_POST['content']));
         $sourceId = intval($_POST['sourceId']);
-        $link = $_POST['link'];
+        $link = filter_var($_POST['link'],FILTER_VALIDATE_URL);
+        if(!$link){
+            $response = json_encode(['errCode'=>URL_FORMAT_ERROR]);
+            echo $response;
+            exit;
+        }
         $status = intval($_POST['status']);
         $image = empty($_FILES['image'])?'':$_FILES['image'];
         $allowFileTypes = ['image/png','image/jpg','image/jpeg','image/gif'];
@@ -225,14 +222,10 @@ class Touching extends Common{
 
 }
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-$query_array = explode('&', $query);
 
-$query_array = array_map(function ($item) {
-    $item = substr($item, strpos($item, '=') + 1);
-    return $item;
-}, $query_array);
+$query_array = Util::getSearchQuery();
+
+$query_array = Util::getSearchQueryValue($query_array);
 
 $db = new Db();
 
@@ -243,6 +236,6 @@ if (in_array('export', $query_array)) {
     exit;
 }
 
-$touching->requestEntry();
+Util::requestEntry(object: $touching);
 
 unset($touching);

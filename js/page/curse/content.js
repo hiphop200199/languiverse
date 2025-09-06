@@ -1,6 +1,6 @@
 import { REQUEST_BASE_URL } from "../admin/config.js"
 import { SUCCESS } from "../admin/constant.js"
-import { createStrategy } from "../curse_model.js"
+import { frontend } from "../../request_model.js";
 
 const openStrategyModal = document.getElementById('open-strategy-modal')
 const strategyModal = document.getElementById('strategy-modal')
@@ -33,7 +33,7 @@ form.addEventListener('submit',async function(e){
         };
          strategyModal.close()
         loadingIcon.style.display = 'block';
-        const response = await createStrategy(param);
+        const response = await frontend('curse',param);
         loadingIcon.style.display = 'none';
         console.log(response);
          if (response.data.errCode === SUCCESS) {

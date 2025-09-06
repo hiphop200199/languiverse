@@ -1,6 +1,6 @@
 import { REQUEST_BASE_URL } from "../admin/config.js"
 import { SUCCESS } from "../admin/constant.js"
-import { createThought } from "../touching_model.js"
+import { frontend } from "../../request_model.js";
 
 const openThoughtModal = document.getElementById('open-thought-modal')
 const thoughtModal = document.getElementById('thought-modal')
@@ -38,7 +38,7 @@ form.addEventListener('submit',async function(e){
         };
          thoughtModal.close()
         loadingIcon.style.display = 'block';
-        const response = await createThought(param);
+        const response = await frontend('touching',param);
         loadingIcon.style.display = 'none';
         console.log(response);
          if (response.data.errCode === SUCCESS) {

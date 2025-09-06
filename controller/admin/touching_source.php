@@ -4,6 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/common.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/model/touching_source_model.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -18,25 +19,7 @@ class Touching_source extends Common
         $this->touching_source_model = $touching_source_model;
     }
 
-    public function requestEntry()
-    {
-        $request_body = file_get_contents('php://input');
-
-        $data = json_decode($request_body, true);
-
-        switch ($data['task']) {
-
-            case 'create':
-                $this->create($data);
-                break;
-            case 'edit':
-                $this->edit($data);
-                break;
-            case 'delete':
-                $this->delete($data);
-                break;
-        }
-    }
+   
 
     public function index()
     {
@@ -50,10 +33,10 @@ class Touching_source extends Common
         return $info;
     }
 
-    private function create($data)
+    private function create()
     {
-        $name = $data['name'];
-        $status = intval($data['status']);
+        $name = htmlspecialchars(strip_tags($_POST['name']));
+        $status = intval($_POST['status']);
         $editor = intval($this->data['account']['id']);
         $result = $this->touching_source_model->create($name, $status, $editor);
         if ($result === SUCCESS) {
@@ -66,11 +49,11 @@ class Touching_source extends Common
         exit;
     }
 
-    private function edit($data)
+    private function edit()
     {
-        $id = intval($data['id']);
-        $name = $data['name'];
-        $status = intval($data['status']);
+        $id = intval($_POST['id']);
+        $name = htmlspecialchars(strip_tags($_POST['name']));
+        $status = intval($_POST['status']);
         $checkExist = $this->touching_source_model->get($id);
         if (empty($checkExist)) {
             $response = json_encode(['errCode' => CURSE_CATEGORY_NOT_EXIST]);
@@ -87,9 +70,9 @@ class Touching_source extends Common
         exit;
     }
 
-    private function delete($data)
+    private function delete()
     {
-        $id = intval($data['id']);
+        $id = intval($_POST['id']);
         $result = $this->touching_source_model->delete($id);
         if ($result === SUCCESS) {
             $response = json_encode(['errCode' => SUCCESS, 'redirect' => 'list.php']);
@@ -154,14 +137,10 @@ class Touching_source extends Common
 }
 
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-$query_array = explode('&', $query);
 
-$query_array = array_map(function ($item) {
-    $item = substr($item, strpos($item, '=') + 1);
-    return $item;
-}, $query_array);
+$query_array = Util::getSearchQuery();
+
+$query_array = Util::getSearchQueryValue($query_array);
 
 $db = new Db();
 
@@ -172,6 +151,6 @@ if (in_array('export', $query_array)) {
     exit;
 }
 
-$touching_source->requestEntry();
+Util::requestEntry(object: $touching_source);
 
 unset($touching_source);

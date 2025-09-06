@@ -5,6 +5,11 @@ $path = parse_url($url, PHP_URL_PATH);
 $path_array = explode('/', $path);
 $css  = '/';
 
+/*拆解url中的path，
+依照順序串接path元素，
+輪到最後一個元素時，
+把.php副檔名去掉，
+最後組成要引用的css檔名*/
 switch (count($path_array)) {
   case 2:
     $css .= 'index';

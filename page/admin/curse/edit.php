@@ -1,13 +1,9 @@
 <?php require_once ($_SERVER['DOCUMENT_ROOT'].'/component/head.php'); 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/admin/curse.php';
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-if (!preg_match('/^id=\d+$/', $query)) {
-  header('Location: ' . ROOT . '/page/admin/curse/list.php');
-  exit;
-}
-$id =  intval(substr($query, strpos($query, '=') + 1));
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
+
+$id =  Util::getIdOfModel();
 $db = new Db();
 $curseController = new Curse(new Curse_model($db),new Curse_strategy_model($db),new Account_model($db));
 $info = $curseController->get($id);
@@ -29,7 +25,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
         <a href="list.php" id="back">返回</a>
         <form id="curse-edit">
         <label for="">內容</label>
-          <div> <input type="text" value="<?=$info['content']?>" id="content" placeholder="請輸入內容"><label for="" id="content-error" class="error">必填</label></div>
+          <div> <input type="text" value="<?=htmlspecialchars($info['content'])?>" id="content" placeholder="請輸入內容"><label for="" id="content-error" class="error">必填</label></div>
           <label for="">狀態</label>
           <section id="status">
             <label for=""><input type="radio" name="status" <?php if ($info['status'] == ACTIVE) { ?>checked <?php } ?> id="" value="2">啟用<input type="radio" name="status" <?php if ($info['status'] != ACTIVE) { ?>checked <?php } ?> id="" value="1">停用</label>

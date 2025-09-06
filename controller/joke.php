@@ -3,6 +3,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/model/joke_model.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
 use Mpdf\Mpdf;
 
@@ -14,21 +15,7 @@ class JokeFrontend{
         $this->joke_model = $joke_model;
     }
 
-     public function requestEntry()
-    {
-        $request_body = file_get_contents('php://input');
     
-        $data = json_decode($request_body, true);
-      
-        switch ($data['task']) {
-            case 'create-rate':
-                $this->createRate($data);
-                break;
-            case 'get-random-question':
-                $this->getRandomQuestion($data);
-                break;
-        } 
-    }
     public function randomJoke()
     {
         $info = $this->joke_model->getRandomJoke();
@@ -57,11 +44,11 @@ class JokeFrontend{
         return $info;
     }
 
-    private function createRate($data)
+    private function createRate()
     {
-        $id = intval($data['id']);
-        $score = intval($data['score']);
-        $comment = $data['comment'];
+        $id = intval($_POST['id']);
+        $score = intval($_POST['score']);
+        $comment = $_POST['comment'];
         $result = $this->joke_model->createRate($id,$comment,$score);
         if($result === SUCCESS){
             $response = json_encode(['errCode'=>SUCCESS]);
@@ -73,7 +60,7 @@ class JokeFrontend{
         exit;
     }
 
-    private function getRandomQuestion($data)
+    private function getRandomQuestion()
     {
         $list = $this->joke_model->getRandomQuestion();
         echo json_encode(['errCode'=>SUCCESS,'list'=>$list]);
@@ -170,14 +157,10 @@ class JokeFrontend{
 
 }
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-$query_array = explode('&', $query);
 
-$query_array = array_map(function ($item) {
-    $item = substr($item, strpos($item, '=') + 1);
-    return $item;
-}, $query_array);
+$query_array = Util::getSearchQuery();
+
+$query_array = Util::getSearchQueryValue($query_array);
 
 
 $joke  = new JokeFrontend(new Joke_model(new Db()));
@@ -187,6 +170,6 @@ if (in_array('export', $query_array)) {
     exit;
 }
 
-$joke->requestEntry();
+Util::requestEntry($joke);
 
 unset($joke);

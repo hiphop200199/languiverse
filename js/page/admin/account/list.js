@@ -1,4 +1,4 @@
-import { destroy, exportFile } from "../../account_model.js";
+import { backend } from "../../request_model.js";
 import { SUCCESS } from "../constant.js";
 
 const deleteBtn = document.querySelectorAll(".delete");
@@ -27,7 +27,7 @@ confirmLBBtn.addEventListener("click", async function () {
     };
     confirmLB.style.display = "none";
     loading.style.display = "block";
-    const response = await destroy(param);
+    const response = await backend(param);
     loading.style.display = "none";
     console.log(response);
    

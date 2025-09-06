@@ -36,12 +36,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
           <tbody>
           <?php foreach ($list as $k=>$v):?> 
             <tr>
-              <td><?=$v['id']?></td>
-              <td><?=$v['content']?></td>
+              <td><?=htmlspecialchars($v['id'])?></td>
+              <td><?=htmlspecialchars($v['content'])?></td>
               <td><?= $v['status'] == ACTIVE ? '啟用' : '停用'; ?></td>
               <td class="operation">
                <?php if($v['editor']==$trendsController->data['account']['id']):?>
-                <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <a data-id="<?= $v['id']; ?>" class="delete">🗑</a>
+                <a href="edit.php?id=<?= htmlspecialchars($v['id']); ?>" class="edit">🖊</a> <a data-id="<?= htmlspecialchars($v['id']); ?>" class="delete">🗑</a>
                 <?php endif;?>
               </td>
             </tr>
@@ -51,12 +51,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/alertLB.php';
         <div id="grid">
           <?php foreach($list as $k=>$v):?>
           <div class="item">
-            <p>id:<?=$v['id']?></p>
-            <p>內容:<?=$v['content']?></p>
+            <p>id:<?=htmlspecialchars($v['id'])?></p>
+            <p>內容:<?=htmlspecialchars($v['content'])?></p>
             <p>狀態:<?= $v['status'] == ACTIVE ? '啟用' : '停用'; ?></p>
             <section class="button">
              <?php if($v['editor']==$trendsController->data['account']['id']):?>
-                <a href="edit.php?id=<?= $v['id']; ?>" class="edit">🖊</a> <a data-id="<?= $v['id']; ?>" class="delete">🗑</a>
+                <a href="edit.php?id=<?= htmlspecialchars($v['id']); ?>" class="edit">🖊</a> <a data-id="<?= htmlspecialchars($v['id']); ?>" class="delete">🗑</a>
                 <?php endif;?>
             </section>
           </div>

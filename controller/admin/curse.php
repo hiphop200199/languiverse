@@ -5,6 +5,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/model/curse_model.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/model/curse_strategy_model.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -20,20 +21,6 @@ class Curse extends Common
         $this->curse_strategy_model = $curse_strategy_model;
     }
 
-    public function requestEntry()
-    {
-        switch ($_POST['task']) {
-            case 'create':
-                $this->create();
-                break;
-            case 'edit':
-                $this->edit();
-                break;
-            case 'delete':
-                $this->delete();
-                break;
-        }
-    }
 
     public function index()
     {
@@ -49,7 +36,7 @@ class Curse extends Common
 
     private function create()
     {
-        $content = $_POST['content'];
+        $content = htmlspecialchars(strip_tags($_POST['content']));
         $status = intval($_POST['status']);
         $editor = intval($this->data['account']['id']);
         $result = $this->curse_model->create($content,  $status,  $editor);
@@ -73,7 +60,7 @@ class Curse extends Common
             echo $response;
             exit;
         }
-        $content = $_POST['content'];
+        $content = htmlspecialchars(strip_tags($_POST['content']));
         $status = intval($_POST['status']);
         $result = $this->curse_model->edit($id, $content,  $status);
         if ($result === SUCCESS) {
@@ -158,14 +145,10 @@ class Curse extends Common
 
 }
 
-$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$query = parse_url($url, PHP_URL_QUERY);
-$query_array = explode('&', $query);
 
-$query_array = array_map(function ($item) {
-    $item = substr($item, strpos($item, '=') + 1);
-    return $item;
-}, $query_array);
+$query_array = Util::getSearchQuery();
+
+$query_array = Util::getSearchQueryValue($query_array);
 
 $db = new Db();
 
@@ -176,6 +159,6 @@ if (in_array('export', $query_array)) {
     exit;
 }
 
-$curse->requestEntry();
+Util::requestEntry($curse);
 
 unset($curse);

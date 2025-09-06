@@ -2,6 +2,7 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/model/curse_model.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
 
 class CurseFrontend{
     private $curse_model;
@@ -11,18 +12,6 @@ class CurseFrontend{
         $this->curse_model = $curse_model;
     }
 
-     public function requestEntry()
-    {
-        $request_body = file_get_contents('php://input');
-    
-        $data = json_decode($request_body, true);
-      
-        switch ($data['task']) {
-            case 'create-strategy':
-                $this->createStrategy($data);
-                break;
-        } 
-    }
     
 
 
@@ -38,10 +27,10 @@ class CurseFrontend{
         return $info;
     }
 
-    private function createStrategy($data)
+    private function createStrategy()
     {
-        $id = intval($data['id']);
-        $content = $data['content'];
+        $id = intval($_POST['id']);
+        $content = $_POST['content'];
         $result = $this->curse_model->createStrategy($id,$content);
         if($result === SUCCESS){
             $response = json_encode(['errCode'=>SUCCESS]);
@@ -57,6 +46,6 @@ class CurseFrontend{
 
 $curse  = new curseFrontend(new curse_model(new Db()));
 
-$curse->requestEntry();
+Util::requestEntry($curse);
 
 unset($curse);
