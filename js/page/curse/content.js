@@ -1,6 +1,6 @@
 import { REQUEST_BASE_URL } from "../admin/config.js"
 import { SUCCESS } from "../admin/constant.js"
-import { frontend } from "../../request_model.js";
+import { frontend } from "../request_model.js";
 
 const openStrategyModal = document.getElementById('open-strategy-modal')
 const strategyModal = document.getElementById('strategy-modal')

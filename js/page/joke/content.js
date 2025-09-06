@@ -1,6 +1,6 @@
 import { REQUEST_BASE_URL } from "../admin/config.js"
 import { SUCCESS } from "../admin/constant.js"
-import { frontend } from "../../request_model.js";
+import { frontend } from "../request_model.js";
 
 const openCommentModal = document.getElementById('open-comment-modal')
 const commentModal = document.getElementById('comment-modal')

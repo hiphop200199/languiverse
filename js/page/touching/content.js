@@ -1,6 +1,6 @@
 import { REQUEST_BASE_URL } from "../admin/config.js"
 import { SUCCESS } from "../admin/constant.js"
-import { frontend } from "../../request_model.js";
+import { frontend } from "../request_model.js";
 
 const openThoughtModal = document.getElementById('open-thought-modal')
 const thoughtModal = document.getElementById('thought-modal')
