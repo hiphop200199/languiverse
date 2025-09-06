@@ -1,17 +1,21 @@
 <?php
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config/constant.php';
+
 class Util
 {
     //取得該筆model的id
     public static function getIdOfModel()
     {
+        
         $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $result = parse_url($url, PHP_URL_QUERY);
+        $result = parse_url($url);
         $query = $result['query'];
         $path = $result['path'];
         $path_array = explode('/', $path);
-
-        if (!preg_match('/^id=\d$/', $query)) {
+       
+     
+        if (!preg_match('/^id=\d+$/', $query)) {
             header('Location: ' . ROOT . '/page/admin/' . $path_array[count($path_array) - 2] . '/list.php');
             exit;
         }

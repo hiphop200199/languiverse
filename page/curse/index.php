@@ -3,7 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/component/head.php');
 ?>
 <div id="page">
    <h1 id="orientation-remind">僅支援直向模式</h1>
-   <div class="video-box"><video src="<?=ROOT.'/video/15287-262921829_tiny.mp4';?>" autoplay loop muted></video></div>
+   <!-- <div class="video-box"><video src="<?=ROOT.'/video/15287-262921829_tiny.mp4';?>" autoplay loop muted></video></div> -->
    
    <div class="box">
    <article>人言可畏，一句話的傷害並不亞於動手帶來的疼痛，也許我們會想，

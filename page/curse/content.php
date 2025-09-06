@@ -2,7 +2,7 @@
   require_once($_SERVER['DOCUMENT_ROOT'] . '/component/head.php');
   require_once $_SERVER['DOCUMENT_ROOT'] . '/controller/curse.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . '/util/util.php';
-
+ 
   $id =  Util::getIdOfModel();
   $db = new Db();
   $curseController = new CurseFrontend(new Curse_model($db));
